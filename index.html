@@ -1,0 +1,655 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>HWDK BHD 결선관리</title>
+
+  <style>
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      font-family: Arial, "Noto Sans KR", sans-serif;
+      background: #f4f6f8;
+      color: #222;
+    }
+
+    header {
+      background: #16324f;
+      color: white;
+      padding: 18px 20px;
+      font-size: 20px;
+      font-weight: 700;
+    }
+
+    .container {
+      max-width: 720px;
+      margin: 0 auto;
+      padding: 16px;
+    }
+
+    .card {
+      background: white;
+      border-radius: 12px;
+      padding: 18px;
+      margin-bottom: 16px;
+      box-shadow: 0 2px 8px rgba(0,0,0,.08);
+    }
+
+    h2 {
+      margin-top: 0;
+      font-size: 20px;
+    }
+
+    label {
+      display: block;
+      margin-top: 12px;
+      margin-bottom: 5px;
+      font-weight: 700;
+    }
+
+    input, select {
+      width: 100%;
+      padding: 12px;
+      border: 1px solid #ccd2d8;
+      border-radius: 7px;
+      font-size: 16px;
+    }
+
+    button {
+      border: 0;
+      border-radius: 8px;
+      padding: 13px 18px;
+      font-size: 16px;
+      font-weight: 700;
+      cursor: pointer;
+    }
+
+    .primary {
+      background: #16324f;
+      color: white;
+      width: 100%;
+      margin-top: 16px;
+    }
+
+    .secondary {
+      background: #e9eef3;
+      color: #222;
+    }
+
+    .tabs {
+      display: flex;
+      gap: 8px;
+      margin-bottom: 16px;
+    }
+
+    .tabs button {
+      flex: 1;
+    }
+
+    .active {
+      background: #16324f;
+      color: white;
+    }
+
+    .hidden {
+      display: none;
+    }
+
+    #preview, #resultImage {
+      width: 100%;
+      max-height: 650px;
+      object-fit: contain;
+      margin-top: 12px;
+      border-radius: 8px;
+      background: #eee;
+    }
+
+    .mirror {
+      transform: scaleX(-1);
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 15px;
+    }
+
+    th, td {
+      border: 1px solid #d5dbe0;
+      padding: 7px;
+      text-align: center;
+    }
+
+    th {
+      background: #edf1f5;
+    }
+
+    td input {
+      padding: 8px;
+      text-align: center;
+    }
+
+    .row-buttons {
+      display: flex;
+      gap: 8px;
+      margin-top: 10px;
+    }
+
+    .status {
+      margin-top: 12px;
+      font-weight: 700;
+    }
+
+    .result-title {
+      background: #16324f;
+      color: white;
+      padding: 10px;
+      margin-top: 18px;
+      border-radius: 6px;
+      font-weight: 700;
+    }
+  </style>
+</head>
+
+<body>
+
+<header>
+  HWDK BHD 결선관리
+</header>
+
+<div class="container">
+
+  <div id="loginCard" class="card">
+    <h2>작업자 로그인</h2>
+
+    <label>이메일</label>
+    <input id="email" type="email">
+
+    <label>비밀번호</label>
+    <input id="password" type="password">
+
+    <button id="loginBtn" class="primary">로그인</button>
+
+    <div id="loginStatus" class="status"></div>
+  </div>
+
+
+  <div id="app" class="hidden">
+
+    <div class="tabs">
+      <button id="registerTab" class="active">BHD 등록</button>
+      <button id="searchTab" class="secondary">BHD 조회</button>
+    </div>
+
+
+    <section id="registerSection">
+
+      <div class="card">
+        <h2>선작업 BHD 등록</h2>
+
+        <label>호선</label>
+        <input id="shipNo" placeholder="예: 1234">
+
+        <label>구역 / 위치</label>
+        <input id="area" placeholder="예: ER / DECK-3">
+
+        <label>BHD 번호</label>
+        <input id="bhdNo" placeholder="예: BHD-17">
+
+        <label>작업일</label>
+        <input id="workDate" type="date">
+
+        <label>선작업 사진</label>
+        <input id="photo" type="file" accept="image/*" capture="environment">
+
+        <img id="preview" class="hidden">
+
+        <h3>결선 테이블</h3>
+
+        <table>
+          <thead>
+            <tr>
+              <th>위치</th>
+              <th>좌측</th>
+              <th>우측</th>
+            </tr>
+          </thead>
+
+          <tbody id="lineRows"></tbody>
+        </table>
+
+        <div class="row-buttons">
+          <button id="addRowBtn" class="secondary">+ 행 추가</button>
+        </div>
+
+        <button id="saveBtn" class="primary">BHD 저장</button>
+
+        <div id="saveStatus" class="status"></div>
+      </div>
+
+    </section>
+
+
+    <section id="searchSection" class="hidden">
+
+      <div class="card">
+
+        <h2>후작업 BHD 조회</h2>
+
+        <label>호선</label>
+        <input id="searchShip" placeholder="호선 입력">
+
+        <label>BHD 번호</label>
+        <input id="searchBhd" placeholder="BHD 번호 입력">
+
+        <button id="searchBtn" class="primary">조회</button>
+
+        <div id="searchStatus" class="status"></div>
+
+        <div id="resultBox" class="hidden">
+
+          <div class="result-title">
+            후작업 기준 화면
+          </div>
+
+          <p>
+            반대편에서 보이는 방향에 맞게
+            좌우가 자동으로 반전되어 표시됩니다.
+          </p>
+
+          <img id="resultImage" class="mirror">
+
+          <table>
+            <thead>
+              <tr>
+                <th>위치</th>
+                <th>좌측</th>
+                <th>우측</th>
+              </tr>
+            </thead>
+
+            <tbody id="resultRows"></tbody>
+          </table>
+
+        </div>
+
+      </div>
+
+    </section>
+
+    <button id="logoutBtn" class="secondary">
+      로그아웃
+    </button>
+
+  </div>
+
+</div>
+
+
+<script type="module">
+
+import {
+  createClient
+} from "https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/+esm";
+
+
+const SUPABASE_URL =
+  "https://dcxplqljfadjrqyvpyvoy.supabase.co";
+
+const SUPABASE_ANON_KEY =
+  "sb_publishable_1XT8EGC8iNLtrFRMhqN41w_kLvgEKcR";
+
+
+const supabase =
+  createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+
+
+const loginCard = document.getElementById("loginCard");
+const app = document.getElementById("app");
+
+
+function showApp() {
+  loginCard.classList.add("hidden");
+  app.classList.remove("hidden");
+}
+
+
+function addRow(position = "", left = "", right = "") {
+
+  const tr = document.createElement("tr");
+
+  tr.innerHTML = `
+    <td>
+      <input value="${position}">
+    </td>
+
+    <td>
+      <input value="${left}">
+    </td>
+
+    <td>
+      <input value="${right}">
+    </td>
+  `;
+
+  document.getElementById("lineRows")
+    .appendChild(tr);
+}
+
+
+for (let i = 1; i <= 8; i++) {
+  addRow(i);
+}
+
+
+document.getElementById("addRowBtn")
+  .onclick = () => {
+
+    const count =
+      document.querySelectorAll("#lineRows tr").length;
+
+    addRow(count + 1);
+  };
+
+
+document.getElementById("photo")
+  .addEventListener("change", e => {
+
+    const file = e.target.files[0];
+
+    if (!file) return;
+
+    const preview =
+      document.getElementById("preview");
+
+    preview.src =
+      URL.createObjectURL(file);
+
+    preview.classList.remove("hidden");
+
+  });
+
+
+document.getElementById("loginBtn")
+  .onclick = async () => {
+
+    const email =
+      document.getElementById("email").value;
+
+    const password =
+      document.getElementById("password").value;
+
+    const status =
+      document.getElementById("loginStatus");
+
+    status.textContent = "로그인 중...";
+
+    const { error } =
+      await supabase.auth.signInWithPassword({
+        email,
+        password
+      });
+
+    if (error) {
+      status.textContent =
+        "로그인 실패: " + error.message;
+
+      return;
+    }
+
+    status.textContent = "";
+
+    showApp();
+  };
+
+
+document.getElementById("logoutBtn")
+  .onclick = async () => {
+
+    await supabase.auth.signOut();
+
+    location.reload();
+  };
+
+
+document.getElementById("registerTab")
+  .onclick = () => {
+
+    document.getElementById("registerSection")
+      .classList.remove("hidden");
+
+    document.getElementById("searchSection")
+      .classList.add("hidden");
+
+  };
+
+
+document.getElementById("searchTab")
+  .onclick = () => {
+
+    document.getElementById("registerSection")
+      .classList.add("hidden");
+
+    document.getElementById("searchSection")
+      .classList.remove("hidden");
+
+  };
+
+
+document.getElementById("saveBtn")
+  .onclick = async () => {
+
+    const shipNo =
+      document.getElementById("shipNo").value.trim();
+
+    const area =
+      document.getElementById("area").value.trim();
+
+    const bhdNo =
+      document.getElementById("bhdNo").value.trim();
+
+    const workDate =
+      document.getElementById("workDate").value;
+
+    const file =
+      document.getElementById("photo").files[0];
+
+    const status =
+      document.getElementById("saveStatus");
+
+
+    if (!shipNo || !bhdNo || !file) {
+
+      status.textContent =
+        "호선, BHD 번호, 사진은 필수입니다.";
+
+      return;
+    }
+
+
+    status.textContent =
+      "저장 중입니다...";
+
+
+    const rows =
+      [...document.querySelectorAll("#lineRows tr")]
+      .map(tr => {
+
+        const inputs =
+          tr.querySelectorAll("input");
+
+        return {
+          position: inputs[0].value,
+          left: inputs[1].value,
+          right: inputs[2].value
+        };
+
+      });
+
+
+    const safeShip =
+      shipNo.replace(/[^a-zA-Z0-9가-힣_-]/g, "_");
+
+    const safeBhd =
+      bhdNo.replace(/[^a-zA-Z0-9가-힣_-]/g, "_");
+
+
+    const path =
+      `${safeShip}/${safeBhd}/${Date.now()}-${file.name}`;
+
+
+    const upload =
+      await supabase.storage
+      .from("bhd-images")
+      .upload(path, file);
+
+
+    if (upload.error) {
+
+      status.textContent =
+        "사진 저장 실패: " +
+        upload.error.message;
+
+      return;
+    }
+
+
+    const insert =
+      await supabase
+      .from("bhd_records")
+      .insert({
+
+        ship_no: shipNo,
+        area: area,
+        bhd_no: bhdNo,
+        work_date: workDate || null,
+        original_image: path,
+        line_table: rows
+
+      });
+
+
+    if (insert.error) {
+
+      status.textContent =
+        "자료 저장 실패: " +
+        insert.error.message;
+
+      return;
+    }
+
+
+    status.textContent =
+      "BHD 등록이 완료되었습니다.";
+  };
+
+
+document.getElementById("searchBtn")
+  .onclick = async () => {
+
+    const shipNo =
+      document.getElementById("searchShip").value.trim();
+
+    const bhdNo =
+      document.getElementById("searchBhd").value.trim();
+
+    const status =
+      document.getElementById("searchStatus");
+
+
+    status.textContent =
+      "조회 중...";
+
+
+    const { data, error } =
+      await supabase
+      .from("bhd_records")
+      .select("*")
+      .eq("ship_no", shipNo)
+      .eq("bhd_no", bhdNo)
+      .order("created_at", {
+        ascending: false
+      })
+      .limit(1)
+      .maybeSingle();
+
+
+    if (error || !data) {
+
+      status.textContent =
+        "등록된 BHD 자료가 없습니다.";
+
+      return;
+    }
+
+
+    const signed =
+      await supabase.storage
+      .from("bhd-images")
+      .createSignedUrl(
+        data.original_image,
+        3600
+      );
+
+
+    if (signed.error) {
+
+      status.textContent =
+        "사진 불러오기 실패";
+
+      return;
+    }
+
+
+    document.getElementById("resultImage").src =
+      signed.data.signedUrl;
+
+
+    const tbody =
+      document.getElementById("resultRows");
+
+    tbody.innerHTML = "";
+
+
+    (data.line_table || []).forEach(row => {
+
+      const tr =
+        document.createElement("tr");
+
+      tr.innerHTML = `
+        <td>${row.position || ""}</td>
+        <td>${row.right || ""}</td>
+        <td>${row.left || ""}</td>
+      `;
+
+      tbody.appendChild(tr);
+
+    });
+
+
+    document.getElementById("resultBox")
+      .classList.remove("hidden");
+
+
+    status.textContent =
+      `${data.ship_no} / ${data.bhd_no}`;
+
+  };
+
+
+const {
+  data: sessionData
+} =
+await supabase.auth.getSession();
+
+
+if (sessionData.session) {
+  showApp();
+}
+
+</script>
+
+</body>
+</html>
