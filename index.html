@@ -24,7 +24,7 @@
     }
 
     .container {
-      max-width: 720px;
+      max-width: 900px;
       margin: 0 auto;
       padding: 16px;
     }
@@ -42,6 +42,11 @@
       font-size: 20px;
     }
 
+    h3 {
+      margin-top: 22px;
+      margin-bottom: 8px;
+    }
+
     label {
       display: block;
       margin-top: 12px;
@@ -55,6 +60,7 @@
       border: 1px solid #ccd2d8;
       border-radius: 7px;
       font-size: 16px;
+      background: white;
     }
 
     button {
@@ -66,11 +72,23 @@
       cursor: pointer;
     }
 
+    button:disabled {
+      opacity: .55;
+      cursor: not-allowed;
+    }
+
     .primary {
       background: #16324f;
       color: white;
       width: 100%;
       margin-top: 16px;
+    }
+
+    .ai-button {
+      background: #265f91;
+      color: white;
+      width: 100%;
+      margin-top: 12px;
     }
 
     .secondary {
@@ -89,31 +107,67 @@
     }
 
     .active {
-      background: #16324f;
-      color: white;
+      background: #16324f !important;
+      color: white !important;
     }
 
     .hidden {
-      display: none;
+      display: none !important;
     }
 
-    #preview, #resultImage {
-      width: 100%;
-      max-height: 650px;
-      object-fit: contain;
+    .status {
       margin-top: 12px;
+      font-weight: 700;
+      line-height: 1.5;
+    }
+
+    .hint {
+      font-size: 13px;
+      color: #666;
+      line-height: 1.5;
+      margin-top: 6px;
+    }
+
+    .analysis-summary {
+      background: #eef5fb;
+      border: 1px solid #c9dceb;
       border-radius: 8px;
+      padding: 12px;
+      margin-top: 12px;
+      line-height: 1.5;
+    }
+
+    .preview-grid,
+    .result-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+      gap: 10px;
+      margin-top: 12px;
+    }
+
+    .preview-grid img,
+    .result-grid img {
+      width: 100%;
+      height: 220px;
+      object-fit: contain;
       background: #eee;
+      border-radius: 8px;
+      border: 1px solid #d9dee3;
     }
 
     .mirror {
       transform: scaleX(-1);
     }
 
+    .table-wrap {
+      overflow-x: auto;
+      margin-top: 10px;
+    }
+
     table {
       width: 100%;
+      min-width: 560px;
       border-collapse: collapse;
-      margin-top: 15px;
     }
 
     th, td {
@@ -129,17 +183,30 @@
     td input {
       padding: 8px;
       text-align: center;
+      min-width: 70px;
+    }
+
+    tr.review {
+      background: #fff6d8;
+    }
+
+    .review-text {
+      font-size: 12px;
+      font-weight: 700;
+      color: #9a6500;
+      white-space: nowrap;
+    }
+
+    .ok-text {
+      font-size: 12px;
+      color: #327149;
+      white-space: nowrap;
     }
 
     .row-buttons {
       display: flex;
       gap: 8px;
       margin-top: 10px;
-    }
-
-    .status {
-      margin-top: 12px;
-      font-weight: 700;
     }
 
     .result-title {
@@ -149,6 +216,18 @@
       margin-top: 18px;
       border-radius: 6px;
       font-weight: 700;
+    }
+
+    .section-title {
+      margin-top: 20px;
+      padding: 8px 10px;
+      background: #e9eef3;
+      border-radius: 6px;
+      font-weight: 700;
+    }
+
+    .logout {
+      margin-bottom: 20px;
     }
   </style>
 </head>
@@ -187,6 +266,7 @@
     <section id="registerSection">
 
       <div class="card">
+
         <h2>선작업 BHD 등록</h2>
 
         <label>호선</label>
@@ -202,31 +282,67 @@
         <input id="workDate" type="date">
 
         <label>선작업 사진</label>
-        <input id="photo" type="file" accept="image/*" capture="environment">
 
-        <img id="preview" class="hidden">
+        <input
+          id="photos"
+          type="file"
+          accept="image/*"
+          multiple
+        >
+
+        <div class="hint">
+          동일 BHD의 전체사진과 근접사진을 함께 선택하세요.
+          최대 8장까지 AI가 동시에 비교합니다.
+        </div>
+
+        <div id="previewGrid" class="preview-grid"></div>
+
+        <button id="analyzeBtn" class="ai-button">
+          AI 자동분석
+        </button>
+
+        <div id="analysisStatus" class="status"></div>
+
+        <div id="analysisSummary"
+             class="analysis-summary hidden">
+        </div>
+
 
         <h3>결선 테이블</h3>
 
-        <table>
-          <thead>
-            <tr>
-              <th>위치</th>
-              <th>좌측</th>
-              <th>우측</th>
-            </tr>
-          </thead>
-
-          <tbody id="lineRows"></tbody>
-        </table>
-
-        <div class="row-buttons">
-          <button id="addRowBtn" class="secondary">+ 행 추가</button>
+        <div class="hint">
+          사진에서 확인된 실제 개수만큼 자동 생성됩니다.
+          노란색 행은 작업자가 한 번 확인하세요.
         </div>
 
-        <button id="saveBtn" class="primary">BHD 저장</button>
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th>구역</th>
+                <th>위치</th>
+                <th>좌측</th>
+                <th>우측</th>
+                <th>판독</th>
+              </tr>
+            </thead>
+
+            <tbody id="lineRows"></tbody>
+          </table>
+        </div>
+
+        <div class="row-buttons">
+          <button id="addRowBtn" class="secondary">
+            + 행 추가
+          </button>
+        </div>
+
+        <button id="saveBtn" class="primary">
+          BHD 저장
+        </button>
 
         <div id="saveStatus" class="status"></div>
+
       </div>
 
     </section>
@@ -244,9 +360,12 @@
         <label>BHD 번호</label>
         <input id="searchBhd" placeholder="BHD 번호 입력">
 
-        <button id="searchBtn" class="primary">조회</button>
+        <button id="searchBtn" class="primary">
+          조회
+        </button>
 
         <div id="searchStatus" class="status"></div>
+
 
         <div id="resultBox" class="hidden">
 
@@ -255,23 +374,17 @@
           </div>
 
           <p>
-            반대편에서 보이는 방향에 맞게
-            좌우가 자동으로 반전되어 표시됩니다.
+            선작업 반대편에서 보는 기준으로
+            사진과 결선표를 좌우 반전하여 표시합니다.
           </p>
 
-          <img id="resultImage" class="mirror">
+          <div id="resultImages" class="result-grid"></div>
 
-          <table>
-            <thead>
-              <tr>
-                <th>위치</th>
-                <th>좌측</th>
-                <th>우측</th>
-              </tr>
-            </thead>
+          <div id="resultInfo"
+               class="analysis-summary">
+          </div>
 
-            <tbody id="resultRows"></tbody>
-          </table>
+          <div id="resultTables"></div>
 
         </div>
 
@@ -279,7 +392,9 @@
 
     </section>
 
-    <button id="logoutBtn" class="secondary">
+
+    <button id="logoutBtn"
+            class="secondary logout">
       로그아웃
     </button>
 
@@ -303,11 +418,31 @@ const SUPABASE_ANON_KEY =
 
 
 const supabase =
-  createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+  createClient(
+    SUPABASE_URL,
+    SUPABASE_ANON_KEY
+  );
 
 
-const loginCard = document.getElementById("loginCard");
-const app = document.getElementById("app");
+const loginCard =
+  document.getElementById("loginCard");
+
+const app =
+  document.getElementById("app");
+
+const lineRows =
+  document.getElementById("lineRows");
+
+const photosInput =
+  document.getElementById("photos");
+
+
+let analysisMeta = {
+  section_count: 0,
+  total_positions: 0,
+  notes: "",
+  ai_analyzed: false
+};
 
 
 function showApp() {
@@ -316,327 +451,1278 @@ function showApp() {
 }
 
 
-function addRow(position = "", left = "", right = "") {
+function setTabs(mode) {
 
-  const tr = document.createElement("tr");
+  const registerTab =
+    document.getElementById("registerTab");
 
-  tr.innerHTML = `
-    <td>
-      <input value="${position}">
-    </td>
+  const searchTab =
+    document.getElementById("searchTab");
 
-    <td>
-      <input value="${left}">
-    </td>
+  const registerSection =
+    document.getElementById("registerSection");
 
-    <td>
-      <input value="${right}">
-    </td>
-  `;
+  const searchSection =
+    document.getElementById("searchSection");
 
-  document.getElementById("lineRows")
-    .appendChild(tr);
+
+  if (mode === "register") {
+
+    registerTab.classList.add("active");
+    searchTab.classList.remove("active");
+
+    registerSection.classList.remove("hidden");
+    searchSection.classList.add("hidden");
+
+  } else {
+
+    searchTab.classList.add("active");
+    registerTab.classList.remove("active");
+
+    searchSection.classList.remove("hidden");
+    registerSection.classList.add("hidden");
+  }
 }
 
 
-for (let i = 1; i <= 8; i++) {
-  addRow(i);
+function createInput(value = "") {
+
+  const input =
+    document.createElement("input");
+
+  input.value =
+    value ?? "";
+
+  return input;
 }
 
 
-document.getElementById("addRowBtn")
-  .onclick = () => {
+function addEditableRow(row = {}) {
 
-    const count =
-      document.querySelectorAll("#lineRows tr").length;
+  const tr =
+    document.createElement("tr");
 
-    addRow(count + 1);
-  };
+  const section =
+    Number(row.section || 1);
+
+  const position =
+    Number(row.position || 1);
+
+  const confidence =
+    Number(row.confidence ?? 1);
+
+  const needsReview =
+    Boolean(row.needs_review);
 
 
-document.getElementById("photo")
-  .addEventListener("change", e => {
+  tr.dataset.confidence =
+    String(confidence);
 
-    const file = e.target.files[0];
+  tr.dataset.review =
+    String(needsReview);
 
-    if (!file) return;
 
-    const preview =
-      document.getElementById("preview");
+  if (needsReview || confidence < 0.8) {
+    tr.classList.add("review");
+  }
 
-    preview.src =
-      URL.createObjectURL(file);
 
-    preview.classList.remove("hidden");
+  const sectionTd =
+    document.createElement("td");
+
+  const positionTd =
+    document.createElement("td");
+
+  const leftTd =
+    document.createElement("td");
+
+  const rightTd =
+    document.createElement("td");
+
+  const reviewTd =
+    document.createElement("td");
+
+
+  const sectionInput =
+    createInput(section);
+
+  sectionInput.type = "number";
+  sectionInput.min = "1";
+
+
+  const positionInput =
+    createInput(position);
+
+  positionInput.type = "number";
+  positionInput.min = "1";
+
+
+  const leftInput =
+    createInput(row.left || "");
+
+  const rightInput =
+    createInput(row.right || "");
+
+
+  sectionTd.appendChild(sectionInput);
+  positionTd.appendChild(positionInput);
+  leftTd.appendChild(leftInput);
+  rightTd.appendChild(rightInput);
+
+
+  function setReviewText() {
+
+    const review =
+      tr.dataset.review === "true";
+
+    const conf =
+      Number(tr.dataset.confidence || 1);
+
+
+    if (review || conf < 0.8) {
+
+      reviewTd.textContent =
+        "확인 필요";
+
+      reviewTd.className =
+        "review-text";
+
+    } else {
+
+      reviewTd.textContent =
+        "확인";
+
+      reviewTd.className =
+        "ok-text";
+    }
+  }
+
+
+  [
+    sectionInput,
+    positionInput,
+    leftInput,
+    rightInput
+  ].forEach(input => {
+
+    input.addEventListener("change", () => {
+
+      tr.dataset.review = "false";
+      tr.dataset.confidence = "1";
+
+      tr.classList.remove("review");
+
+      setReviewText();
+    });
 
   });
 
 
-document.getElementById("loginBtn")
-  .onclick = async () => {
+  setReviewText();
 
-    const email =
-      document.getElementById("email").value;
 
-    const password =
-      document.getElementById("password").value;
+  tr.appendChild(sectionTd);
+  tr.appendChild(positionTd);
+  tr.appendChild(leftTd);
+  tr.appendChild(rightTd);
+  tr.appendChild(reviewTd);
+
+  lineRows.appendChild(tr);
+}
+
+
+function renderEditableRows(rows = []) {
+
+  lineRows.innerHTML = "";
+
+  const sorted =
+    [...rows].sort((a, b) => {
+
+      const sectionDiff =
+        Number(a.section || 1) -
+        Number(b.section || 1);
+
+      if (sectionDiff !== 0) {
+        return sectionDiff;
+      }
+
+      return (
+        Number(a.position || 0) -
+        Number(b.position || 0)
+      );
+    });
+
+
+  sorted.forEach(row =>
+    addEditableRow(row)
+  );
+}
+
+
+function collectRows() {
+
+  return [
+    ...document.querySelectorAll(
+      "#lineRows tr"
+    )
+  ]
+  .map(tr => {
+
+    const inputs =
+      tr.querySelectorAll("input");
+
+    return {
+      section:
+        Number(inputs[0].value || 1),
+
+      position:
+        Number(inputs[1].value || 0),
+
+      left:
+        inputs[2].value.trim(),
+
+      right:
+        inputs[3].value.trim(),
+
+      confidence:
+        Number(
+          tr.dataset.confidence || 1
+        ),
+
+      needs_review:
+        tr.dataset.review === "true"
+    };
+
+  })
+  .filter(row =>
+    row.position ||
+    row.left ||
+    row.right
+  );
+}
+
+
+function getMaxSection(rows) {
+
+  if (!rows.length) return 0;
+
+  return Math.max(
+    ...rows.map(row =>
+      Number(row.section || 1)
+    )
+  );
+}
+
+
+function sanitizePart(value) {
+
+  return value
+    .replace(
+      /[^a-zA-Z0-9가-힣_.-]/g,
+      "_"
+    );
+}
+
+
+function fileToDataURL(file) {
+
+  return new Promise(
+    (resolve, reject) => {
+
+      const reader =
+        new FileReader();
+
+      reader.onload =
+        () => resolve(reader.result);
+
+      reader.onerror =
+        reject;
+
+      reader.readAsDataURL(file);
+    }
+  );
+}
+
+
+async function compressForAI(
+  file,
+  maxDimension = 1600,
+  quality = 0.78
+) {
+
+  try {
+
+    const bitmap =
+      await createImageBitmap(file);
+
+    const ratio =
+      Math.min(
+        1,
+        maxDimension /
+        Math.max(
+          bitmap.width,
+          bitmap.height
+        )
+      );
+
+    const width =
+      Math.round(
+        bitmap.width * ratio
+      );
+
+    const height =
+      Math.round(
+        bitmap.height * ratio
+      );
+
+    const canvas =
+      document.createElement("canvas");
+
+    canvas.width = width;
+    canvas.height = height;
+
+    const ctx =
+      canvas.getContext("2d");
+
+    ctx.drawImage(
+      bitmap,
+      0,
+      0,
+      width,
+      height
+    );
+
+    bitmap.close();
+
+    return canvas.toDataURL(
+      "image/jpeg",
+      quality
+    );
+
+  } catch (error) {
+
+    console.warn(
+      "압축 실패, 원본 사용",
+      error
+    );
+
+    return await fileToDataURL(file);
+  }
+}
+
+
+function renderPreviews() {
+
+  const grid =
+    document.getElementById(
+      "previewGrid"
+    );
+
+  grid.innerHTML = "";
+
+  const files =
+    [...photosInput.files];
+
+
+  files.slice(0, 8)
+    .forEach(file => {
+
+      const img =
+        document.createElement("img");
+
+      img.src =
+        URL.createObjectURL(file);
+
+      grid.appendChild(img);
+    });
+}
+
+
+photosInput.addEventListener(
+  "change",
+  () => {
+
+    renderPreviews();
+
+    const count =
+      photosInput.files.length;
 
     const status =
-      document.getElementById("loginStatus");
+      document.getElementById(
+        "analysisStatus"
+      );
 
-    status.textContent = "로그인 중...";
-
-    const { error } =
-      await supabase.auth.signInWithPassword({
-        email,
-        password
-      });
-
-    if (error) {
-      status.textContent =
-        "로그인 실패: " + error.message;
-
-      return;
-    }
-
-    status.textContent = "";
-
-    showApp();
-  };
-
-
-document.getElementById("logoutBtn")
-  .onclick = async () => {
-
-    await supabase.auth.signOut();
-
-    location.reload();
-  };
-
-
-document.getElementById("registerTab")
-  .onclick = () => {
-
-    document.getElementById("registerSection")
-      .classList.remove("hidden");
-
-    document.getElementById("searchSection")
-      .classList.add("hidden");
-
-  };
-
-
-document.getElementById("searchTab")
-  .onclick = () => {
-
-    document.getElementById("registerSection")
-      .classList.add("hidden");
-
-    document.getElementById("searchSection")
-      .classList.remove("hidden");
-
-  };
-
-
-document.getElementById("saveBtn")
-  .onclick = async () => {
-
-    const shipNo =
-      document.getElementById("shipNo").value.trim();
-
-    const area =
-      document.getElementById("area").value.trim();
-
-    const bhdNo =
-      document.getElementById("bhdNo").value.trim();
-
-    const workDate =
-      document.getElementById("workDate").value;
-
-    const file =
-      document.getElementById("photo").files[0];
-
-    const status =
-      document.getElementById("saveStatus");
-
-
-    if (!shipNo || !bhdNo || !file) {
+    if (count > 8) {
 
       status.textContent =
-        "호선, BHD 번호, 사진은 필수입니다.";
+        "사진은 한 BHD당 최대 8장까지 분석됩니다.";
 
-      return;
+    } else {
+
+      status.textContent =
+        count
+          ? `사진 ${count}장 선택됨`
+          : "";
     }
+  }
+);
 
+
+document.getElementById(
+  "addRowBtn"
+).onclick = () => {
+
+  const rows =
+    collectRows();
+
+  const last =
+    rows[rows.length - 1];
+
+  const section =
+    last?.section || 1;
+
+  const position =
+    last?.section === section
+      ? Number(last?.position || 0) + 1
+      : 1;
+
+  addEditableRow({
+    section,
+    position,
+    left: "",
+    right: "",
+    confidence: 1,
+    needs_review: false
+  });
+};
+
+
+document.getElementById(
+  "analyzeBtn"
+).onclick = async () => {
+
+  const files =
+    [...photosInput.files];
+
+  const status =
+    document.getElementById(
+      "analysisStatus"
+    );
+
+  const summary =
+    document.getElementById(
+      "analysisSummary"
+    );
+
+  const button =
+    document.getElementById(
+      "analyzeBtn"
+    );
+
+
+  if (!files.length) {
 
     status.textContent =
-      "저장 중입니다...";
+      "분석할 사진을 먼저 선택하세요.";
+
+    return;
+  }
+
+
+  if (files.length > 8) {
+
+    status.textContent =
+      "사진은 최대 8장까지만 선택하세요.";
+
+    return;
+  }
+
+
+  try {
+
+    button.disabled = true;
+
+    status.textContent =
+      `사진 ${files.length}장 AI 분석 중...`;
+
+
+    const images =
+      await Promise.all(
+        files.map(file =>
+          compressForAI(file)
+        )
+      );
+
+
+    const {
+      data,
+      error
+    } =
+    await supabase.functions.invoke(
+      "bhd-analyze",
+      {
+        body: {
+          images
+        }
+      }
+    );
+
+
+    if (error) {
+
+      console.error(error);
+
+      status.textContent =
+        "AI 분석 호출에 실패했습니다.";
+
+      return;
+    }
+
+
+    if (data?.error) {
+
+      status.textContent =
+        "AI 분석 실패: " +
+        data.error;
+
+      return;
+    }
 
 
     const rows =
-      [...document.querySelectorAll("#lineRows tr")]
-      .map(tr => {
+      Array.isArray(data?.rows)
+        ? data.rows
+        : [];
 
-        const inputs =
-          tr.querySelectorAll("input");
 
-        return {
-          position: inputs[0].value,
-          left: inputs[1].value,
-          right: inputs[2].value
-        };
+    analysisMeta = {
+      section_count:
+        Number(
+          data?.section_count || 0
+        ),
 
-      });
+      total_positions:
+        Number(
+          data?.total_positions ||
+          rows.length
+        ),
+
+      notes:
+        data?.notes || "",
+
+      ai_analyzed:
+        true
+    };
+
+
+    renderEditableRows(rows);
+
+
+    const reviewCount =
+      rows.filter(row =>
+        row.needs_review ||
+        Number(row.confidence || 0) < 0.8
+      ).length;
+
+
+    summary.classList.remove(
+      "hidden"
+    );
+
+
+    summary.textContent =
+      `AI 분석 완료 · 구역 ${
+        analysisMeta.section_count
+      }개 · 판독 위치 ${
+        rows.length
+      }개 · 확인 필요 ${
+        reviewCount
+      }개${
+        analysisMeta.notes
+          ? " · " + analysisMeta.notes
+          : ""
+      }`;
+
+
+    status.textContent =
+      rows.length
+        ? "자동 테이블이 생성되었습니다."
+        : "판독된 결선 위치가 없습니다.";
+
+
+  } catch (error) {
+
+    console.error(error);
+
+    status.textContent =
+      "AI 분석 중 오류가 발생했습니다.";
+
+  } finally {
+
+    button.disabled = false;
+  }
+};
+
+
+document.getElementById(
+  "loginBtn"
+).onclick = async () => {
+
+  const email =
+    document.getElementById(
+      "email"
+    ).value.trim();
+
+  const password =
+    document.getElementById(
+      "password"
+    ).value;
+
+  const status =
+    document.getElementById(
+      "loginStatus"
+    );
+
+
+  status.textContent =
+    "로그인 중...";
+
+
+  const {
+    error
+  } =
+  await supabase.auth
+    .signInWithPassword({
+      email,
+      password
+    });
+
+
+  if (error) {
+
+    status.textContent =
+      "로그인 실패: " +
+      error.message;
+
+    return;
+  }
+
+
+  status.textContent = "";
+
+  showApp();
+};
+
+
+document.getElementById(
+  "logoutBtn"
+).onclick = async () => {
+
+  await supabase.auth.signOut();
+
+  location.reload();
+};
+
+
+document.getElementById(
+  "registerTab"
+).onclick = () => {
+
+  setTabs("register");
+};
+
+
+document.getElementById(
+  "searchTab"
+).onclick = () => {
+
+  setTabs("search");
+};
+
+
+document.getElementById(
+  "saveBtn"
+).onclick = async () => {
+
+  const shipNo =
+    document.getElementById(
+      "shipNo"
+    ).value.trim();
+
+  const area =
+    document.getElementById(
+      "area"
+    ).value.trim();
+
+  const bhdNo =
+    document.getElementById(
+      "bhdNo"
+    ).value.trim();
+
+  const workDate =
+    document.getElementById(
+      "workDate"
+    ).value;
+
+  const files =
+    [...photosInput.files];
+
+  const status =
+    document.getElementById(
+      "saveStatus"
+    );
+
+  const saveBtn =
+    document.getElementById(
+      "saveBtn"
+    );
+
+
+  if (
+    !shipNo ||
+    !bhdNo ||
+    !files.length
+  ) {
+
+    status.textContent =
+      "호선, BHD 번호, 사진은 필수입니다.";
+
+    return;
+  }
+
+
+  if (files.length > 8) {
+
+    status.textContent =
+      "사진은 최대 8장까지 저장하세요.";
+
+    return;
+  }
+
+
+  const rows =
+    collectRows();
+
+
+  if (!rows.length) {
+
+    status.textContent =
+      "결선 테이블이 비어 있습니다. AI 자동분석 또는 수동 입력 후 저장하세요.";
+
+    return;
+  }
+
+
+  try {
+
+    saveBtn.disabled = true;
+
+    status.textContent =
+      `사진 ${files.length}장 저장 중...`;
 
 
     const safeShip =
-      shipNo.replace(/[^a-zA-Z0-9가-힣_-]/g, "_");
+      sanitizePart(shipNo);
 
     const safeBhd =
-      bhdNo.replace(/[^a-zA-Z0-9가-힣_-]/g, "_");
+      sanitizePart(bhdNo);
+
+    const baseTime =
+      Date.now();
+
+    const paths = [];
 
 
-    const path =
-      `${safeShip}/${safeBhd}/${Date.now()}-${file.name}`;
+    for (
+      let i = 0;
+      i < files.length;
+      i++
+    ) {
+
+      const file =
+        files[i];
+
+      const safeFile =
+        sanitizePart(file.name);
+
+      const path =
+        `${safeShip}/${safeBhd}/` +
+        `${baseTime}-${i + 1}-${safeFile}`;
 
 
-    const upload =
+      const {
+        error
+      } =
       await supabase.storage
-      .from("bhd-images")
-      .upload(path, file);
+        .from("bhd-images")
+        .upload(
+          path,
+          file,
+          {
+            upsert: false
+          }
+        );
 
 
-    if (upload.error) {
+      if (error) {
 
-      status.textContent =
-        "사진 저장 실패: " +
-        upload.error.message;
+        throw new Error(
+          "사진 저장 실패: " +
+          error.message
+        );
+      }
 
-      return;
+
+      paths.push(path);
     }
 
 
-    const insert =
-      await supabase
+    const sectionCount =
+      analysisMeta.section_count ||
+      getMaxSection(rows);
+
+
+    const {
+      error: insertError
+    } =
+    await supabase
       .from("bhd_records")
       .insert({
 
-        ship_no: shipNo,
-        area: area,
-        bhd_no: bhdNo,
-        work_date: workDate || null,
-        original_image: path,
-        line_table: rows
+        ship_no:
+          shipNo,
+
+        area:
+          area,
+
+        bhd_no:
+          bhdNo,
+
+        work_date:
+          workDate || null,
+
+        original_image:
+          paths[0] || null,
+
+        original_images:
+          paths,
+
+        line_table:
+          rows,
+
+        section_count:
+          sectionCount,
+
+        total_positions:
+          rows.length,
+
+        analysis_notes:
+          analysisMeta.notes || "",
+
+        ai_analyzed:
+          analysisMeta.ai_analyzed
 
       });
 
 
-    if (insert.error) {
+    if (insertError) {
 
-      status.textContent =
+      throw new Error(
         "자료 저장 실패: " +
-        insert.error.message;
-
-      return;
+        insertError.message
+      );
     }
 
 
     status.textContent =
-      "BHD 등록이 완료되었습니다.";
-  };
+      `BHD 등록 완료 · 사진 ${paths.length}장 · 결선 ${rows.length}개`;
 
 
-document.getElementById("searchBtn")
-  .onclick = async () => {
+  } catch (error) {
 
-    const shipNo =
-      document.getElementById("searchShip").value.trim();
-
-    const bhdNo =
-      document.getElementById("searchBhd").value.trim();
-
-    const status =
-      document.getElementById("searchStatus");
-
+    console.error(error);
 
     status.textContent =
-      "조회 중...";
+      error.message ||
+      "저장 중 오류가 발생했습니다.";
+
+  } finally {
+
+    saveBtn.disabled = false;
+  }
+};
 
 
-    const { data, error } =
-      await supabase
-      .from("bhd_records")
-      .select("*")
-      .eq("ship_no", shipNo)
-      .eq("bhd_no", bhdNo)
-      .order("created_at", {
-        ascending: false
-      })
-      .limit(1)
-      .maybeSingle();
+async function makeSignedUrls(
+  paths
+) {
+
+  const result = [];
 
 
-    if (error || !data) {
+  for (const path of paths) {
 
-      status.textContent =
-        "등록된 BHD 자료가 없습니다.";
-
-      return;
-    }
-
-
-    const signed =
-      await supabase.storage
+    const {
+      data,
+      error
+    } =
+    await supabase.storage
       .from("bhd-images")
       .createSignedUrl(
-        data.original_image,
+        path,
         3600
       );
 
 
-    if (signed.error) {
+    if (
+      !error &&
+      data?.signedUrl
+    ) {
 
-      status.textContent =
-        "사진 불러오기 실패";
-
-      return;
+      result.push(
+        data.signedUrl
+      );
     }
+  }
 
 
-    document.getElementById("resultImage").src =
-      signed.data.signedUrl;
+  return result;
+}
 
 
-    const tbody =
-      document.getElementById("resultRows");
+function renderResultTables(
+  rows,
+  sectionCount
+) {
 
-    tbody.innerHTML = "";
+  const container =
+    document.getElementById(
+      "resultTables"
+    );
+
+  container.innerHTML = "";
 
 
-    (data.line_table || []).forEach(row => {
+  const normalized =
+    rows.map(row => {
 
-      const tr =
-        document.createElement("tr");
+      const originalSection =
+        Number(row.section || 1);
 
-      tr.innerHTML = `
-        <td>${row.position || ""}</td>
-        <td>${row.right || ""}</td>
-        <td>${row.left || ""}</td>
-      `;
+      return {
+        ...row,
 
-      tbody.appendChild(tr);
+        originalSection,
 
+        displaySection:
+          sectionCount -
+          originalSection +
+          1
+      };
     });
 
 
-    document.getElementById("resultBox")
-      .classList.remove("hidden");
+  normalized.sort((a, b) => {
 
+    const sectionDiff =
+      a.displaySection -
+      b.displaySection;
+
+    if (sectionDiff !== 0) {
+      return sectionDiff;
+    }
+
+    return (
+      Number(a.position || 0) -
+      Number(b.position || 0)
+    );
+  });
+
+
+  const sectionNumbers =
+    [
+      ...new Set(
+        normalized.map(
+          row =>
+            row.displaySection
+        )
+      )
+    ];
+
+
+  sectionNumbers.forEach(
+    displaySection => {
+
+      const sectionRows =
+        normalized.filter(
+          row =>
+            row.displaySection ===
+            displaySection
+        );
+
+
+      const originalSection =
+        sectionRows[0]
+          ?.originalSection;
+
+
+      const title =
+        document.createElement("div");
+
+      title.className =
+        "section-title";
+
+      title.textContent =
+        `후작업 구역 ${displaySection}` +
+        ` · 선작업 구역 ${originalSection}`;
+
+
+      const wrap =
+        document.createElement("div");
+
+      wrap.className =
+        "table-wrap";
+
+
+      const table =
+        document.createElement("table");
+
+
+      table.innerHTML = `
+        <thead>
+          <tr>
+            <th>위치</th>
+            <th>좌측</th>
+            <th>우측</th>
+          </tr>
+        </thead>
+        <tbody></tbody>
+      `;
+
+
+      const tbody =
+        table.querySelector("tbody");
+
+
+      sectionRows.forEach(row => {
+
+        const tr =
+          document.createElement("tr");
+
+        const positionTd =
+          document.createElement("td");
+
+        const leftTd =
+          document.createElement("td");
+
+        const rightTd =
+          document.createElement("td");
+
+
+        positionTd.textContent =
+          row.position ?? "";
+
+        /* 반대편이므로 좌우 교환 */
+        leftTd.textContent =
+          row.right || "";
+
+        rightTd.textContent =
+          row.left || "";
+
+
+        tr.appendChild(positionTd);
+        tr.appendChild(leftTd);
+        tr.appendChild(rightTd);
+
+        tbody.appendChild(tr);
+      });
+
+
+      wrap.appendChild(table);
+
+      container.appendChild(title);
+      container.appendChild(wrap);
+    }
+  );
+}
+
+
+document.getElementById(
+  "searchBtn"
+).onclick = async () => {
+
+  const shipNo =
+    document.getElementById(
+      "searchShip"
+    ).value.trim();
+
+  const bhdNo =
+    document.getElementById(
+      "searchBhd"
+    ).value.trim();
+
+  const status =
+    document.getElementById(
+      "searchStatus"
+    );
+
+  const resultBox =
+    document.getElementById(
+      "resultBox"
+    );
+
+
+  resultBox.classList.add(
+    "hidden"
+  );
+
+
+  if (!shipNo || !bhdNo) {
 
     status.textContent =
-      `${data.ship_no} / ${data.bhd_no}`;
+      "호선과 BHD 번호를 입력하세요.";
 
-  };
+    return;
+  }
+
+
+  status.textContent =
+    "조회 중...";
+
+
+  const {
+    data,
+    error
+  } =
+  await supabase
+    .from("bhd_records")
+    .select("*")
+    .eq(
+      "ship_no",
+      shipNo
+    )
+    .eq(
+      "bhd_no",
+      bhdNo
+    )
+    .order(
+      "created_at",
+      {
+        ascending: false
+      }
+    )
+    .limit(1)
+    .maybeSingle();
+
+
+  if (
+    error ||
+    !data
+  ) {
+
+    status.textContent =
+      "등록된 BHD 자료가 없습니다.";
+
+    return;
+  }
+
+
+  let paths = [];
+
+
+  if (
+    Array.isArray(
+      data.original_images
+    ) &&
+    data.original_images.length
+  ) {
+
+    paths =
+      data.original_images;
+
+  } else if (
+    data.original_image
+  ) {
+
+    paths =
+      [data.original_image];
+  }
+
+
+  const urls =
+    await makeSignedUrls(paths);
+
+
+  const imageContainer =
+    document.getElementById(
+      "resultImages"
+    );
+
+  imageContainer.innerHTML = "";
+
+
+  urls.forEach(url => {
+
+    const img =
+      document.createElement("img");
+
+    img.src = url;
+
+    img.classList.add(
+      "mirror"
+    );
+
+    imageContainer.appendChild(img);
+  });
+
+
+  const rows =
+    Array.isArray(
+      data.line_table
+    )
+      ? data.line_table
+      : [];
+
+
+  const sectionCount =
+    Number(
+      data.section_count ||
+      getMaxSection(rows)
+    );
+
+
+  renderResultTables(
+    rows,
+    sectionCount
+  );
+
+
+  const info =
+    document.getElementById(
+      "resultInfo"
+    );
+
+
+  info.textContent =
+    `${data.ship_no} / ${data.bhd_no}` +
+    `${data.area ? " / " + data.area : ""}` +
+    ` · 구역 ${sectionCount}개` +
+    ` · 결선 ${rows.length}개` +
+    `${
+      data.ai_analyzed
+        ? " · AI 분석"
+        : ""
+    }`;
+
+
+  resultBox.classList.remove(
+    "hidden"
+  );
+
+
+  status.textContent =
+    "조회 완료";
+};
 
 
 const {
@@ -645,9 +1731,22 @@ const {
 await supabase.auth.getSession();
 
 
-if (sessionData.session) {
+if (
+  sessionData.session
+) {
+
   showApp();
 }
+
+
+const today =
+  new Date()
+    .toISOString()
+    .slice(0, 10);
+
+document.getElementById(
+  "workDate"
+).value = today;
 
 </script>
 
