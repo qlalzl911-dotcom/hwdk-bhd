@@ -2427,13 +2427,30 @@ setRows([], 1);
 
 const {
   data: sessionData
-} =
-await supabase.auth
-  .getSession();
-
+} = await supabase.auth.getSession();
 
 if (sessionData.session) {
+
   showApp();
+
+} else {
+
+  const {
+    data,
+    error
+  } = await supabase.auth.signInAnonymously();
+
+  if (error) {
+
+    document.getElementById(
+      "loginStatus"
+    ).textContent =
+      "자동 접속 실패: " + error.message;
+
+  } else {
+
+    showApp();
+  }
 }
 
 </script>
