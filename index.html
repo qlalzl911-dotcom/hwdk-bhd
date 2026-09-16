@@ -302,6 +302,22 @@ button:disabled {
   transform: scaleX(-1);
 }
 
+.image-tools {
+  display: flex;
+  gap: 6px;
+  margin-top: 6px;
+}
+
+.image-tools button {
+  flex: 1;
+  padding: 8px 6px;
+  font-size: 13px;
+}
+
+.image-preview-clickable {
+  cursor: zoom-in;
+}
+
 .table-wrap {
   width: 100%;
   overflow-x: auto;
@@ -360,6 +376,23 @@ th {
   background: #16324f;
   border-radius: 6px;
   font-weight: 700;
+}
+
+.export-actions {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px;
+  margin-top: 12px;
+}
+
+.export-image-btn {
+  background: #265f91;
+  color: white;
+}
+
+.print-btn {
+  background: #5b6470;
+  color: white;
 }
 
 .record-card {
@@ -440,6 +473,140 @@ th {
   padding: 25px;
   color: #777;
 }
+
+
+/* 사진 확대창 */
+
+.image-modal {
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+  background: rgba(0,0,0,.92);
+  display: flex;
+  flex-direction: column;
+}
+
+.image-modal.hidden {
+  display: none !important;
+}
+
+.image-modal-top {
+  flex: 0 0 auto;
+  display: flex;
+  justify-content: flex-end;
+  gap: 7px;
+  padding: 10px;
+}
+
+.image-modal-top button {
+  background: rgba(255,255,255,.92);
+  color: #222;
+  padding: 9px 12px;
+}
+
+.image-modal-viewer {
+  flex: 1;
+  min-height: 0;
+  overflow: auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 15px;
+}
+
+.image-modal-viewer img {
+  max-width: 95vw;
+  max-height: 82vh;
+  object-fit: contain;
+  transform-origin: center center;
+  transition: transform .15s ease;
+}
+
+.image-modal-bottom {
+  flex: 0 0 auto;
+  padding: 10px 10px 18px;
+  display: flex;
+  gap: 7px;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.image-modal-bottom button {
+  min-width: 85px;
+}
+
+.modal-download {
+  background: #167148;
+  color: white;
+}
+
+.modal-close {
+  background: #d64545 !important;
+  color: white !important;
+}
+
+
+/* PNG 저장용 숨김 영역 */
+
+#exportStage {
+  position: fixed;
+  left: -10000px;
+  top: 0;
+  background: white;
+  padding: 30px;
+  color: #111;
+}
+
+.export-sheet {
+  background: white;
+  padding: 28px;
+  width: max-content;
+  min-width: 1000px;
+}
+
+.export-sheet-title {
+  text-align: center;
+  font-size: 28px;
+  font-weight: 800;
+  margin-bottom: 18px;
+}
+
+.export-sheet-info {
+  border: 1px solid #333;
+  padding: 12px;
+  margin-bottom: 16px;
+  font-size: 18px;
+  line-height: 1.6;
+}
+
+.export-sheet table {
+  min-width: 900px;
+  font-size: 18px;
+}
+
+.export-sheet th,
+.export-sheet td {
+  padding: 10px;
+  border: 1px solid #333;
+}
+
+.export-sheet th {
+  background: #e8eef3;
+}
+
+@media (max-width: 600px) {
+  .header-title {
+    font-size: 17px;
+  }
+
+  .mode-badge {
+    display: none;
+  }
+
+  .export-actions {
+    grid-template-columns: 1fr;
+  }
+}
 </style>
 </head>
 
@@ -447,7 +614,8 @@ th {
 
 
 <!-- 처음 접속 화면 -->
-<div id="entryScreen" class="entry-wrap">
+<div id="entryScreen"
+     class="entry-wrap">
 
   <div class="entry-card">
 
@@ -477,7 +645,6 @@ th {
     </div>
 
 
-    <!-- 관리자 로그인 -->
     <div id="adminLoginBox"
          class="admin-login-box hidden">
 
@@ -579,7 +746,7 @@ th {
   </div>
 
 
-  <!-- BHD 등록 -->
+  <!-- 등록 -->
   <section id="registerSection">
 
     <div class="card">
@@ -609,41 +776,31 @@ th {
       </h2>
 
 
-      <label>
-        호선
-      </label>
+      <label>호선</label>
 
       <input id="shipNo"
              placeholder="예: 2751">
 
 
-      <label>
-        구역 / 위치
-      </label>
+      <label>구역 / 위치</label>
 
       <input id="area"
              placeholder="예: ER / 3DECK">
 
 
-      <label>
-        이름
-      </label>
+      <label>이름</label>
 
       <input id="bhdNo"
              placeholder="홍길동">
 
 
-      <label>
-        작업일
-      </label>
+      <label>작업일</label>
 
       <input id="workDate"
              type="date">
 
 
-      <label>
-        선작업 사진
-      </label>
+      <label>선작업 사진</label>
 
       <input id="photos"
              type="file"
@@ -681,6 +838,7 @@ th {
       <h3>
         결선 배치표
       </h3>
+
 
       <div class="hint">
         실제 사진 배열 기준으로
@@ -724,7 +882,7 @@ th {
   </section>
 
 
-  <!-- BHD 조회 -->
+  <!-- 조회 -->
   <section id="searchSection"
            class="hidden">
 
@@ -741,25 +899,19 @@ th {
       </div>
 
 
-      <label>
-        호선
-      </label>
+      <label>호선</label>
 
       <input id="searchShip"
              placeholder="예: 2751">
 
 
-      <label>
-        위치
-      </label>
+      <label>위치</label>
 
       <input id="searchArea"
              placeholder="예: ER / 3DECK">
 
 
-      <label>
-        이름
-      </label>
+      <label>이름</label>
 
       <input id="searchBhd"
              placeholder="예: 홍길동">
@@ -800,6 +952,26 @@ th {
 
         <div id="resultMatrix"
              class="table-wrap">
+        </div>
+
+
+        <div class="export-actions">
+
+          <button id="exportTableImageBtn"
+                  class="export-image-btn">
+            표 이미지 저장
+          </button>
+
+          <button id="printTableBtn"
+                  class="print-btn">
+            인쇄 / PDF 저장
+          </button>
+
+        </div>
+
+
+        <div id="exportStatus"
+             class="status">
         </div>
 
 
@@ -860,6 +1032,64 @@ th {
 </div>
 
 
+<!-- 사진 확대 -->
+<div id="imageModal"
+     class="image-modal hidden">
+
+  <div class="image-modal-top">
+
+    <button id="modalCloseBtn"
+            class="modal-close">
+      닫기
+    </button>
+
+  </div>
+
+
+  <div id="imageModalViewer"
+       class="image-modal-viewer">
+
+    <img id="modalImage"
+         alt="확대 사진">
+
+  </div>
+
+
+  <div class="image-modal-bottom">
+
+    <button id="zoomOutBtn"
+            class="secondary">
+      축소 -
+    </button>
+
+    <button id="zoomResetBtn"
+            class="secondary">
+      원래크기
+    </button>
+
+    <button id="zoomInBtn"
+            class="secondary">
+      확대 +
+    </button>
+
+    <button id="modalDownloadBtn"
+            class="modal-download">
+      다운로드
+    </button>
+
+  </div>
+
+</div>
+
+
+<!-- PNG 저장용 -->
+<div id="exportStage">
+</div>
+
+
+<script src="https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js"></script>
+
+
 <script type="module">
 
 import {
@@ -882,18 +1112,35 @@ const supabase =
 
 
 let isAdmin = false;
+
 let editingId = null;
+
 let currentViewedRecord = null;
+
 let existingPaths = [];
+
 let existingPreviewUrls = [];
+
 let rowMap = new Map();
+
 let sectionCount = 1;
+
 let maxPosition = 1;
 
 let analysisMeta = {
   notes: "",
   ai_analyzed: false
 };
+
+
+let modalImageUrl = "";
+
+let modalDownloadName =
+  "BHD-photo.jpg";
+
+let modalZoom = 1;
+
+let modalMirror = false;
 
 
 const entryScreen =
@@ -919,9 +1166,11 @@ const photosInput =
 
 function localToday() {
 
-  const d = new Date();
+  const d =
+    new Date();
 
-  const y = d.getFullYear();
+  const y =
+    d.getFullYear();
 
   const m =
     String(
@@ -952,7 +1201,9 @@ function formatDateTime(
   }
 
   const d =
-    new Date(value);
+    new Date(
+      value
+    );
 
   return d.toLocaleString(
     "ko-KR",
@@ -996,6 +1247,23 @@ function escapeHtml(
   );
 }
 
+
+function safeFilename(
+  value
+) {
+
+  return String(
+    value || "BHD"
+  ).replace(
+    /[\\/:*?"<>|]/g,
+    "_"
+  );
+}
+
+
+/* =========================================
+   처음화면 / 모드
+========================================= */
 
 function showApp(
   adminMode = false
@@ -1086,10 +1354,6 @@ function showEntry() {
 }
 
 
-/* =========================================
-   일반 작업자 입장
-========================================= */
-
 document.getElementById(
   "workerEntryBtn"
 ).onclick =
@@ -1115,10 +1379,6 @@ async () => {
 
   try {
 
-    /*
-     * 기존 관리자 세션이 남아 있더라도
-     * 반드시 로그아웃 후 익명 작업자로 다시 접속
-     */
     await supabase.auth
       .signOut();
 
@@ -1149,6 +1409,7 @@ async () => {
 
     await resetRegister();
 
+
     setTab(
       "register"
     );
@@ -1176,10 +1437,6 @@ async () => {
   }
 };
 
-
-/* =========================================
-   관리자 로그인 화면
-========================================= */
 
 document.getElementById(
   "adminEntryBtn"
@@ -1326,9 +1583,6 @@ async () => {
 
   try {
 
-    /*
-     * 익명 세션 또는 기존 세션 제거
-     */
     await supabase.auth
       .signOut();
 
@@ -1384,10 +1638,6 @@ async () => {
     );
 
 
-    /*
-     * 관리자는 삭제를 주로 사용하므로
-     * 목록 화면으로 바로 이동
-     */
     setTab(
       "list"
     );
@@ -1430,10 +1680,6 @@ document.getElementById(
 );
 
 
-/* =========================================
-   처음 화면으로
-========================================= */
-
 document.getElementById(
   "exitBtn"
 ).onclick =
@@ -1445,7 +1691,6 @@ async () => {
 
   isAdmin =
     false;
-
 
   currentViewedRecord =
     null;
@@ -1586,7 +1831,7 @@ document.getElementById(
 
 
 /* =========================================
-   결선 테이블
+   결선표
 ========================================= */
 
 function rowKey(
@@ -2066,7 +2311,7 @@ function renderEditableMatrix() {
 
 
 /* =========================================
-   사진
+   사진 URL / 확대 / 다운로드
 ========================================= */
 
 async function signedUrls(
@@ -2110,6 +2355,338 @@ async function signedUrls(
   return urls;
 }
 
+
+function openImageModal(
+  url,
+  filename = "BHD-photo.jpg",
+  mirror = false
+) {
+
+  modalImageUrl =
+    url;
+
+  modalDownloadName =
+    filename;
+
+  modalZoom =
+    1;
+
+  modalMirror =
+    mirror;
+
+
+  const modal =
+    document.getElementById(
+      "imageModal"
+    );
+
+
+  const img =
+    document.getElementById(
+      "modalImage"
+    );
+
+
+  img.src =
+    url;
+
+
+  applyModalTransform();
+
+
+  modal.classList.remove(
+    "hidden"
+  );
+
+
+  document.body.style.overflow =
+    "hidden";
+}
+
+
+function closeImageModal() {
+
+  document.getElementById(
+    "imageModal"
+  ).classList.add(
+    "hidden"
+  );
+
+
+  document.getElementById(
+    "modalImage"
+  ).src =
+    "";
+
+
+  document.body.style.overflow =
+    "";
+
+
+  modalImageUrl =
+    "";
+
+  modalZoom =
+    1;
+
+  modalMirror =
+    false;
+}
+
+
+function applyModalTransform() {
+
+  const img =
+    document.getElementById(
+      "modalImage"
+    );
+
+
+  const mirrorValue =
+    modalMirror
+      ? -1
+      : 1;
+
+
+  img.style.transform =
+    `scale(${mirrorValue * modalZoom}, ${modalZoom})`;
+}
+
+
+document.getElementById(
+  "modalCloseBtn"
+).onclick =
+  closeImageModal;
+
+
+document.getElementById(
+  "zoomInBtn"
+).onclick =
+() => {
+
+  modalZoom =
+    Math.min(
+      5,
+      modalZoom + 0.25
+    );
+
+  applyModalTransform();
+};
+
+
+document.getElementById(
+  "zoomOutBtn"
+).onclick =
+() => {
+
+  modalZoom =
+    Math.max(
+      0.5,
+      modalZoom - 0.25
+    );
+
+  applyModalTransform();
+};
+
+
+document.getElementById(
+  "zoomResetBtn"
+).onclick =
+() => {
+
+  modalZoom =
+    1;
+
+  applyModalTransform();
+};
+
+
+async function downloadImage(
+  url,
+  filename
+) {
+
+  try {
+
+    const response =
+      await fetch(
+        url
+      );
+
+
+    if (
+      !response.ok
+    ) {
+
+      throw new Error();
+    }
+
+
+    const blob =
+      await response.blob();
+
+
+    const blobUrl =
+      URL.createObjectURL(
+        blob
+      );
+
+
+    const a =
+      document.createElement(
+        "a"
+      );
+
+
+    a.href =
+      blobUrl;
+
+    a.download =
+      safeFilename(
+        filename
+      );
+
+
+    document.body.appendChild(
+      a
+    );
+
+
+    a.click();
+
+    a.remove();
+
+
+    setTimeout(
+      () =>
+        URL.revokeObjectURL(
+          blobUrl
+        ),
+      1000
+    );
+
+
+  } catch (
+    error
+  ) {
+
+    window.open(
+      url,
+      "_blank"
+    );
+  }
+}
+
+
+document.getElementById(
+  "modalDownloadBtn"
+).onclick =
+() => {
+
+  if (
+    modalImageUrl
+  ) {
+
+    downloadImage(
+      modalImageUrl,
+      modalDownloadName
+    );
+  }
+};
+
+
+function attachImageTools(
+  item,
+  img,
+  url,
+  filename,
+  mirror = false
+) {
+
+  img.classList.add(
+    "image-preview-clickable"
+  );
+
+
+  img.onclick =
+    () =>
+      openImageModal(
+        url,
+        filename,
+        mirror
+      );
+
+
+  const tools =
+    document.createElement(
+      "div"
+    );
+
+
+  tools.className =
+    "image-tools";
+
+
+  const zoomBtn =
+    document.createElement(
+      "button"
+    );
+
+
+  zoomBtn.className =
+    "secondary";
+
+  zoomBtn.textContent =
+    "확대";
+
+
+  zoomBtn.onclick =
+    () =>
+      openImageModal(
+        url,
+        filename,
+        mirror
+      );
+
+
+  const downloadBtn =
+    document.createElement(
+      "button"
+    );
+
+
+  downloadBtn.className =
+    "secondary";
+
+  downloadBtn.textContent =
+    "다운로드";
+
+
+  downloadBtn.onclick =
+    () =>
+      downloadImage(
+        url,
+        filename
+      );
+
+
+  tools.appendChild(
+    zoomBtn
+  );
+
+  tools.appendChild(
+    downloadBtn
+  );
+
+  item.appendChild(
+    tools
+  );
+}
+
+
+/* =========================================
+   등록 사진 미리보기
+========================================= */
 
 function renderPreviews() {
 
@@ -2166,6 +2743,16 @@ function renderPreviews() {
         label
       );
 
+
+      attachImageTools(
+        item,
+        img,
+        url,
+        `BHD-등록사진-${i + 1}.jpg`,
+        false
+      );
+
+
       grid.appendChild(
         item
       );
@@ -2177,6 +2764,12 @@ function renderPreviews() {
     ...photosInput.files
   ].forEach(
     (file, i) => {
+
+      const url =
+        URL.createObjectURL(
+          file
+        );
+
 
       const item =
         document.createElement(
@@ -2195,9 +2788,7 @@ function renderPreviews() {
 
 
       img.src =
-        URL.createObjectURL(
-          file
-        );
+        url;
 
 
       const label =
@@ -2221,82 +2812,21 @@ function renderPreviews() {
         label
       );
 
+
+      attachImageTools(
+        item,
+        img,
+        url,
+        file.name ||
+          `추가사진-${i + 1}.jpg`,
+        false
+      );
+
+
       grid.appendChild(
         item
       );
     }
-  );
-}
-
-
-async function compressForAI(
-  file,
-  maxDimension = 1800,
-  quality = 0.82
-) {
-
-  const bitmap =
-    await createImageBitmap(
-      file
-    );
-
-
-  const ratio =
-    Math.min(
-      1,
-      maxDimension /
-      Math.max(
-        bitmap.width,
-        bitmap.height
-      )
-    );
-
-
-  const width =
-    Math.round(
-      bitmap.width *
-      ratio
-    );
-
-  const height =
-    Math.round(
-      bitmap.height *
-      ratio
-    );
-
-
-  const canvas =
-    document.createElement(
-      "canvas"
-    );
-
-
-  canvas.width =
-    width;
-
-  canvas.height =
-    height;
-
-
-  canvas
-    .getContext(
-      "2d"
-    )
-    .drawImage(
-      bitmap,
-      0,
-      0,
-      width,
-      height
-    );
-
-
-  bitmap.close();
-
-
-  return canvas.toDataURL(
-    "image/jpeg",
-    quality
   );
 }
 
@@ -2497,12 +3027,7 @@ async function loadForEdit(
   ).textContent =
     `${record.ship_no || ""}` +
     ` / ${record.bhd_no || ""}` +
-    `${
-      record.area
-        ? " / " +
-          record.area
-        : ""
-    }`;
+    ` / ${record.area || ""}`;
 
 
   document.getElementById(
@@ -2591,6 +3116,78 @@ document.getElementById(
 /* =========================================
    AI 분석
 ========================================= */
+
+async function compressForAI(
+  file,
+  maxDimension = 1800,
+  quality = 0.82
+) {
+
+  const bitmap =
+    await createImageBitmap(
+      file
+    );
+
+
+  const ratio =
+    Math.min(
+      1,
+      maxDimension /
+      Math.max(
+        bitmap.width,
+        bitmap.height
+      )
+    );
+
+
+  const width =
+    Math.round(
+      bitmap.width *
+      ratio
+    );
+
+  const height =
+    Math.round(
+      bitmap.height *
+      ratio
+    );
+
+
+  const canvas =
+    document.createElement(
+      "canvas"
+    );
+
+
+  canvas.width =
+    width;
+
+  canvas.height =
+    height;
+
+
+  canvas
+    .getContext(
+      "2d"
+    )
+    .drawImage(
+      bitmap,
+      0,
+      0,
+      width,
+      height
+    );
+
+
+  bitmap.close();
+
+
+  return canvas.toDataURL(
+    "image/jpeg",
+    quality
+  );
+}
+
 
 document.getElementById(
   "analyzeBtn"
@@ -2909,10 +3506,6 @@ async () => {
     ).value;
 
 
-  /*
-   * 호선 + 구역/위치 + 이름
-   * 모두 필수
-   */
   if (
     !shipNo ||
     !area ||
@@ -3121,23 +3714,13 @@ async () => {
 
 
 /* =========================================
-   후작업 반전 화면
+   후작업 반전표 HTML
 ========================================= */
 
-function renderMirroredMatrix(
+function buildMirroredTableHTML(
   rows,
   sections
 ) {
-
-  const wrap =
-    document.getElementById(
-      "resultMatrix"
-    );
-
-
-  wrap.innerHTML =
-    "";
-
 
   const map =
     new Map();
@@ -3182,17 +3765,12 @@ function renderMirroredMatrix(
   );
 
 
-  const table =
-    document.createElement(
-      "table"
-    );
-
-
   let html =
     `
-      <thead>
-        <tr>
-          <th rowspan="2">위치</th>
+      <table>
+        <thead>
+          <tr>
+            <th rowspan="2">위치</th>
     `;
 
 
@@ -3209,8 +3787,8 @@ function renderMirroredMatrix(
 
   html +=
     `
-        </tr>
-        <tr>
+          </tr>
+          <tr>
     `;
 
 
@@ -3227,9 +3805,9 @@ function renderMirroredMatrix(
 
   html +=
     `
-        </tr>
-      </thead>
-      <tbody>
+          </tr>
+        </thead>
+        <tbody>
     `;
 
 
@@ -3240,7 +3818,8 @@ function renderMirroredMatrix(
   ) {
 
     html +=
-      `<tr>
+      `
+      <tr>
         <td class="position-cell">
           ${p}
         </td>
@@ -3280,18 +3859,38 @@ function renderMirroredMatrix(
 
 
   html +=
-    `</tbody>`;
+    `
+        </tbody>
+      </table>
+    `;
 
 
-  table.innerHTML =
-    html;
-
-
-  wrap.appendChild(
-    table
-  );
+  return html;
 }
 
+
+function renderMirroredMatrix(
+  rows,
+  sections
+) {
+
+  const wrap =
+    document.getElementById(
+      "resultMatrix"
+    );
+
+
+  wrap.innerHTML =
+    buildMirroredTableHTML(
+      rows,
+      sections
+    );
+}
+
+
+/* =========================================
+   후작업 보기
+========================================= */
 
 async function showRecord(
   record
@@ -3299,6 +3898,12 @@ async function showRecord(
 
   currentViewedRecord =
     record;
+
+
+  document.getElementById(
+    "exportStatus"
+  ).textContent =
+    "";
 
 
   const paths =
@@ -3348,6 +3953,7 @@ async function showRecord(
           "img"
         );
 
+
       img.src =
         url;
 
@@ -3371,6 +3977,15 @@ async function showRecord(
 
       item.appendChild(
         label
+      );
+
+
+      attachImageTools(
+        item,
+        img,
+        url,
+        `${record.ship_no || "BHD"}-${record.bhd_no || "사진"}-${i + 1}.jpg`,
+        true
       );
 
 
@@ -3403,8 +4018,8 @@ async function showRecord(
     "resultInfo"
   ).textContent =
     `${record.ship_no || ""}` +
-    ` / ${record.bhd_no || ""}` +
     ` / ${record.area || ""}` +
+    ` / ${record.bhd_no || ""}` +
     ` · ${
       record.is_completed
         ? "완료"
@@ -3447,7 +4062,359 @@ async function showRecord(
 
 
 /* =========================================
-   작업 완료
+   후작업 표 이미지 저장
+========================================= */
+
+function buildExportSheet(
+  record
+) {
+
+  const rows =
+    Array.isArray(
+      record.line_table
+    )
+      ? record.line_table
+      : [];
+
+
+  const sections =
+    Math.max(
+      1,
+      Number(
+        record.section_count ||
+        1
+      )
+    );
+
+
+  return `
+    <div class="export-sheet">
+
+      <div class="export-sheet-title">
+        BHD 후작업 결선표
+      </div>
+
+      <div class="export-sheet-info">
+
+        <strong>호선:</strong>
+        ${escapeHtml(record.ship_no || "-")}
+        &nbsp;&nbsp;
+
+        <strong>구역 / 위치:</strong>
+        ${escapeHtml(record.area || "-")}
+        &nbsp;&nbsp;
+
+        <strong>이름:</strong>
+        ${escapeHtml(record.bhd_no || "-")}
+
+        <br>
+
+        <strong>작업일:</strong>
+        ${escapeHtml(record.work_date || "-")}
+        &nbsp;&nbsp;
+
+        <strong>상태:</strong>
+        ${
+          record.is_completed
+            ? "완료"
+            : "미완료"
+        }
+
+        ${
+          record.completed_at
+            ? `&nbsp;&nbsp;<strong>후작업 완료:</strong> ${escapeHtml(formatDateTime(record.completed_at))}`
+            : ""
+        }
+
+      </div>
+
+      ${buildMirroredTableHTML(
+        rows,
+        sections
+      )}
+
+    </div>
+  `;
+}
+
+
+document.getElementById(
+  "exportTableImageBtn"
+).onclick =
+async () => {
+
+  const status =
+    document.getElementById(
+      "exportStatus"
+    );
+
+
+  if (
+    !currentViewedRecord
+  ) {
+
+    status.textContent =
+      "먼저 후작업 기록을 선택하세요.";
+
+    return;
+  }
+
+
+  if (
+    typeof window.html2canvas !==
+    "function"
+  ) {
+
+    status.textContent =
+      "이미지 저장 기능을 불러오지 못했습니다.";
+
+    return;
+  }
+
+
+  try {
+
+    status.textContent =
+      "표 이미지 만드는 중...";
+
+
+    const stage =
+      document.getElementById(
+        "exportStage"
+      );
+
+
+    stage.innerHTML =
+      buildExportSheet(
+        currentViewedRecord
+      );
+
+
+    const target =
+      stage.firstElementChild;
+
+
+    const canvas =
+      await window.html2canvas(
+        target,
+        {
+          backgroundColor:
+            "#ffffff",
+
+          scale:
+            2,
+
+          useCORS:
+            true
+        }
+      );
+
+
+    const link =
+      document.createElement(
+        "a"
+      );
+
+
+    link.download =
+      safeFilename(
+        `${currentViewedRecord.ship_no || "BHD"}_` +
+        `${currentViewedRecord.area || "위치"}_` +
+        `${currentViewedRecord.bhd_no || "결선표"}_후작업표.png`
+      );
+
+
+    link.href =
+      canvas.toDataURL(
+        "image/png"
+      );
+
+
+    document.body.appendChild(
+      link
+    );
+
+
+    link.click();
+
+    link.remove();
+
+
+    stage.innerHTML =
+      "";
+
+
+    status.textContent =
+      "표 이미지 저장 완료";
+
+
+  } catch (
+    error
+  ) {
+
+    status.textContent =
+      "이미지 저장 실패: " +
+      (
+        error?.message ||
+        "오류"
+      );
+  }
+};
+
+
+/* =========================================
+   인쇄 / PDF 저장
+========================================= */
+
+document.getElementById(
+  "printTableBtn"
+).onclick =
+() => {
+
+  const status =
+    document.getElementById(
+      "exportStatus"
+    );
+
+
+  if (
+    !currentViewedRecord
+  ) {
+
+    status.textContent =
+      "먼저 후작업 기록을 선택하세요.";
+
+    return;
+  }
+
+
+  const content =
+    buildExportSheet(
+      currentViewedRecord
+    );
+
+
+  const printWindow =
+    window.open(
+      "",
+      "_blank"
+    );
+
+
+  if (
+    !printWindow
+  ) {
+
+    status.textContent =
+      "팝업이 차단되었습니다. 브라우저에서 팝업을 허용해주세요.";
+
+    return;
+  }
+
+
+  printWindow.document.write(`
+    <!DOCTYPE html>
+    <html lang="ko">
+    <head>
+
+      <meta charset="UTF-8">
+
+      <title>
+        BHD 후작업 결선표
+      </title>
+
+      <style>
+
+        @page {
+          size: A4 landscape;
+          margin: 10mm;
+        }
+
+        body {
+          font-family:
+            Arial,
+            "Noto Sans KR",
+            sans-serif;
+          color: #111;
+          margin: 0;
+          padding: 0;
+        }
+
+        .export-sheet {
+          width: 100%;
+        }
+
+        .export-sheet-title {
+          text-align: center;
+          font-size: 24px;
+          font-weight: 800;
+          margin-bottom: 14px;
+        }
+
+        .export-sheet-info {
+          border: 1px solid #333;
+          padding: 10px;
+          margin-bottom: 14px;
+          line-height: 1.6;
+          font-size: 14px;
+        }
+
+        table {
+          width: 100%;
+          border-collapse: collapse;
+          table-layout: fixed;
+        }
+
+        th,
+        td {
+          border: 1px solid #333;
+          padding: 7px 4px;
+          text-align: center;
+          font-size: 13px;
+          word-break: break-all;
+        }
+
+        th {
+          background: #e8eef3;
+        }
+
+        .position-cell {
+          font-weight: 700;
+          background: #f3f5f7;
+          width: 45px;
+        }
+
+      </style>
+
+    </head>
+
+    <body>
+
+      ${content}
+
+      <script>
+        window.onload = function() {
+          setTimeout(function() {
+            window.print();
+          }, 300);
+        };
+      <\/script>
+
+    </body>
+    </html>
+  `);
+
+
+  printWindow.document.close();
+
+
+  status.textContent =
+    "인쇄창에서 프린터 출력 또는 PDF 저장을 선택하세요.";
+};
+
+
+/* =========================================
+   작업완료
 ========================================= */
 
 function updateCompleteButton(
@@ -3578,6 +4545,15 @@ async () => {
   updateCompleteButton(
     currentViewedRecord
   );
+
+
+  document.getElementById(
+    "resultInfo"
+  ).textContent =
+    `${currentViewedRecord.ship_no || ""}` +
+    ` / ${currentViewedRecord.area || ""}` +
+    ` / ${currentViewedRecord.bhd_no || ""}` +
+    ` · 완료`;
 };
 
 
@@ -3632,6 +4608,50 @@ async function deleteRecord(
 
   try {
 
+    const paths =
+      Array.isArray(
+        record.original_images
+      ) &&
+      record.original_images.length
+        ? record.original_images
+        : record.original_image
+          ? [
+              record.original_image
+            ]
+          : [];
+
+
+    /*
+     * 사진부터 삭제
+     */
+    if (
+      paths.length
+    ) {
+
+      const {
+        error: storageError
+      } =
+      await supabase.storage
+        .from(
+          "bhd-images"
+        )
+        .remove(
+          paths
+        );
+
+
+      if (
+        storageError
+      ) {
+
+        throw storageError;
+      }
+    }
+
+
+    /*
+     * DB 삭제
+     */
     const {
       data: deletedRows,
       error: deleteError
@@ -3669,47 +4689,6 @@ async function deleteRecord(
     }
 
 
-    const paths =
-      Array.isArray(
-        record.original_images
-      ) &&
-      record.original_images.length
-        ? record.original_images
-        : record.original_image
-          ? [
-              record.original_image
-            ]
-          : [];
-
-
-    if (
-      paths.length
-    ) {
-
-      const {
-        error: storageError
-      } =
-      await supabase.storage
-        .from(
-          "bhd-images"
-        )
-        .remove(
-          paths
-        );
-
-
-      if (
-        storageError
-      ) {
-
-        console.warn(
-          "사진 삭제 오류:",
-          storageError
-        );
-      }
-    }
-
-
     alert(
       "삭제되었습니다."
     );
@@ -3734,7 +4713,7 @@ async function deleteRecord(
 
 
 /* =========================================
-   목록 카드
+   카드
 ========================================= */
 
 function recordCard(
@@ -3775,6 +4754,7 @@ function recordCard(
 
       <div class="record-title">
         ${escapeHtml(record.ship_no || "")}
+        / ${escapeHtml(record.area || "")}
         / ${escapeHtml(record.bhd_no || "")}
       </div>
 
@@ -3785,10 +4765,6 @@ function recordCard(
     </div>
 
     <div class="record-meta">
-
-      위치:
-      ${escapeHtml(record.area || "-")}
-      <br>
 
       작업일:
       ${escapeHtml(record.work_date || "-")}
@@ -3868,9 +4844,6 @@ function recordCard(
   );
 
 
-  /*
-   * 관리자 + 목록 화면에서만 삭제
-   */
   if (
     allowDelete &&
     isAdmin
@@ -4124,7 +5097,7 @@ document.getElementById(
 
 
 /* =========================================
-   전체 목록
+   목록
 ========================================= */
 
 async function loadRecordList() {
@@ -4244,7 +5217,7 @@ document.getElementById(
 
 
 /* =========================================
-   초기 상태
+   초기
 ========================================= */
 
 document.getElementById(
@@ -4259,10 +5232,6 @@ setRows(
 );
 
 
-/*
- * 페이지를 열자마자 작업 권한을 사용하지 않음.
- * 반드시 '등록하기' 또는 '관리자 모드'를 선택해야 함.
- */
 showEntry();
 
 </script>
