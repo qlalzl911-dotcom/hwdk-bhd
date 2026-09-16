@@ -6,9 +6,7 @@
 <title>HWDK BHD 결선관리</title>
 
 <style>
-* {
-  box-sizing: border-box;
-}
+* { box-sizing: border-box; }
 
 body {
   margin: 0;
@@ -17,9 +15,7 @@ body {
   color: #222;
 }
 
-.hidden {
-  display: none !important;
-}
+.hidden { display: none !important; }
 
 header {
   background: #16324f;
@@ -82,9 +78,7 @@ header {
   box-shadow: 0 2px 8px rgba(0,0,0,.08);
 }
 
-h2 {
-  margin-top: 0;
-}
+h2 { margin-top: 0; }
 
 label {
   display: block;
@@ -146,7 +140,7 @@ button:disabled {
 
 .complete-btn {
   width: 100%;
-  margin-top: 16px;
+  margin-top: 12px;
   background: #167148;
   color: white;
   font-size: 17px;
@@ -154,9 +148,21 @@ button:disabled {
 
 .completed-btn {
   width: 100%;
-  margin-top: 16px;
+  margin-top: 12px;
   background: #dfe8e3;
   color: #315c47;
+}
+
+.complete-worker-box {
+  margin-top: 16px;
+  padding: 14px;
+  background: #f4f8f6;
+  border: 1px solid #c8ddd1;
+  border-radius: 9px;
+}
+
+.complete-worker-box label {
+  margin-top: 0;
 }
 
 .status {
@@ -242,9 +248,7 @@ button:disabled {
   margin-top: 14px;
 }
 
-.admin-actions button {
-  flex: 1;
-}
+.admin-actions button { flex: 1; }
 
 .tabs {
   display: grid;
@@ -278,9 +282,7 @@ button:disabled {
   margin-top: 12px;
 }
 
-.preview-item {
-  position: relative;
-}
+.preview-item { position: relative; }
 
 .preview-grid img {
   width: 100%;
@@ -298,9 +300,7 @@ button:disabled {
   color: #555;
 }
 
-.result-grid img {
-  transform: scaleX(-1);
-}
+.result-grid img { transform: scaleX(-1); }
 
 .image-tools {
   display: flex;
@@ -314,9 +314,7 @@ button:disabled {
   font-size: 13px;
 }
 
-.image-preview-clickable {
-  cursor: zoom-in;
-}
+.image-preview-clickable { cursor: zoom-in; }
 
 .table-wrap {
   width: 100%;
@@ -330,8 +328,7 @@ table {
   min-width: 620px;
 }
 
-th,
-td {
+th, td {
   border: 1px solid #ccd3d9;
   padding: 6px;
   text-align: center;
@@ -342,9 +339,7 @@ th {
   white-space: nowrap;
 }
 
-.section-head {
-  background: #dce7f0;
-}
+.section-head { background: #dce7f0; }
 
 .position-cell {
   width: 60px;
@@ -358,9 +353,7 @@ th {
   text-align: center;
 }
 
-.review-cell {
-  background: #fff2c4;
-}
+.review-cell { background: #fff2c4; }
 
 .matrix-controls {
   display: flex;
@@ -463,9 +456,7 @@ th {
   gap: 8px;
 }
 
-.refresh-btn {
-  background: #e8edf2;
-}
+.refresh-btn { background: #e8edf2; }
 
 .empty {
   margin-top: 16px;
@@ -546,7 +537,7 @@ th {
 }
 
 
-/* PNG 저장용 숨김 영역 */
+/* PNG 생성용 */
 
 #exportStage {
   position: fixed;
@@ -595,17 +586,9 @@ th {
 }
 
 @media (max-width: 600px) {
-  .header-title {
-    font-size: 17px;
-  }
-
-  .mode-badge {
-    display: none;
-  }
-
-  .export-actions {
-    grid-template-columns: 1fr;
-  }
+  .header-title { font-size: 17px; }
+  .mode-badge { display: none; }
+  .export-actions { grid-template-columns: 1fr; }
 }
 </style>
 </head>
@@ -613,9 +596,8 @@ th {
 <body>
 
 
-<!-- 처음 접속 화면 -->
-<div id="entryScreen"
-     class="entry-wrap">
+<!-- 첫 화면 -->
+<div id="entryScreen" class="entry-wrap">
 
   <div class="entry-card">
 
@@ -627,18 +609,15 @@ th {
       작업 유형을 선택하세요.
     </div>
 
-
     <button id="workerEntryBtn"
             class="worker-entry-btn">
       등록하기
     </button>
 
-
     <button id="adminEntryBtn"
             class="admin-entry-btn">
       관리자 모드
     </button>
-
 
     <div id="entryStatus"
          class="status">
@@ -657,7 +636,6 @@ th {
              value="g.s.lee@daekong.com"
              autocomplete="username">
 
-
       <label>
         관리자 비밀번호
       </label>
@@ -666,7 +644,6 @@ th {
              type="password"
              autocomplete="current-password"
              placeholder="비밀번호 입력">
-
 
       <div class="admin-actions">
 
@@ -683,7 +660,6 @@ th {
 
       </div>
 
-
       <div id="adminStatus"
            class="status">
       </div>
@@ -695,7 +671,7 @@ th {
 </div>
 
 
-<!-- 작업 화면 헤더 -->
+<!-- 작업화면 헤더 -->
 <header id="appHeader"
         class="hidden">
 
@@ -746,7 +722,7 @@ th {
   </div>
 
 
-  <!-- 등록 -->
+  <!-- BHD 등록 -->
   <section id="registerSection">
 
     <div class="card">
@@ -835,9 +811,7 @@ th {
       </div>
 
 
-      <h3>
-        결선 배치표
-      </h3>
+      <h3>결선 배치표</h3>
 
 
       <div class="hint">
@@ -882,16 +856,13 @@ th {
   </section>
 
 
-  <!-- 조회 -->
+  <!-- BHD 조회 -->
   <section id="searchSection"
            class="hidden">
 
     <div class="card">
 
-      <h2>
-        BHD 조회
-      </h2>
-
+      <h2>BHD 조회</h2>
 
       <div class="hint">
         호선 · 위치 · 이름 중 하나만 입력해도 조회할 수 있습니다.
@@ -975,6 +946,24 @@ th {
         </div>
 
 
+        <!-- 추가된 후작업 작업자 입력 -->
+        <div class="complete-worker-box">
+
+          <label>
+            후작업 작업자 이름
+          </label>
+
+          <input id="completedBy"
+                 type="text"
+                 placeholder="작업자 이름 입력">
+
+          <div class="hint">
+            작업자 이름을 입력해야 완료처리가 가능합니다.
+          </div>
+
+        </div>
+
+
         <button id="completeBtn"
                 class="complete-btn">
           후작업 작업완료
@@ -1046,8 +1035,7 @@ th {
   </div>
 
 
-  <div id="imageModalViewer"
-       class="image-modal-viewer">
+  <div class="image-modal-viewer">
 
     <img id="modalImage"
          alt="확대 사진">
@@ -1082,9 +1070,7 @@ th {
 </div>
 
 
-<!-- PNG 저장용 -->
-<div id="exportStage">
-</div>
+<div id="exportStage"></div>
 
 
 <script src="https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js"></script>
@@ -1112,19 +1098,14 @@ const supabase =
 
 
 let isAdmin = false;
-
 let editingId = null;
-
 let currentViewedRecord = null;
 
 let existingPaths = [];
-
 let existingPreviewUrls = [];
 
 let rowMap = new Map();
-
 let sectionCount = 1;
-
 let maxPosition = 1;
 
 let analysisMeta = {
@@ -1132,78 +1113,50 @@ let analysisMeta = {
   ai_analyzed: false
 };
 
-
 let modalImageUrl = "";
-
-let modalDownloadName =
-  "BHD-photo.jpg";
-
+let modalDownloadName = "BHD-photo.jpg";
 let modalZoom = 1;
-
 let modalMirror = false;
 
 
 const entryScreen =
-  document.getElementById(
-    "entryScreen"
-  );
+  document.getElementById("entryScreen");
 
 const appHeader =
-  document.getElementById(
-    "appHeader"
-  );
+  document.getElementById("appHeader");
 
 const app =
-  document.getElementById(
-    "app"
-  );
+  document.getElementById("app");
 
 const photosInput =
-  document.getElementById(
-    "photos"
-  );
+  document.getElementById("photos");
 
 
 function localToday() {
 
-  const d =
-    new Date();
+  const d = new Date();
 
-  const y =
-    d.getFullYear();
+  const y = d.getFullYear();
 
   const m =
-    String(
-      d.getMonth() + 1
-    ).padStart(
-      2,
-      "0"
-    );
+    String(d.getMonth() + 1)
+      .padStart(2, "0");
 
   const day =
-    String(
-      d.getDate()
-    ).padStart(
-      2,
-      "0"
-    );
+    String(d.getDate())
+      .padStart(2, "0");
 
   return `${y}-${m}-${day}`;
 }
 
 
-function formatDateTime(
-  value
-) {
+function formatDateTime(value) {
 
   if (!value) {
     return "-";
   }
 
-  const d =
-    new Date(
-      value
-    );
+  const d = new Date(value);
 
   return d.toLocaleString(
     "ko-KR",
@@ -1218,39 +1171,18 @@ function formatDateTime(
 }
 
 
-function escapeHtml(
-  value
-) {
+function escapeHtml(value) {
 
-  return String(
-    value ?? ""
-  )
-  .replaceAll(
-    "&",
-    "&amp;"
-  )
-  .replaceAll(
-    "<",
-    "&lt;"
-  )
-  .replaceAll(
-    ">",
-    "&gt;"
-  )
-  .replaceAll(
-    '"',
-    "&quot;"
-  )
-  .replaceAll(
-    "'",
-    "&#039;"
-  );
+  return String(value ?? "")
+    .replaceAll("&", "&amp;")
+    .replaceAll("<", "&lt;")
+    .replaceAll(">", "&gt;")
+    .replaceAll('"', "&quot;")
+    .replaceAll("'", "&#039;");
 }
 
 
-function safeFilename(
-  value
-) {
+function safeFilename(value) {
 
   return String(
     value || "BHD"
@@ -1262,16 +1194,13 @@ function safeFilename(
 
 
 /* =========================================
-   처음화면 / 모드
+   처음화면 / 권한
 ========================================= */
 
-function showApp(
-  adminMode = false
-) {
+function showApp(adminMode = false) {
 
   isAdmin =
     adminMode;
-
 
   entryScreen.classList.add(
     "hidden"
@@ -1292,9 +1221,7 @@ function showApp(
     );
 
 
-  if (
-    isAdmin
-  ) {
+  if (isAdmin) {
 
     badge.textContent =
       "관리자 모드";
@@ -1390,10 +1317,7 @@ async () => {
       .signInAnonymously();
 
 
-    if (
-      error
-    ) {
-
+    if (error) {
       throw error;
     }
 
@@ -1402,13 +1326,9 @@ async () => {
       false;
 
 
-    showApp(
-      false
-    );
-
+    showApp(false);
 
     await resetRegister();
-
 
     setTab(
       "register"
@@ -1419,9 +1339,7 @@ async () => {
       "";
 
 
-  } catch (
-    error
-  ) {
+  } catch (error) {
 
     status.textContent =
       "접속 실패: " +
@@ -1449,12 +1367,10 @@ document.getElementById(
     "hidden"
   );
 
-
   document.getElementById(
     "adminStatus"
   ).textContent =
     "";
-
 
   document.getElementById(
     "adminPassword"
@@ -1473,12 +1389,10 @@ document.getElementById(
     "hidden"
   );
 
-
   document.getElementById(
     "adminPassword"
   ).value =
     "";
-
 
   document.getElementById(
     "adminStatus"
@@ -1500,10 +1414,7 @@ async function checkCurrentUserAdmin() {
     sessionData.session;
 
 
-  if (
-    !session
-  ) {
-
+  if (!session) {
     return false;
   }
 
@@ -1513,12 +1424,8 @@ async function checkCurrentUserAdmin() {
     error
   } =
   await supabase
-    .from(
-      "admin_users"
-    )
-    .select(
-      "user_id"
-    )
+    .from("admin_users")
+    .select("user_id")
     .eq(
       "user_id",
       session.user.id
@@ -1597,10 +1504,7 @@ async () => {
       });
 
 
-    if (
-      error
-    ) {
-
+    if (error) {
       throw error;
     }
 
@@ -1609,13 +1513,10 @@ async () => {
       await checkCurrentUserAdmin();
 
 
-    if (
-      !allowed
-    ) {
+    if (!allowed) {
 
       await supabase.auth
         .signOut();
-
 
       throw new Error(
         "삭제 권한이 없는 계정입니다."
@@ -1633,19 +1534,14 @@ async () => {
       "";
 
 
-    showApp(
-      true
-    );
-
+    showApp(true);
 
     setTab(
       "list"
     );
 
 
-  } catch (
-    error
-  ) {
+  } catch (error) {
 
     status.textContent =
       "관리자 로그인 실패: " +
@@ -1668,9 +1564,7 @@ document.getElementById(
   "keydown",
   e => {
 
-    if (
-      e.key === "Enter"
-    ) {
+    if (e.key === "Enter") {
 
       document.getElementById(
         "adminLoginBtn"
@@ -1704,9 +1598,7 @@ async () => {
    탭
 ========================================= */
 
-function setTab(
-  mode
-) {
+function setTab(mode) {
 
   const registerTab =
     document.getElementById(
@@ -1764,9 +1656,7 @@ function setTab(
   );
 
 
-  if (
-    mode === "register"
-  ) {
+  if (mode === "register") {
 
     registerTab.classList.add(
       "active"
@@ -1806,28 +1696,19 @@ function setTab(
 document.getElementById(
   "registerTab"
 ).onclick =
-() =>
-  setTab(
-    "register"
-  );
+() => setTab("register");
 
 
 document.getElementById(
   "searchTab"
 ).onclick =
-() =>
-  setTab(
-    "search"
-  );
+() => setTab("search");
 
 
 document.getElementById(
   "listTab"
 ).onclick =
-() =>
-  setTab(
-    "list"
-  );
+() => setTab("list");
 
 
 /* =========================================
@@ -1855,11 +1736,7 @@ function getRow(
     );
 
 
-  if (
-    !rowMap.has(
-      key
-    )
-  ) {
+  if (!rowMap.has(key)) {
 
     rowMap.set(
       key,
@@ -1875,9 +1752,7 @@ function getRow(
   }
 
 
-  return rowMap.get(
-    key
-  );
+  return rowMap.get(key);
 }
 
 
@@ -1897,72 +1772,63 @@ function setRows(
     0;
 
 
-  rows.forEach(
-    raw => {
+  rows.forEach(raw => {
 
-      const section =
-        Number(
-          raw.section ||
-          1
-        );
-
-
-      const position =
-        Number(
-          raw.position ||
-          1
-        );
-
-
-      detectedSection =
-        Math.max(
-          detectedSection,
-          section
-        );
-
-
-      detectedPosition =
-        Math.max(
-          detectedPosition,
-          position
-        );
-
-
-      rowMap.set(
-        rowKey(
-          section,
-          position
-        ),
-        {
-          section,
-          position,
-          left:
-            raw.left ||
-            "",
-          right:
-            raw.right ||
-            "",
-          confidence:
-            Number(
-              raw.confidence ??
-              1
-            ),
-          needs_review:
-            Boolean(
-              raw.needs_review
-            )
-        }
+    const section =
+      Number(
+        raw.section || 1
       );
-    }
-  );
+
+    const position =
+      Number(
+        raw.position || 1
+      );
+
+
+    detectedSection =
+      Math.max(
+        detectedSection,
+        section
+      );
+
+
+    detectedPosition =
+      Math.max(
+        detectedPosition,
+        position
+      );
+
+
+    rowMap.set(
+      rowKey(
+        section,
+        position
+      ),
+      {
+        section,
+        position,
+        left:
+          raw.left || "",
+        right:
+          raw.right || "",
+        confidence:
+          Number(
+            raw.confidence ?? 1
+          ),
+        needs_review:
+          Boolean(
+            raw.needs_review
+          )
+      }
+    );
+  });
 
 
   sectionCount =
     Math.max(
       1,
       Number(
-        suppliedSections ||
-        0
+        suppliedSections || 0
       ),
       detectedSection
     );
@@ -1987,42 +1853,33 @@ function collectRows() {
   .filter(
     row =>
       String(
-        row.left ||
-        ""
+        row.left || ""
       ).trim() ||
       String(
-        row.right ||
-        ""
+        row.right || ""
       ).trim()
   )
   .map(
     row => ({
       section:
-        Number(
-          row.section
-        ),
+        Number(row.section),
 
       position:
-        Number(
-          row.position
-        ),
+        Number(row.position),
 
       left:
         String(
-          row.left ||
-          ""
+          row.left || ""
         ).trim(),
 
       right:
         String(
-          row.right ||
-          ""
+          row.right || ""
         ).trim(),
 
       confidence:
         Number(
-          row.confidence ??
-          1
+          row.confidence ?? 1
         ),
 
       needs_review:
@@ -2033,10 +1890,8 @@ function collectRows() {
   )
   .sort(
     (a, b) =>
-      a.section -
-      b.section ||
-      a.position -
-      b.position
+      a.section - b.section ||
+      a.position - b.position
   );
 }
 
@@ -2111,9 +1966,7 @@ function renderEditableMatrix() {
       "section-head";
 
 
-    head1.appendChild(
-      th
-    );
+    head1.appendChild(th);
   }
 
 
@@ -2147,27 +2000,15 @@ function renderEditableMatrix() {
       "우";
 
 
-    head2.appendChild(
-      left
-    );
-
-    head2.appendChild(
-      right
-    );
+    head2.appendChild(left);
+    head2.appendChild(right);
   }
 
 
-  thead.appendChild(
-    head1
-  );
+  thead.appendChild(head1);
+  thead.appendChild(head2);
 
-  thead.appendChild(
-    head2
-  );
-
-  table.appendChild(
-    thead
-  );
+  table.appendChild(thead);
 
 
   const tbody =
@@ -2201,9 +2042,7 @@ function renderEditableMatrix() {
       "position-cell";
 
 
-    tr.appendChild(
-      posTd
-    );
+    tr.appendChild(posTd);
 
 
     for (
@@ -2222,118 +2061,97 @@ function renderEditableMatrix() {
       [
         "left",
         "right"
-      ].forEach(
-        side => {
+      ].forEach(side => {
 
-          const td =
-            document.createElement(
-              "td"
-            );
+        const td =
+          document.createElement(
+            "td"
+          );
 
 
-          if (
-            row.needs_review ||
-            Number(
-              row.confidence
-            ) < 0.8
-          ) {
+        if (
+          row.needs_review ||
+          Number(
+            row.confidence
+          ) < 0.8
+        ) {
 
-            td.classList.add(
+          td.classList.add(
+            "review-cell"
+          );
+        }
+
+
+        const input =
+          document.createElement(
+            "input"
+          );
+
+
+        input.className =
+          "matrix-input";
+
+        input.value =
+          row[side] || "";
+
+        input.placeholder =
+          "-";
+
+
+        input.addEventListener(
+          "input",
+          () => {
+
+            row[side] =
+              input.value;
+
+            row.needs_review =
+              false;
+
+            row.confidence =
+              1;
+
+            td.classList.remove(
               "review-cell"
             );
           }
+        );
 
 
-          const input =
-            document.createElement(
-              "input"
-            );
+        td.appendChild(input);
 
-
-          input.className =
-            "matrix-input";
-
-          input.value =
-            row[side] ||
-            "";
-
-          input.placeholder =
-            "-";
-
-
-          input.addEventListener(
-            "input",
-            () => {
-
-              row[side] =
-                input.value;
-
-              row.needs_review =
-                false;
-
-              row.confidence =
-                1;
-
-
-              td.classList.remove(
-                "review-cell"
-              );
-            }
-          );
-
-
-          td.appendChild(
-            input
-          );
-
-          tr.appendChild(
-            td
-          );
-        }
-      );
+        tr.appendChild(td);
+      });
     }
 
 
-    tbody.appendChild(
-      tr
-    );
+    tbody.appendChild(tr);
   }
 
 
-  table.appendChild(
-    tbody
-  );
+  table.appendChild(tbody);
 
-  wrap.appendChild(
-    table
-  );
+  wrap.appendChild(table);
 }
 
 
 /* =========================================
-   사진 URL / 확대 / 다운로드
+   사진
 ========================================= */
 
-async function signedUrls(
-  paths
-) {
+async function signedUrls(paths) {
 
-  const urls =
-    [];
+  const urls = [];
 
 
-  for (
-    const path of paths
-  ) {
+  for (const path of paths) {
 
     const {
       data,
       error
     } =
     await supabase.storage
-      .from(
-        "bhd-images"
-      )
+      .from("bhd-images")
       .createSignedUrl(
         path,
         3600
@@ -2509,15 +2327,10 @@ async function downloadImage(
   try {
 
     const response =
-      await fetch(
-        url
-      );
+      await fetch(url);
 
 
-    if (
-      !response.ok
-    ) {
-
+    if (!response.ok) {
       throw new Error();
     }
 
@@ -2527,9 +2340,7 @@ async function downloadImage(
 
 
     const blobUrl =
-      URL.createObjectURL(
-        blob
-      );
+      URL.createObjectURL(blob);
 
 
     const a =
@@ -2542,15 +2353,10 @@ async function downloadImage(
       blobUrl;
 
     a.download =
-      safeFilename(
-        filename
-      );
+      safeFilename(filename);
 
 
-    document.body.appendChild(
-      a
-    );
-
+    document.body.appendChild(a);
 
     a.click();
 
@@ -2566,9 +2372,7 @@ async function downloadImage(
     );
 
 
-  } catch (
-    error
-  ) {
+  } catch (error) {
 
     window.open(
       url,
@@ -2583,9 +2387,7 @@ document.getElementById(
 ).onclick =
 () => {
 
-  if (
-    modalImageUrl
-  ) {
+  if (modalImageUrl) {
 
     downloadImage(
       modalImageUrl,
@@ -2684,10 +2486,6 @@ function attachImageTools(
 }
 
 
-/* =========================================
-   등록 사진 미리보기
-========================================= */
-
 function renderPreviews() {
 
   const grid =
@@ -2735,13 +2533,8 @@ function renderPreviews() {
         `기존 사진 ${i + 1}`;
 
 
-      item.appendChild(
-        img
-      );
-
-      item.appendChild(
-        label
-      );
+      item.appendChild(img);
+      item.appendChild(label);
 
 
       attachImageTools(
@@ -2753,9 +2546,7 @@ function renderPreviews() {
       );
 
 
-      grid.appendChild(
-        item
-      );
+      grid.appendChild(item);
     }
   );
 
@@ -2804,13 +2595,8 @@ function renderPreviews() {
         `추가 사진 ${i + 1}`;
 
 
-      item.appendChild(
-        img
-      );
-
-      item.appendChild(
-        label
-      );
+      item.appendChild(img);
+      item.appendChild(label);
 
 
       attachImageTools(
@@ -2823,9 +2609,7 @@ function renderPreviews() {
       );
 
 
-      grid.appendChild(
-        item
-      );
+      grid.appendChild(item);
     }
   );
 }
@@ -2861,18 +2645,15 @@ async function resetRegister() {
   ).value =
     "";
 
-
   document.getElementById(
     "area"
   ).value =
     "";
 
-
   document.getElementById(
     "bhdNo"
   ).value =
     "";
-
 
   document.getElementById(
     "workDate"
@@ -2918,19 +2699,13 @@ async function resetRegister() {
     "";
 
 
-  setRows(
-    [],
-    1
-  );
-
+  setRows([], 1);
 
   renderPreviews();
 }
 
 
-async function loadForEdit(
-  record
-) {
+async function loadForEdit(record) {
 
   editingId =
     record.id;
@@ -2962,22 +2737,19 @@ async function loadForEdit(
   document.getElementById(
     "shipNo"
   ).value =
-    record.ship_no ||
-    "";
+    record.ship_no || "";
 
 
   document.getElementById(
     "area"
   ).value =
-    record.area ||
-    "";
+    record.area || "";
 
 
   document.getElementById(
     "bhdNo"
   ).value =
-    record.bhd_no ||
-    "";
+    record.bhd_no || "";
 
 
   document.getElementById(
@@ -3042,9 +2814,7 @@ async function loadForEdit(
     "수정 저장";
 
 
-  setTab(
-    "register"
-  );
+  setTab("register");
 
 
   window.scrollTo({
@@ -3061,9 +2831,7 @@ async () => {
 
   await resetRegister();
 
-  setTab(
-    "register"
-  );
+  setTab("register");
 };
 
 
@@ -3094,8 +2862,7 @@ document.getElementById(
 ).onclick =
 () => {
 
-  maxPosition +=
-    1;
+  maxPosition += 1;
 
   renderEditableMatrix();
 };
@@ -3106,8 +2873,7 @@ document.getElementById(
 ).onclick =
 () => {
 
-  sectionCount +=
-    1;
+  sectionCount += 1;
 
   renderEditableMatrix();
 };
@@ -3159,17 +2925,12 @@ async function compressForAI(
     );
 
 
-  canvas.width =
-    width;
-
-  canvas.height =
-    height;
+  canvas.width = width;
+  canvas.height = height;
 
 
   canvas
-    .getContext(
-      "2d"
-    )
+    .getContext("2d")
     .drawImage(
       bitmap,
       0,
@@ -3232,9 +2993,7 @@ async () => {
   }
 
 
-  if (
-    total > 8
-  ) {
+  if (total > 8) {
 
     status.textContent =
       "사진은 최대 8장입니다.";
@@ -3289,17 +3048,12 @@ async () => {
     );
 
 
-    if (
-      error
-    ) {
-
+    if (error) {
       throw error;
     }
 
 
-    if (
-      data?.error
-    ) {
+    if (data?.error) {
 
       throw new Error(
         data.error
@@ -3317,8 +3071,7 @@ async () => {
 
     analysisMeta = {
       notes:
-        data?.notes ||
-        "",
+        data?.notes || "",
 
       ai_analyzed:
         true
@@ -3339,8 +3092,7 @@ async () => {
         row =>
           row.needs_review ||
           Number(
-            row.confidence ||
-            0
+            row.confidence || 0
           ) < 0.8
       ).length;
 
@@ -3360,9 +3112,7 @@ async () => {
       "자동 분석이 완료되었습니다.";
 
 
-  } catch (
-    error
-  ) {
+  } catch (error) {
 
     status.textContent =
       "AI 분석 실패: " +
@@ -3383,9 +3133,7 @@ async () => {
    파일 업로드
 ========================================= */
 
-function safePart(
-  value
-) {
+function safePart(value) {
 
   return value.replace(
     /[^a-zA-Z0-9가-힣_.-]/g,
@@ -3434,26 +3182,19 @@ async function uploadNewFiles(
       error
     } =
     await supabase.storage
-      .from(
-        "bhd-images"
-      )
+      .from("bhd-images")
       .upload(
         path,
         file
       );
 
 
-    if (
-      error
-    ) {
-
+    if (error) {
       throw error;
     }
 
 
-    paths.push(
-      path
-    );
+    paths.push(path);
   }
 
 
@@ -3523,9 +3264,7 @@ async () => {
     collectRows();
 
 
-  if (
-    !rows.length
-  ) {
+  if (!rows.length) {
 
     status.textContent =
       "결선표가 비어 있습니다.";
@@ -3584,12 +3323,10 @@ async () => {
         name,
 
       work_date:
-        workDate ||
-        null,
+        workDate || null,
 
       original_image:
-        allPaths[0] ||
-        null,
+        allPaths[0] || null,
 
       original_images:
         allPaths,
@@ -3611,30 +3348,21 @@ async () => {
     };
 
 
-    if (
-      editingId
-    ) {
+    if (editingId) {
 
       const {
         error
       } =
       await supabase
-        .from(
-          "bhd_records"
-        )
-        .update(
-          payload
-        )
+        .from("bhd_records")
+        .update(payload)
         .eq(
           "id",
           editingId
         );
 
 
-      if (
-        error
-      ) {
-
+      if (error) {
         throw error;
       }
 
@@ -3668,23 +3396,19 @@ async () => {
       payload.completed_at =
         null;
 
+      payload.completed_by =
+        null;
+
 
       const {
         error
       } =
       await supabase
-        .from(
-          "bhd_records"
-        )
-        .insert(
-          payload
-        );
+        .from("bhd_records")
+        .insert(payload);
 
 
-      if (
-        error
-      ) {
-
+      if (error) {
         throw error;
       }
 
@@ -3694,9 +3418,7 @@ async () => {
     }
 
 
-  } catch (
-    error
-  ) {
+  } catch (error) {
 
     status.textContent =
       "저장 실패: " +
@@ -3714,7 +3436,7 @@ async () => {
 
 
 /* =========================================
-   후작업 반전표 HTML
+   후작업 반전표
 ========================================= */
 
 function buildMirroredTableHTML(
@@ -3730,47 +3452,42 @@ function buildMirroredTableHTML(
     1;
 
 
-  rows.forEach(
-    row => {
+  rows.forEach(row => {
 
-      const section =
-        Number(
-          row.section ||
-          1
-        );
-
-
-      const position =
-        Number(
-          row.position ||
-          1
-        );
-
-
-      maxPos =
-        Math.max(
-          maxPos,
-          position
-        );
-
-
-      map.set(
-        rowKey(
-          section,
-          position
-        ),
-        row
+    const section =
+      Number(
+        row.section || 1
       );
-    }
-  );
+
+    const position =
+      Number(
+        row.position || 1
+      );
+
+
+    maxPos =
+      Math.max(
+        maxPos,
+        position
+      );
+
+
+    map.set(
+      rowKey(
+        section,
+        position
+      ),
+      row
+    );
+  });
 
 
   let html =
     `
-      <table>
-        <thead>
-          <tr>
-            <th rowspan="2">위치</th>
+    <table>
+      <thead>
+        <tr>
+          <th rowspan="2">위치</th>
     `;
 
 
@@ -3787,8 +3504,8 @@ function buildMirroredTableHTML(
 
   html +=
     `
-          </tr>
-          <tr>
+        </tr>
+        <tr>
     `;
 
 
@@ -3805,9 +3522,9 @@ function buildMirroredTableHTML(
 
   html +=
     `
-          </tr>
-        </thead>
-        <tbody>
+        </tr>
+      </thead>
+      <tbody>
     `;
 
 
@@ -3860,8 +3577,8 @@ function buildMirroredTableHTML(
 
   html +=
     `
-        </tbody>
-      </table>
+      </tbody>
+    </table>
     `;
 
 
@@ -3874,13 +3591,9 @@ function renderMirroredMatrix(
   sections
 ) {
 
-  const wrap =
-    document.getElementById(
-      "resultMatrix"
-    );
-
-
-  wrap.innerHTML =
+  document.getElementById(
+    "resultMatrix"
+  ).innerHTML =
     buildMirroredTableHTML(
       rows,
       sections
@@ -3892,9 +3605,7 @@ function renderMirroredMatrix(
    후작업 보기
 ========================================= */
 
-async function showRecord(
-  record
-) {
+async function showRecord(record) {
 
   currentViewedRecord =
     record;
@@ -3971,13 +3682,8 @@ async function showRecord(
         `반전 사진 ${i + 1}`;
 
 
-      item.appendChild(
-        img
-      );
-
-      item.appendChild(
-        label
-      );
+      item.appendChild(img);
+      item.appendChild(label);
 
 
       attachImageTools(
@@ -3989,9 +3695,7 @@ async function showRecord(
       );
 
 
-      images.appendChild(
-        item
-      );
+      images.appendChild(item);
     }
   );
 
@@ -4045,29 +3749,24 @@ async function showRecord(
   );
 
 
-  setTab(
-    "search"
-  );
+  setTab("search");
 
 
   window.scrollTo({
     top:
       document.getElementById(
         "resultBox"
-      ).offsetTop -
-      30,
+      ).offsetTop - 30,
     behavior: "smooth"
   });
 }
 
 
 /* =========================================
-   후작업 표 이미지 저장
+   이미지 / 인쇄
 ========================================= */
 
-function buildExportSheet(
-  record
-) {
+function buildExportSheet(record) {
 
   const rows =
     Array.isArray(
@@ -4121,8 +3820,14 @@ function buildExportSheet(
         }
 
         ${
+          record.completed_by
+            ? `&nbsp;&nbsp;<strong>후작업 작업자:</strong> ${escapeHtml(record.completed_by)}`
+            : ""
+        }
+
+        ${
           record.completed_at
-            ? `&nbsp;&nbsp;<strong>후작업 완료:</strong> ${escapeHtml(formatDateTime(record.completed_at))}`
+            ? `<br><strong>후작업 완료시간:</strong> ${escapeHtml(formatDateTime(record.completed_at))}`
             : ""
         }
 
@@ -4149,9 +3854,7 @@ async () => {
     );
 
 
-  if (
-    !currentViewedRecord
-  ) {
+  if (!currentViewedRecord) {
 
     status.textContent =
       "먼저 후작업 기록을 선택하세요.";
@@ -4200,10 +3903,8 @@ async () => {
         {
           backgroundColor:
             "#ffffff",
-
           scale:
             2,
-
           useCORS:
             true
         }
@@ -4239,7 +3940,6 @@ async () => {
 
     link.remove();
 
-
     stage.innerHTML =
       "";
 
@@ -4248,9 +3948,7 @@ async () => {
       "표 이미지 저장 완료";
 
 
-  } catch (
-    error
-  ) {
+  } catch (error) {
 
     status.textContent =
       "이미지 저장 실패: " +
@@ -4261,10 +3959,6 @@ async () => {
   }
 };
 
-
-/* =========================================
-   인쇄 / PDF 저장
-========================================= */
 
 document.getElementById(
   "printTableBtn"
@@ -4277,9 +3971,7 @@ document.getElementById(
     );
 
 
-  if (
-    !currentViewedRecord
-  ) {
+  if (!currentViewedRecord) {
 
     status.textContent =
       "먼저 후작업 기록을 선택하세요.";
@@ -4301,9 +3993,7 @@ document.getElementById(
     );
 
 
-  if (
-    !printWindow
-  ) {
+  if (!printWindow) {
 
     status.textContent =
       "팝업이 차단되었습니다. 브라우저에서 팝업을 허용해주세요.";
@@ -4414,12 +4104,10 @@ document.getElementById(
 
 
 /* =========================================
-   작업완료
+   후작업 완료
 ========================================= */
 
-function updateCompleteButton(
-  record
-) {
+function updateCompleteButton(record) {
 
   const btn =
     document.getElementById(
@@ -4433,9 +4121,20 @@ function updateCompleteButton(
     );
 
 
-  if (
-    record.is_completed
-  ) {
+  const workerInput =
+    document.getElementById(
+      "completedBy"
+    );
+
+
+  if (record.is_completed) {
+
+    workerInput.value =
+      record.completed_by || "";
+
+    workerInput.disabled =
+      true;
+
 
     btn.textContent =
       "후작업 완료됨";
@@ -4448,12 +4147,22 @@ function updateCompleteButton(
 
 
     status.textContent =
-      record.completed_at
-        ? `완료시간: ${formatDateTime(record.completed_at)}`
-        : "완료 처리된 작업입니다.";
+      `후작업 작업자: ${record.completed_by || "-"}` +
+      (
+        record.completed_at
+          ? ` · 완료시간: ${formatDateTime(record.completed_at)}`
+          : ""
+      );
 
 
   } else {
+
+    workerInput.value =
+      "";
+
+    workerInput.disabled =
+      false;
+
 
     btn.textContent =
       "후작업 작업완료";
@@ -4485,9 +4194,32 @@ async () => {
   }
 
 
+  const completedBy =
+    document.getElementById(
+      "completedBy"
+    ).value.trim();
+
+
+  if (!completedBy) {
+
+    document.getElementById(
+      "completeStatus"
+    ).textContent =
+      "후작업 작업자 이름을 입력하세요.";
+
+
+    document.getElementById(
+      "completedBy"
+    ).focus();
+
+
+    return;
+  }
+
+
   const ok =
     confirm(
-      "후작업을 완료 처리하시겠습니까?"
+      `후작업 작업자: ${completedBy}\n\n완료 처리하시겠습니까?`
     );
 
 
@@ -4505,15 +4237,16 @@ async () => {
     error
   } =
   await supabase
-    .from(
-      "bhd_records"
-    )
+    .from("bhd_records")
     .update({
       is_completed:
         true,
 
       completed_at:
-        now
+        now,
+
+      completed_by:
+        completedBy
     })
     .eq(
       "id",
@@ -4521,9 +4254,7 @@ async () => {
     );
 
 
-  if (
-    error
-  ) {
+  if (error) {
 
     document.getElementById(
       "completeStatus"
@@ -4540,6 +4271,9 @@ async () => {
 
   currentViewedRecord.completed_at =
     now;
+
+  currentViewedRecord.completed_by =
+    completedBy;
 
 
   updateCompleteButton(
@@ -4561,13 +4295,9 @@ async () => {
    관리자 삭제
 ========================================= */
 
-async function deleteRecord(
-  record
-) {
+async function deleteRecord(record) {
 
-  if (
-    !isAdmin
-  ) {
+  if (!isAdmin) {
 
     alert(
       "관리자만 삭제할 수 있습니다."
@@ -4581,9 +4311,7 @@ async function deleteRecord(
     await checkCurrentUserAdmin();
 
 
-  if (
-    !allowed
-  ) {
+  if (!allowed) {
 
     alert(
       "관리자 인증이 확인되지 않았습니다."
@@ -4621,59 +4349,37 @@ async function deleteRecord(
           : [];
 
 
-    /*
-     * 사진부터 삭제
-     */
-    if (
-      paths.length
-    ) {
+    if (paths.length) {
 
       const {
         error: storageError
       } =
       await supabase.storage
-        .from(
-          "bhd-images"
-        )
-        .remove(
-          paths
-        );
+        .from("bhd-images")
+        .remove(paths);
 
 
-      if (
-        storageError
-      ) {
-
+      if (storageError) {
         throw storageError;
       }
     }
 
 
-    /*
-     * DB 삭제
-     */
     const {
       data: deletedRows,
       error: deleteError
     } =
     await supabase
-      .from(
-        "bhd_records"
-      )
+      .from("bhd_records")
       .delete()
       .eq(
         "id",
         record.id
       )
-      .select(
-        "id"
-      );
+      .select("id");
 
 
-    if (
-      deleteError
-    ) {
-
+    if (deleteError) {
       throw deleteError;
     }
 
@@ -4697,9 +4403,7 @@ async function deleteRecord(
     await loadRecordList();
 
 
-  } catch (
-    error
-  ) {
+  } catch (error) {
 
     alert(
       "삭제 실패: " +
@@ -4775,6 +4479,13 @@ function recordCard(
 
       ${
         record.is_completed &&
+        record.completed_by
+          ? `<br>후작업 작업자: ${escapeHtml(record.completed_by)}`
+          : ""
+      }
+
+      ${
+        record.is_completed &&
         record.completed_at
           ? `<br>후작업 완료: ${formatDateTime(record.completed_at)}`
           : ""
@@ -4809,9 +4520,7 @@ function recordCard(
 
   view.onclick =
     () =>
-      showRecord(
-        record
-      );
+      showRecord(record);
 
 
   const edit =
@@ -4829,19 +4538,12 @@ function recordCard(
 
   edit.onclick =
     () =>
-      loadForEdit(
-        record
-      );
+      loadForEdit(record);
 
 
-  actions.appendChild(
-    view
-  );
+  actions.appendChild(view);
 
-
-  actions.appendChild(
-    edit
-  );
+  actions.appendChild(edit);
 
 
   if (
@@ -4864,9 +4566,7 @@ function recordCard(
 
     deleteBtn.onclick =
       () =>
-        deleteRecord(
-          record
-        );
+        deleteRecord(record);
 
 
     actions.appendChild(
@@ -4875,9 +4575,7 @@ function recordCard(
   }
 
 
-  card.appendChild(
-    actions
-  );
+  card.appendChild(actions);
 
 
   return card;
@@ -4950,22 +4648,17 @@ async function searchRecords() {
 
   let query =
     supabase
-      .from(
-        "bhd_records"
-      )
+      .from("bhd_records")
       .select("*")
       .order(
         "created_at",
         {
-          ascending:
-            false
+          ascending: false
         }
       );
 
 
-  if (
-    ship
-  ) {
+  if (ship) {
 
     query =
       query.ilike(
@@ -4975,9 +4668,7 @@ async function searchRecords() {
   }
 
 
-  if (
-    area
-  ) {
+  if (area) {
 
     query =
       query.ilike(
@@ -4987,9 +4678,7 @@ async function searchRecords() {
   }
 
 
-  if (
-    name
-  ) {
+  if (name) {
 
     query =
       query.ilike(
@@ -5006,9 +4695,7 @@ async function searchRecords() {
   await query;
 
 
-  if (
-    error
-  ) {
+  if (error) {
 
     status.textContent =
       "조회 오류: " +
@@ -5018,9 +4705,7 @@ async function searchRecords() {
   }
 
 
-  if (
-    !data?.length
-  ) {
+  if (!data?.length) {
 
     status.textContent =
       "조건에 맞는 등록 자료가 없습니다.";
@@ -5031,15 +4716,13 @@ async function searchRecords() {
 
   const incompleteCount =
     data.filter(
-      x =>
-        !x.is_completed
+      x => !x.is_completed
     ).length;
 
 
   const completedCount =
     data.filter(
-      x =>
-        x.is_completed
+      x => x.is_completed
     ).length;
 
 
@@ -5049,17 +4732,15 @@ async function searchRecords() {
     ` · 완료 ${completedCount}건`;
 
 
-  data.forEach(
-    record => {
+  data.forEach(record => {
 
-      results.appendChild(
-        recordCard(
-          record,
-          false
-        )
-      );
-    }
-  );
+    results.appendChild(
+      recordCard(
+        record,
+        false
+      )
+    );
+  });
 }
 
 
@@ -5073,27 +4754,21 @@ document.getElementById(
   "searchShip",
   "searchArea",
   "searchBhd"
-].forEach(
-  id => {
+].forEach(id => {
 
-    document
-      .getElementById(
-        id
-      )
-      .addEventListener(
-        "keydown",
-        e => {
+  document
+    .getElementById(id)
+    .addEventListener(
+      "keydown",
+      e => {
 
-          if (
-            e.key === "Enter"
-          ) {
+        if (e.key === "Enter") {
 
-            searchRecords();
-          }
+          searchRecords();
         }
-      );
-  }
-);
+      }
+    );
+});
 
 
 /* =========================================
@@ -5127,22 +4802,17 @@ async function loadRecordList() {
     error
   } =
   await supabase
-    .from(
-      "bhd_records"
-    )
+    .from("bhd_records")
     .select("*")
     .order(
       "created_at",
       {
-        ascending:
-          false
+        ascending: false
       }
     );
 
 
-  if (
-    error
-  ) {
+  if (error) {
 
     status.textContent =
       "목록 조회 실패: " +
@@ -5152,9 +4822,7 @@ async function loadRecordList() {
   }
 
 
-  if (
-    !data?.length
-  ) {
+  if (!data?.length) {
 
     status.textContent =
       "";
@@ -5173,15 +4841,13 @@ async function loadRecordList() {
 
   const incompleteCount =
     data.filter(
-      x =>
-        !x.is_completed
+      x => !x.is_completed
     ).length;
 
 
   const completedCount =
     data.filter(
-      x =>
-        x.is_completed
+      x => x.is_completed
     ).length;
 
 
@@ -5196,17 +4862,15 @@ async function loadRecordList() {
     }`;
 
 
-  data.forEach(
-    record => {
+  data.forEach(record => {
 
-      container.appendChild(
-        recordCard(
-          record,
-          true
-        )
-      );
-    }
-  );
+    container.appendChild(
+      recordCard(
+        record,
+        true
+      )
+    );
+  });
 }
 
 
@@ -5217,7 +4881,7 @@ document.getElementById(
 
 
 /* =========================================
-   초기
+   초기화
 ========================================= */
 
 document.getElementById(
@@ -5226,11 +4890,7 @@ document.getElementById(
   localToday();
 
 
-setRows(
-  [],
-  1
-);
-
+setRows([], 1);
 
 showEntry();
 
