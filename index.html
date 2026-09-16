@@ -78,9 +78,7 @@ header {
   box-shadow: 0 2px 8px rgba(0,0,0,.08);
 }
 
-h2 {
-  margin-top: 0;
-}
+h2 { margin-top: 0; }
 
 label {
   display: block;
@@ -128,9 +126,19 @@ button:disabled {
   color: #533d00;
 }
 
+.delete-request-btn {
+  background: #fff0d9;
+  color: #a45100;
+}
+
 .delete-btn {
   background: #d64545;
   color: white;
+}
+
+.request-clear-btn {
+  background: #e8edf2;
+  color: #333;
 }
 
 .ai {
@@ -163,9 +171,7 @@ button:disabled {
   border-radius: 9px;
 }
 
-.complete-worker-box label {
-  margin-top: 0;
-}
+.complete-worker-box label { margin-top: 0; }
 
 .status {
   margin-top: 10px;
@@ -250,9 +256,7 @@ button:disabled {
   margin-top: 14px;
 }
 
-.admin-actions button {
-  flex: 1;
-}
+.admin-actions button { flex: 1; }
 
 .tabs {
   display: grid;
@@ -286,9 +290,7 @@ button:disabled {
   margin-top: 12px;
 }
 
-.preview-item {
-  position: relative;
-}
+.preview-item { position: relative; }
 
 .preview-grid img {
   width: 100%;
@@ -306,9 +308,7 @@ button:disabled {
   color: #555;
 }
 
-.result-grid img {
-  transform: scaleX(-1);
-}
+.result-grid img { transform: scaleX(-1); }
 
 .image-tools {
   display: flex;
@@ -322,9 +322,7 @@ button:disabled {
   font-size: 13px;
 }
 
-.image-preview-clickable {
-  cursor: zoom-in;
-}
+.image-preview-clickable { cursor: zoom-in; }
 
 .table-wrap {
   width: 100%;
@@ -350,9 +348,7 @@ th {
   white-space: nowrap;
 }
 
-.section-head {
-  background: #dce7f0;
-}
+.section-head { background: #dce7f0; }
 
 .position-cell {
   width: 60px;
@@ -366,9 +362,7 @@ th {
   text-align: center;
 }
 
-.review-cell {
-  background: #fff2c4;
-}
+.review-cell { background: #fff2c4; }
 
 .matrix-controls {
   display: flex;
@@ -419,10 +413,17 @@ th {
   border-left: 5px solid #e09a24;
 }
 
+.record-card.delete-requested {
+  background: #fff9f4;
+  border-top: 2px solid #df6b39;
+  border-right: 2px solid #df6b39;
+  border-bottom: 2px solid #df6b39;
+}
+
 .record-top {
   display: flex;
   justify-content: space-between;
-  align-items: center;
+  align-items: flex-start;
   gap: 8px;
 }
 
@@ -431,10 +432,28 @@ th {
   font-weight: 700;
 }
 
+.record-badges {
+  display: flex;
+  gap: 5px;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+}
+
 .record-meta {
   font-size: 13px;
   color: #666;
   margin-top: 7px;
+  line-height: 1.6;
+}
+
+.delete-request-info {
+  margin-top: 9px;
+  padding: 9px;
+  background: #fff0e8;
+  border: 1px solid #f0b695;
+  border-radius: 7px;
+  font-size: 13px;
+  color: #803100;
   line-height: 1.6;
 }
 
@@ -464,6 +483,11 @@ th {
   color: #16603c;
 }
 
+.badge-delete-request {
+  background: #ffe0d2;
+  color: #a33e12;
+}
+
 .list-header {
   display: flex;
   align-items: center;
@@ -471,9 +495,7 @@ th {
   gap: 8px;
 }
 
-.refresh-btn {
-  background: #e8edf2;
-}
+.refresh-btn { background: #e8edf2; }
 
 .empty {
   margin-top: 16px;
@@ -494,9 +516,7 @@ th {
   flex-direction: column;
 }
 
-.image-modal.hidden {
-  display: none !important;
-}
+.image-modal.hidden { display: none !important; }
 
 .image-modal-top {
   flex: 0 0 auto;
@@ -592,25 +612,15 @@ th {
 }
 
 @media (max-width: 600px) {
-  .header-title {
-    font-size: 17px;
-  }
-
-  .mode-badge {
-    display: none;
-  }
-
-  .export-actions {
-    grid-template-columns: 1fr;
-  }
+  .header-title { font-size: 17px; }
+  .mode-badge { display: none; }
+  .export-actions { grid-template-columns: 1fr; }
 }
 </style>
 </head>
 
 <body>
 
-
-<!-- 처음화면 -->
 
 <div id="entryScreen" class="entry-wrap">
 
@@ -634,26 +644,20 @@ th {
       관리자 모드
     </button>
 
-    <div id="entryStatus"
-         class="status">
-    </div>
+    <div id="entryStatus" class="status"></div>
 
 
     <div id="adminLoginBox"
          class="admin-login-box hidden">
 
-      <label>
-        관리자 이메일
-      </label>
+      <label>관리자 이메일</label>
 
       <input id="adminEmail"
              type="email"
              value="g.s.lee@daekong.com"
              autocomplete="username">
 
-      <label>
-        관리자 비밀번호
-      </label>
+      <label>관리자 비밀번호</label>
 
       <input id="adminPassword"
              type="password"
@@ -675,9 +679,7 @@ th {
 
       </div>
 
-      <div id="adminStatus"
-           class="status">
-      </div>
+      <div id="adminStatus" class="status"></div>
 
     </div>
 
@@ -686,8 +688,7 @@ th {
 </div>
 
 
-<header id="appHeader"
-        class="hidden">
+<header id="appHeader" class="hidden">
 
   <div class="header-inner">
 
@@ -697,13 +698,11 @@ th {
 
     <div class="header-right">
 
-      <span id="modeBadge"
-            class="mode-badge">
+      <span id="modeBadge" class="mode-badge">
         일반 모드
       </span>
 
-      <button id="exitBtn"
-              class="exit-btn">
+      <button id="exitBtn" class="exit-btn">
         처음 화면
       </button>
 
@@ -714,14 +713,12 @@ th {
 </header>
 
 
-<div id="app"
-     class="container hidden">
+<div id="app" class="container hidden">
 
 
   <div class="tabs">
 
-    <button id="registerTab"
-            class="active">
+    <button id="registerTab" class="active">
       BHD 등록
     </button>
 
@@ -736,8 +733,6 @@ th {
   </div>
 
 
-  <!-- 등록 -->
-
   <section id="registerSection">
 
     <div class="card">
@@ -745,13 +740,9 @@ th {
       <div id="editBanner"
            class="edit-banner hidden">
 
-        <strong>
-          기존 기록 수정 중
-        </strong>
+        <strong>기존 기록 수정 중</strong>
 
-        <div id="editInfo"
-             class="hint">
-        </div>
+        <div id="editInfo" class="hint"></div>
 
         <button id="cancelEditBtn"
                 class="secondary"
@@ -768,27 +759,19 @@ th {
 
 
       <label>호선</label>
-
-      <input id="shipNo"
-             placeholder="예: 2751">
+      <input id="shipNo" placeholder="예: 2751">
 
 
       <label>구역 / 위치</label>
-
-      <input id="area"
-             placeholder="예: ER / 3DECK">
+      <input id="area" placeholder="예: ER / 3DECK">
 
 
       <label>이름</label>
-
-      <input id="bhdNo"
-             placeholder="홍길동">
+      <input id="bhdNo" placeholder="홍길동">
 
 
       <label>작업일</label>
-
-      <input id="workDate"
-             type="date">
+      <input id="workDate" type="date">
 
 
       <label>선작업 사진</label>
@@ -805,31 +788,22 @@ th {
       </div>
 
 
-      <div id="previewGrid"
-           class="preview-grid">
-      </div>
+      <div id="previewGrid" class="preview-grid"></div>
 
 
-      <button id="analyzeBtn"
-              class="ai">
+      <button id="analyzeBtn" class="ai">
         AI 자동분석
       </button>
 
 
-      <div id="analysisStatus"
-           class="status">
-      </div>
-
+      <div id="analysisStatus" class="status"></div>
 
       <div id="analysisSummary"
            class="summary hidden">
       </div>
 
 
-      <h3>
-        결선 배치표
-      </h3>
-
+      <h3>결선 배치표</h3>
 
       <div class="hint">
         실제 사진 배열 기준으로 세로는 위치,
@@ -837,52 +811,38 @@ th {
       </div>
 
 
-      <div id="matrixWrap"
-           class="table-wrap">
-      </div>
+      <div id="matrixWrap" class="table-wrap"></div>
 
 
       <div class="matrix-controls">
 
-        <button id="addPositionBtn"
-                class="secondary">
+        <button id="addPositionBtn" class="secondary">
           + 위치(행) 추가
         </button>
 
-        <button id="addSectionBtn"
-                class="secondary">
+        <button id="addSectionBtn" class="secondary">
           + 구역(열) 추가
         </button>
 
       </div>
 
 
-      <button id="saveBtn"
-              class="primary">
+      <button id="saveBtn" class="primary">
         BHD 저장
       </button>
 
-
-      <div id="saveStatus"
-           class="status">
-      </div>
+      <div id="saveStatus" class="status"></div>
 
     </div>
 
   </section>
 
 
-  <!-- 조회 -->
-
-  <section id="searchSection"
-           class="hidden">
+  <section id="searchSection" class="hidden">
 
     <div class="card">
 
-      <h2>
-        BHD 조회
-      </h2>
-
+      <h2>BHD 조회</h2>
 
       <div class="hint">
         호선 · 위치 · 이름 중 하나만 입력해도 조회할 수 있습니다.
@@ -890,49 +850,35 @@ th {
 
 
       <label>호선</label>
-
-      <input id="searchShip"
-             placeholder="예: 2751">
+      <input id="searchShip" placeholder="예: 2751">
 
 
       <label>위치</label>
-
-      <input id="searchArea"
-             placeholder="예: ER / 3DECK">
+      <input id="searchArea" placeholder="예: ER / 3DECK">
 
 
       <label>이름</label>
-
-      <input id="searchBhd"
-             placeholder="예: 홍길동">
+      <input id="searchBhd" placeholder="예: 홍길동">
 
 
-      <button id="searchBtn"
-              class="primary">
+      <button id="searchBtn" class="primary">
         기록 찾기
       </button>
 
 
-      <div id="searchStatus"
-           class="status">
-      </div>
+      <div id="searchStatus" class="status"></div>
+
+      <div id="searchResults"></div>
 
 
-      <div id="searchResults">
-      </div>
-
-
-      <div id="resultBox"
-           class="hidden">
+      <div id="resultBox" class="hidden">
 
         <div class="result-title">
           후작업 기준 화면
         </div>
 
 
-        <div id="resultInfo"
-             class="summary">
-        </div>
+        <div id="resultInfo" class="summary"></div>
 
 
         <div id="resultImages"
@@ -940,9 +886,7 @@ th {
         </div>
 
 
-        <div id="resultMatrix"
-             class="table-wrap">
-        </div>
+        <div id="resultMatrix" class="table-wrap"></div>
 
 
         <div class="export-actions">
@@ -960,16 +904,12 @@ th {
         </div>
 
 
-        <div id="exportStatus"
-             class="status">
-        </div>
+        <div id="exportStatus" class="status"></div>
 
 
         <div class="complete-worker-box">
 
-          <label>
-            후작업 작업자 이름
-          </label>
+          <label>후작업 작업자 이름</label>
 
           <input id="completedBy"
                  type="text"
@@ -988,9 +928,7 @@ th {
         </button>
 
 
-        <div id="completeStatus"
-             class="status">
-        </div>
+        <div id="completeStatus" class="status"></div>
 
       </div>
 
@@ -999,10 +937,7 @@ th {
   </section>
 
 
-  <!-- 목록 -->
-
-  <section id="listSection"
-           class="hidden">
+  <section id="listSection" class="hidden">
 
     <div class="card">
 
@@ -1022,16 +957,13 @@ th {
 
       <div class="hint">
         최근 등록된 자료가 가장 위에 표시됩니다.
+        관리자 모드에서는 삭제 요청 건이 먼저 표시됩니다.
       </div>
 
 
-      <div id="listStatus"
-           class="status">
-      </div>
+      <div id="listStatus" class="status"></div>
 
-
-      <div id="recordList">
-      </div>
+      <div id="recordList"></div>
 
     </div>
 
@@ -1039,8 +971,6 @@ th {
 
 </div>
 
-
-<!-- 사진 확대창 -->
 
 <div id="imageModal"
      class="image-modal hidden">
@@ -1057,26 +987,22 @@ th {
 
   <div class="image-modal-viewer">
 
-    <img id="modalImage"
-         alt="확대 사진">
+    <img id="modalImage" alt="확대 사진">
 
   </div>
 
 
   <div class="image-modal-bottom">
 
-    <button id="zoomOutBtn"
-            class="secondary">
+    <button id="zoomOutBtn" class="secondary">
       축소 -
     </button>
 
-    <button id="zoomResetBtn"
-            class="secondary">
+    <button id="zoomResetBtn" class="secondary">
       원래크기
     </button>
 
-    <button id="zoomInBtn"
-            class="secondary">
+    <button id="zoomInBtn" class="secondary">
       확대 +
     </button>
 
@@ -1154,33 +1080,19 @@ const photosInput =
   document.getElementById("photos");
 
 
-/* =========================================
-   공통
-========================================= */
-
 function localToday() {
 
-  const d =
-    new Date();
+  const d = new Date();
 
-  const y =
-    d.getFullYear();
+  const y = d.getFullYear();
 
   const m =
-    String(
-      d.getMonth() + 1
-    ).padStart(
-      2,
-      "0"
-    );
+    String(d.getMonth() + 1)
+      .padStart(2, "0");
 
   const day =
-    String(
-      d.getDate()
-    ).padStart(
-      2,
-      "0"
-    );
+    String(d.getDate())
+      .padStart(2, "0");
 
   return `${y}-${m}-${day}`;
 }
@@ -1188,51 +1100,30 @@ function localToday() {
 
 function formatDateTime(value) {
 
-  if (!value) {
-    return "-";
-  }
+  if (!value) return "-";
 
-  const d =
-    new Date(value);
-
-  return d.toLocaleString(
-    "ko-KR",
-    {
-      year: "numeric",
-      month: "2-digit",
-      day: "2-digit",
-      hour: "2-digit",
-      minute: "2-digit"
-    }
-  );
+  return new Date(value)
+    .toLocaleString(
+      "ko-KR",
+      {
+        year: "numeric",
+        month: "2-digit",
+        day: "2-digit",
+        hour: "2-digit",
+        minute: "2-digit"
+      }
+    );
 }
 
 
 function escapeHtml(value) {
 
-  return String(
-    value ?? ""
-  )
-  .replaceAll(
-    "&",
-    "&amp;"
-  )
-  .replaceAll(
-    "<",
-    "&lt;"
-  )
-  .replaceAll(
-    ">",
-    "&gt;"
-  )
-  .replaceAll(
-    '"',
-    "&quot;"
-  )
-  .replaceAll(
-    "'",
-    "&#039;"
-  );
+  return String(value ?? "")
+    .replaceAll("&", "&amp;")
+    .replaceAll("<", "&lt;")
+    .replaceAll(">", "&gt;")
+    .replaceAll('"', "&quot;")
+    .replaceAll("'", "&#039;");
 }
 
 
@@ -1247,9 +1138,7 @@ function safeFilename(value) {
 }
 
 
-/* =========================================
-   브라우저 뒤로가기 관리
-========================================= */
+/* 브라우저 기록 */
 
 function pushHistory(state) {
 
@@ -1271,33 +1160,18 @@ function replaceHistory(state) {
 }
 
 
-/* =========================================
-   처음화면 / 로그인
-========================================= */
+/* 처음화면 */
 
 function showApp(adminMode = false) {
 
-  isAdmin =
-    adminMode;
+  isAdmin = adminMode;
 
-
-  entryScreen.classList.add(
-    "hidden"
-  );
-
-  appHeader.classList.remove(
-    "hidden"
-  );
-
-  app.classList.remove(
-    "hidden"
-  );
-
+  entryScreen.classList.add("hidden");
+  appHeader.classList.remove("hidden");
+  app.classList.remove("hidden");
 
   const badge =
-    document.getElementById(
-      "modeBadge"
-    );
+    document.getElementById("modeBadge");
 
 
   if (isAdmin) {
@@ -1321,46 +1195,27 @@ function showApp(adminMode = false) {
 
 function showEntry() {
 
-  appHeader.classList.add(
-    "hidden"
-  );
-
-  app.classList.add(
-    "hidden"
-  );
-
-  entryScreen.classList.remove(
-    "hidden"
-  );
-
+  appHeader.classList.add("hidden");
+  app.classList.add("hidden");
+  entryScreen.classList.remove("hidden");
 
   document.getElementById(
     "adminLoginBox"
-  ).classList.add(
-    "hidden"
-  );
-
+  ).classList.add("hidden");
 
   document.getElementById(
     "adminPassword"
-  ).value =
-    "";
-
+  ).value = "";
 
   document.getElementById(
     "adminStatus"
-  ).textContent =
-    "";
-
+  ).textContent = "";
 
   document.getElementById(
     "entryStatus"
-  ).textContent =
-    "";
+  ).textContent = "";
 
-
-  activeScreen =
-    "entry";
+  activeScreen = "entry";
 }
 
 
@@ -1369,17 +1224,14 @@ async function checkCurrentUserAdmin() {
   const {
     data: sessionData
   } =
-  await supabase.auth
-    .getSession();
+  await supabase.auth.getSession();
 
 
   const session =
     sessionData.session;
 
 
-  if (!session) {
-    return false;
-  }
+  if (!session) return false;
 
 
   const {
@@ -1387,12 +1239,8 @@ async function checkCurrentUserAdmin() {
     error
   } =
   await supabase
-    .from(
-      "admin_users"
-    )
-    .select(
-      "user_id"
-    )
+    .from("admin_users")
+    .select("user_id")
     .eq(
       "user_id",
       session.user.id
@@ -1400,10 +1248,7 @@ async function checkCurrentUserAdmin() {
     .maybeSingle();
 
 
-  return (
-    !error &&
-    Boolean(data)
-  );
+  return !error && Boolean(data);
 }
 
 
@@ -1423,17 +1268,13 @@ async () => {
     );
 
 
-  button.disabled =
-    true;
-
-  status.textContent =
-    "접속 중...";
+  button.disabled = true;
+  status.textContent = "접속 중...";
 
 
   try {
 
-    await supabase.auth
-      .signOut();
+    await supabase.auth.signOut();
 
 
     const {
@@ -1443,27 +1284,18 @@ async () => {
       .signInAnonymously();
 
 
-    if (error) {
-      throw error;
-    }
+    if (error) throw error;
 
 
-    isAdmin =
-      false;
-
+    isAdmin = false;
 
     await resetRegister();
 
-
     showApp(false);
 
-    renderTabUI(
-      "register"
-    );
+    renderTabUI("register");
 
-
-    activeScreen =
-      "tab";
+    activeScreen = "tab";
 
 
     pushHistory({
@@ -1473,8 +1305,7 @@ async () => {
     });
 
 
-    status.textContent =
-      "";
+    status.textContent = "";
 
 
   } catch (error) {
@@ -1488,8 +1319,7 @@ async () => {
 
   } finally {
 
-    button.disabled =
-      false;
+    button.disabled = false;
   }
 };
 
@@ -1501,16 +1331,11 @@ document.getElementById(
 
   document.getElementById(
     "adminLoginBox"
-  ).classList.remove(
-    "hidden"
-  );
-
+  ).classList.remove("hidden");
 
   document.getElementById(
     "adminStatus"
-  ).textContent =
-    "";
-
+  ).textContent = "";
 
   document.getElementById(
     "adminPassword"
@@ -1525,21 +1350,15 @@ document.getElementById(
 
   document.getElementById(
     "adminLoginBox"
-  ).classList.add(
-    "hidden"
-  );
-
+  ).classList.add("hidden");
 
   document.getElementById(
     "adminPassword"
-  ).value =
-    "";
-
+  ).value = "";
 
   document.getElementById(
     "adminStatus"
-  ).textContent =
-    "";
+  ).textContent = "";
 };
 
 
@@ -1553,18 +1372,15 @@ async () => {
       "adminEmail"
     ).value.trim();
 
-
   const password =
     document.getElementById(
       "adminPassword"
     ).value;
 
-
   const status =
     document.getElementById(
       "adminStatus"
     );
-
 
   const button =
     document.getElementById(
@@ -1572,10 +1388,7 @@ async () => {
     );
 
 
-  if (
-    !email ||
-    !password
-  ) {
+  if (!email || !password) {
 
     status.textContent =
       "이메일과 비밀번호를 입력하세요.";
@@ -1584,8 +1397,7 @@ async () => {
   }
 
 
-  button.disabled =
-    true;
+  button.disabled = true;
 
   status.textContent =
     "관리자 확인 중...";
@@ -1593,8 +1405,7 @@ async () => {
 
   try {
 
-    await supabase.auth
-      .signOut();
+    await supabase.auth.signOut();
 
 
     const {
@@ -1607,9 +1418,7 @@ async () => {
       });
 
 
-    if (error) {
-      throw error;
-    }
+    if (error) throw error;
 
 
     const allowed =
@@ -1618,9 +1427,7 @@ async () => {
 
     if (!allowed) {
 
-      await supabase.auth
-        .signOut();
-
+      await supabase.auth.signOut();
 
       throw new Error(
         "삭제 권한이 없는 계정입니다."
@@ -1628,25 +1435,18 @@ async () => {
     }
 
 
-    isAdmin =
-      true;
-
+    isAdmin = true;
 
     document.getElementById(
       "adminPassword"
-    ).value =
-      "";
+    ).value = "";
 
 
     showApp(true);
 
-    renderTabUI(
-      "list"
-    );
+    renderTabUI("list");
 
-
-    activeScreen =
-      "tab";
+    activeScreen = "tab";
 
 
     pushHistory({
@@ -1667,8 +1467,7 @@ async () => {
 
   } finally {
 
-    button.disabled =
-      false;
+    button.disabled = false;
   }
 };
 
@@ -1679,9 +1478,7 @@ document.getElementById(
   "keydown",
   e => {
 
-    if (
-      e.key === "Enter"
-    ) {
+    if (e.key === "Enter") {
 
       document.getElementById(
         "adminLoginBtn"
@@ -1696,19 +1493,12 @@ document.getElementById(
 ).onclick =
 async () => {
 
-  await supabase.auth
-    .signOut();
+  await supabase.auth.signOut();
 
-
-  isAdmin =
-    false;
-
-  currentViewedRecord =
-    null;
-
+  isAdmin = false;
+  currentViewedRecord = null;
 
   showEntry();
-
 
   replaceHistory({
     screen: "entry"
@@ -1716,9 +1506,7 @@ async () => {
 };
 
 
-/* =========================================
-   탭
-========================================= */
+/* 탭 */
 
 function renderTabUI(mode) {
 
@@ -1778,39 +1566,20 @@ function renderTabUI(mode) {
   );
 
 
-  if (
-    mode === "register"
-  ) {
+  if (mode === "register") {
 
-    registerTab.classList.add(
-      "active"
-    );
+    registerTab.classList.add("active");
+    registerSection.classList.remove("hidden");
 
-    registerSection.classList.remove(
-      "hidden"
-    );
+  } else if (mode === "search") {
 
-  } else if (
-    mode === "search"
-  ) {
-
-    searchTab.classList.add(
-      "active"
-    );
-
-    searchSection.classList.remove(
-      "hidden"
-    );
+    searchTab.classList.add("active");
+    searchSection.classList.remove("hidden");
 
   } else {
 
-    listTab.classList.add(
-      "active"
-    );
-
-    listSection.classList.remove(
-      "hidden"
-    );
+    listTab.classList.add("active");
+    listSection.classList.remove("hidden");
 
     loadRecordList();
   }
@@ -1819,37 +1588,14 @@ function renderTabUI(mode) {
 
 function navigateTab(mode) {
 
-  if (
-    window.history.state?.screen === "edit" &&
-    mode === "register"
-  ) {
-
-    renderTabUI(
-      "register"
-    );
-
-    return;
-  }
-
-
-  renderTabUI(
-    mode
-  );
-
+  renderTabUI(mode);
 
   document.getElementById(
     "resultBox"
-  ).classList.add(
-    "hidden"
-  );
+  ).classList.add("hidden");
 
-
-  currentViewedRecord =
-    null;
-
-
-  activeScreen =
-    "tab";
+  currentViewedRecord = null;
+  activeScreen = "tab";
 
 
   pushHistory({
@@ -1863,33 +1609,22 @@ function navigateTab(mode) {
 document.getElementById(
   "registerTab"
 ).onclick =
-() =>
-  navigateTab(
-    "register"
-  );
+() => navigateTab("register");
 
 
 document.getElementById(
   "searchTab"
 ).onclick =
-() =>
-  navigateTab(
-    "search"
-  );
+() => navigateTab("search");
 
 
 document.getElementById(
   "listTab"
 ).onclick =
-() =>
-  navigateTab(
-    "list"
-  );
+() => navigateTab("list");
 
 
-/* =========================================
-   결선표
-========================================= */
+/* 결선표 */
 
 function rowKey(
   section,
@@ -1912,11 +1647,7 @@ function getRow(
     );
 
 
-  if (
-    !rowMap.has(
-      key
-    )
-  ) {
+  if (!rowMap.has(key)) {
 
     rowMap.set(
       key,
@@ -1932,9 +1663,7 @@ function getRow(
   }
 
 
-  return rowMap.get(
-    key
-  );
+  return rowMap.get(key);
 }
 
 
@@ -1943,83 +1672,62 @@ function setRows(
   suppliedSections = 0
 ) {
 
-  rowMap =
-    new Map();
+  rowMap = new Map();
+
+  let detectedSection = 0;
+  let detectedPosition = 0;
 
 
-  let detectedSection =
-    0;
+  rows.forEach(raw => {
 
-  let detectedPosition =
-    0;
+    const section =
+      Number(raw.section || 1);
 
-
-  rows.forEach(
-    raw => {
-
-      const section =
-        Number(
-          raw.section ||
-          1
-        );
+    const position =
+      Number(raw.position || 1);
 
 
-      const position =
-        Number(
-          raw.position ||
-          1
-        );
-
-
-      detectedSection =
-        Math.max(
-          detectedSection,
-          section
-        );
-
-
-      detectedPosition =
-        Math.max(
-          detectedPosition,
-          position
-        );
-
-
-      rowMap.set(
-        rowKey(
-          section,
-          position
-        ),
-        {
-          section,
-          position,
-          left:
-            raw.left ||
-            "",
-          right:
-            raw.right ||
-            "",
-          confidence:
-            Number(
-              raw.confidence ??
-              1
-            ),
-          needs_review:
-            Boolean(
-              raw.needs_review
-            )
-        }
+    detectedSection =
+      Math.max(
+        detectedSection,
+        section
       );
-    }
-  );
+
+    detectedPosition =
+      Math.max(
+        detectedPosition,
+        position
+      );
+
+
+    rowMap.set(
+      rowKey(
+        section,
+        position
+      ),
+      {
+        section,
+        position,
+        left: raw.left || "",
+        right: raw.right || "",
+        confidence:
+          Number(
+            raw.confidence ?? 1
+          ),
+        needs_review:
+          Boolean(
+            raw.needs_review
+          )
+      }
+    );
+  });
 
 
   sectionCount =
     Math.max(
       1,
       Number(
-        suppliedSections ||
-        0
+        suppliedSections || 0
       ),
       detectedSection
     );
@@ -2044,42 +1752,33 @@ function collectRows() {
   .filter(
     row =>
       String(
-        row.left ||
-        ""
+        row.left || ""
       ).trim() ||
       String(
-        row.right ||
-        ""
+        row.right || ""
       ).trim()
   )
   .map(
     row => ({
       section:
-        Number(
-          row.section
-        ),
+        Number(row.section),
 
       position:
-        Number(
-          row.position
-        ),
+        Number(row.position),
 
       left:
         String(
-          row.left ||
-          ""
+          row.left || ""
         ).trim(),
 
       right:
         String(
-          row.right ||
-          ""
+          row.right || ""
         ).trim(),
 
       confidence:
         Number(
-          row.confidence ??
-          1
+          row.confidence ?? 1
         ),
 
       needs_review:
@@ -2106,8 +1805,7 @@ function renderEditableMatrix() {
     );
 
 
-  wrap.innerHTML =
-    "";
+  wrap.innerHTML = "";
 
 
   const table =
@@ -2134,16 +1832,10 @@ function renderEditableMatrix() {
     );
 
 
-  positionHead.textContent =
-    "위치";
+  positionHead.textContent = "위치";
+  positionHead.rowSpan = 2;
 
-  positionHead.rowSpan =
-    2;
-
-
-  head1.appendChild(
-    positionHead
-  );
+  head1.appendChild(positionHead);
 
 
   for (
@@ -2157,20 +1849,13 @@ function renderEditableMatrix() {
         "th"
       );
 
-
     th.textContent =
       `구역 ${section}`;
 
-    th.colSpan =
-      2;
+    th.colSpan = 2;
+    th.className = "section-head";
 
-    th.className =
-      "section-head";
-
-
-    head1.appendChild(
-      th
-    );
+    head1.appendChild(th);
   }
 
 
@@ -2191,8 +1876,7 @@ function renderEditableMatrix() {
         "th"
       );
 
-    left.textContent =
-      "좌";
+    left.textContent = "좌";
 
 
     const right =
@@ -2200,31 +1884,18 @@ function renderEditableMatrix() {
         "th"
       );
 
-    right.textContent =
-      "우";
+    right.textContent = "우";
 
 
-    head2.appendChild(
-      left
-    );
-
-    head2.appendChild(
-      right
-    );
+    head2.appendChild(left);
+    head2.appendChild(right);
   }
 
 
-  thead.appendChild(
-    head1
-  );
+  thead.appendChild(head1);
+  thead.appendChild(head2);
 
-  thead.appendChild(
-    head2
-  );
-
-  table.appendChild(
-    thead
-  );
+  table.appendChild(thead);
 
 
   const tbody =
@@ -2251,16 +1922,10 @@ function renderEditableMatrix() {
       );
 
 
-    posTd.textContent =
-      position;
+    posTd.textContent = position;
+    posTd.className = "position-cell";
 
-    posTd.className =
-      "position-cell";
-
-
-    tr.appendChild(
-      posTd
-    );
+    tr.appendChild(posTd);
 
 
     for (
@@ -2279,118 +1944,87 @@ function renderEditableMatrix() {
       [
         "left",
         "right"
-      ].forEach(
-        side => {
+      ].forEach(side => {
 
-          const td =
-            document.createElement(
-              "td"
-            );
+        const td =
+          document.createElement(
+            "td"
+          );
 
 
-          if (
-            row.needs_review ||
-            Number(
-              row.confidence
-            ) < 0.8
-          ) {
+        if (
+          row.needs_review ||
+          Number(
+            row.confidence
+          ) < 0.8
+        ) {
 
-            td.classList.add(
+          td.classList.add(
+            "review-cell"
+          );
+        }
+
+
+        const input =
+          document.createElement(
+            "input"
+          );
+
+
+        input.className = "matrix-input";
+        input.value = row[side] || "";
+        input.placeholder = "-";
+
+
+        input.addEventListener(
+          "input",
+          () => {
+
+            row[side] =
+              input.value;
+
+            row.needs_review =
+              false;
+
+            row.confidence = 1;
+
+            td.classList.remove(
               "review-cell"
             );
           }
+        );
 
 
-          const input =
-            document.createElement(
-              "input"
-            );
-
-
-          input.className =
-            "matrix-input";
-
-          input.value =
-            row[side] ||
-            "";
-
-          input.placeholder =
-            "-";
-
-
-          input.addEventListener(
-            "input",
-            () => {
-
-              row[side] =
-                input.value;
-
-              row.needs_review =
-                false;
-
-              row.confidence =
-                1;
-
-
-              td.classList.remove(
-                "review-cell"
-              );
-            }
-          );
-
-
-          td.appendChild(
-            input
-          );
-
-          tr.appendChild(
-            td
-          );
-        }
-      );
+        td.appendChild(input);
+        tr.appendChild(td);
+      });
     }
 
 
-    tbody.appendChild(
-      tr
-    );
+    tbody.appendChild(tr);
   }
 
 
-  table.appendChild(
-    tbody
-  );
-
-  wrap.appendChild(
-    table
-  );
+  table.appendChild(tbody);
+  wrap.appendChild(table);
 }
 
 
-/* =========================================
-   사진 URL
-========================================= */
+/* 사진 */
 
-async function signedUrls(
-  paths
-) {
+async function signedUrls(paths) {
 
-  const urls =
-    [];
+  const urls = [];
 
 
-  for (
-    const path of paths
-  ) {
+  for (const path of paths) {
 
     const {
       data,
       error
     } =
     await supabase.storage
-      .from(
-        "bhd-images"
-      )
+      .from("bhd-images")
       .createSignedUrl(
         path,
         3600
@@ -2413,27 +2047,16 @@ async function signedUrls(
 }
 
 
-/* =========================================
-   사진 확대
-========================================= */
-
 function showImageModalOnly(
   url,
   filename,
   mirror
 ) {
 
-  modalImageUrl =
-    url;
-
-  modalDownloadName =
-    filename;
-
-  modalZoom =
-    1;
-
-  modalMirror =
-    mirror;
+  modalImageUrl = url;
+  modalDownloadName = filename;
+  modalZoom = 1;
+  modalMirror = mirror;
 
 
   const img =
@@ -2442,26 +2065,21 @@ function showImageModalOnly(
     );
 
 
-  img.src =
-    url;
-
+  img.src = url;
 
   applyModalTransform();
 
 
   document.getElementById(
     "imageModal"
-  ).classList.remove(
-    "hidden"
-  );
+  ).classList.remove("hidden");
 
 
   document.body.style.overflow =
     "hidden";
 
 
-  activeScreen =
-    "image";
+  activeScreen = "image";
 }
 
 
@@ -2492,29 +2110,19 @@ function hideImageModalOnly() {
 
   document.getElementById(
     "imageModal"
-  ).classList.add(
-    "hidden"
-  );
+  ).classList.add("hidden");
 
 
   document.getElementById(
     "modalImage"
-  ).src =
-    "";
+  ).src = "";
 
 
-  document.body.style.overflow =
-    "";
+  document.body.style.overflow = "";
 
-
-  modalImageUrl =
-    "";
-
-  modalZoom =
-    1;
-
-  modalMirror =
-    false;
+  modalImageUrl = "";
+  modalZoom = 1;
+  modalMirror = false;
 }
 
 
@@ -2543,7 +2151,8 @@ document.getElementById(
 () => {
 
   if (
-    window.history.state?.screen === "image"
+    window.history.state?.screen ===
+    "image"
   ) {
 
     window.history.back();
@@ -2590,8 +2199,7 @@ document.getElementById(
 ).onclick =
 () => {
 
-  modalZoom =
-    1;
+  modalZoom = 1;
 
   applyModalTransform();
 };
@@ -2605,55 +2213,29 @@ async function downloadImage(
   try {
 
     const response =
-      await fetch(
-        url
-      );
+      await fetch(url);
 
-
-    if (
-      !response.ok
-    ) {
-
-      throw new Error(
-        "사진을 불러오지 못했습니다."
-      );
+    if (!response.ok) {
+      throw new Error();
     }
-
 
     const blob =
       await response.blob();
 
-
     const blobUrl =
-      URL.createObjectURL(
-        blob
-      );
-
+      URL.createObjectURL(blob);
 
     const a =
-      document.createElement(
-        "a"
-      );
+      document.createElement("a");
 
-
-    a.href =
-      blobUrl;
-
+    a.href = blobUrl;
     a.download =
-      safeFilename(
-        filename
-      );
+      safeFilename(filename);
 
-
-    document.body.appendChild(
-      a
-    );
-
+    document.body.appendChild(a);
 
     a.click();
-
     a.remove();
-
 
     setTimeout(
       () =>
@@ -2663,8 +2245,7 @@ async function downloadImage(
       1000
     );
 
-
-  } catch (error) {
+  } catch {
 
     window.open(
       url,
@@ -2679,9 +2260,7 @@ document.getElementById(
 ).onclick =
 () => {
 
-  if (
-    modalImageUrl
-  ) {
+  if (modalImageUrl) {
 
     downloadImage(
       modalImageUrl,
@@ -2718,7 +2297,6 @@ function attachImageTools(
       "div"
     );
 
-
   tools.className =
     "image-tools";
 
@@ -2728,13 +2306,11 @@ function attachImageTools(
       "button"
     );
 
-
   zoomBtn.className =
     "secondary";
 
   zoomBtn.textContent =
     "확대";
-
 
   zoomBtn.onclick =
     () =>
@@ -2750,13 +2326,11 @@ function attachImageTools(
       "button"
     );
 
-
   downloadBtn.className =
     "secondary";
 
   downloadBtn.textContent =
     "다운로드";
-
 
   downloadBtn.onclick =
     () =>
@@ -2766,23 +2340,12 @@ function attachImageTools(
       );
 
 
-  tools.appendChild(
-    zoomBtn
-  );
+  tools.appendChild(zoomBtn);
+  tools.appendChild(downloadBtn);
 
-  tools.appendChild(
-    downloadBtn
-  );
-
-  item.appendChild(
-    tools
-  );
+  item.appendChild(tools);
 }
 
-
-/* =========================================
-   사진 미리보기
-========================================= */
 
 function renderPreviews() {
 
@@ -2792,37 +2355,27 @@ function renderPreviews() {
     );
 
 
-  grid.innerHTML =
-    "";
+  grid.innerHTML = "";
 
 
   existingPreviewUrls.forEach(
     (url, i) => {
 
       const item =
-        document.createElement(
-          "div"
-        );
-
+        document.createElement("div");
 
       item.className =
         "preview-item";
 
 
       const img =
-        document.createElement(
-          "img"
-        );
+        document.createElement("img");
 
-      img.src =
-        url;
+      img.src = url;
 
 
       const label =
-        document.createElement(
-          "div"
-        );
-
+        document.createElement("div");
 
       label.className =
         "preview-label";
@@ -2831,13 +2384,8 @@ function renderPreviews() {
         `기존 사진 ${i + 1}`;
 
 
-      item.appendChild(
-        img
-      );
-
-      item.appendChild(
-        label
-      );
+      item.appendChild(img);
+      item.appendChild(label);
 
 
       attachImageTools(
@@ -2849,9 +2397,7 @@ function renderPreviews() {
       );
 
 
-      grid.appendChild(
-        item
-      );
+      grid.appendChild(item);
     }
   );
 
@@ -2862,36 +2408,24 @@ function renderPreviews() {
     (file, i) => {
 
       const url =
-        URL.createObjectURL(
-          file
-        );
+        URL.createObjectURL(file);
 
 
       const item =
-        document.createElement(
-          "div"
-        );
-
+        document.createElement("div");
 
       item.className =
         "preview-item";
 
 
       const img =
-        document.createElement(
-          "img"
-        );
+        document.createElement("img");
 
-
-      img.src =
-        url;
+      img.src = url;
 
 
       const label =
-        document.createElement(
-          "div"
-        );
-
+        document.createElement("div");
 
       label.className =
         "preview-label";
@@ -2900,13 +2434,8 @@ function renderPreviews() {
         `추가 사진 ${i + 1}`;
 
 
-      item.appendChild(
-        img
-      );
-
-      item.appendChild(
-        label
-      );
+      item.appendChild(img);
+      item.appendChild(label);
 
 
       attachImageTools(
@@ -2919,31 +2448,22 @@ function renderPreviews() {
       );
 
 
-      grid.appendChild(
-        item
-      );
+      grid.appendChild(item);
     }
   );
 }
 
 
-/* =========================================
-   등록 초기화 / 수정
-========================================= */
+/* 등록 / 수정 */
 
 async function resetRegister() {
 
-  editingId =
-    null;
+  editingId = null;
 
-  existingPaths =
-    [];
+  existingPaths = [];
+  existingPreviewUrls = [];
 
-  existingPreviewUrls =
-    [];
-
-  photosInput.value =
-    "";
+  photosInput.value = "";
 
 
   analysisMeta = {
@@ -2954,21 +2474,15 @@ async function resetRegister() {
 
   document.getElementById(
     "shipNo"
-  ).value =
-    "";
-
+  ).value = "";
 
   document.getElementById(
     "area"
-  ).value =
-    "";
-
+  ).value = "";
 
   document.getElementById(
     "bhdNo"
-  ).value =
-    "";
-
+  ).value = "";
 
   document.getElementById(
     "workDate"
@@ -2978,9 +2492,7 @@ async function resetRegister() {
 
   document.getElementById(
     "editBanner"
-  ).classList.add(
-    "hidden"
-  );
+  ).classList.add("hidden");
 
 
   document.getElementById(
@@ -2997,28 +2509,20 @@ async function resetRegister() {
 
   document.getElementById(
     "analysisSummary"
-  ).classList.add(
-    "hidden"
-  );
+  ).classList.add("hidden");
 
 
   document.getElementById(
     "analysisStatus"
-  ).textContent =
-    "";
+  ).textContent = "";
 
 
   document.getElementById(
     "saveStatus"
-  ).textContent =
-    "";
+  ).textContent = "";
 
 
-  setRows(
-    [],
-    1
-  );
-
+  setRows([], 1);
 
   renderPreviews();
 }
@@ -3029,8 +2533,7 @@ async function loadForEdit(
   push = true
 ) {
 
-  editingId =
-    record.id;
+  editingId = record.id;
 
 
   existingPaths =
@@ -3052,30 +2555,23 @@ async function loadForEdit(
     );
 
 
-  photosInput.value =
-    "";
+  photosInput.value = "";
 
 
   document.getElementById(
     "shipNo"
   ).value =
-    record.ship_no ||
-    "";
-
+    record.ship_no || "";
 
   document.getElementById(
     "area"
   ).value =
-    record.area ||
-    "";
-
+    record.area || "";
 
   document.getElementById(
     "bhdNo"
   ).value =
-    record.bhd_no ||
-    "";
-
+    record.bhd_no || "";
 
   document.getElementById(
     "workDate"
@@ -3088,7 +2584,6 @@ async function loadForEdit(
     notes:
       record.analysis_notes ||
       "",
-
     ai_analyzed:
       Boolean(
         record.ai_analyzed
@@ -3114,9 +2609,7 @@ async function loadForEdit(
 
   document.getElementById(
     "editBanner"
-  ).classList.remove(
-    "hidden"
-  );
+  ).classList.remove("hidden");
 
 
   document.getElementById(
@@ -3139,23 +2632,13 @@ async function loadForEdit(
     "수정 저장";
 
 
-  showApp(
-    isAdmin
-  );
+  showApp(isAdmin);
+  renderTabUI("register");
+
+  activeScreen = "edit";
 
 
-  renderTabUI(
-    "register"
-  );
-
-
-  activeScreen =
-    "edit";
-
-
-  if (
-    push
-  ) {
+  if (push) {
 
     pushHistory({
       screen: "edit",
@@ -3179,14 +2662,9 @@ async () => {
 
   await resetRegister();
 
+  renderTabUI("register");
 
-  renderTabUI(
-    "register"
-  );
-
-
-  activeScreen =
-    "tab";
+  activeScreen = "tab";
 
 
   pushHistory({
@@ -3224,8 +2702,7 @@ document.getElementById(
 ).onclick =
 () => {
 
-  maxPosition +=
-    1;
+  maxPosition += 1;
 
   renderEditableMatrix();
 };
@@ -3236,16 +2713,13 @@ document.getElementById(
 ).onclick =
 () => {
 
-  sectionCount +=
-    1;
+  sectionCount += 1;
 
   renderEditableMatrix();
 };
 
 
-/* =========================================
-   AI
-========================================= */
+/* AI */
 
 async function compressForAI(
   file,
@@ -3254,9 +2728,7 @@ async function compressForAI(
 ) {
 
   const bitmap =
-    await createImageBitmap(
-      file
-    );
+    await createImageBitmap(file);
 
 
   const ratio =
@@ -3272,14 +2744,12 @@ async function compressForAI(
 
   const width =
     Math.round(
-      bitmap.width *
-      ratio
+      bitmap.width * ratio
     );
 
   const height =
     Math.round(
-      bitmap.height *
-      ratio
+      bitmap.height * ratio
     );
 
 
@@ -3288,18 +2758,12 @@ async function compressForAI(
       "canvas"
     );
 
-
-  canvas.width =
-    width;
-
-  canvas.height =
-    height;
+  canvas.width = width;
+  canvas.height = height;
 
 
   canvas
-    .getContext(
-      "2d"
-    )
+    .getContext("2d")
     .drawImage(
       bitmap,
       0,
@@ -3329,12 +2793,10 @@ async () => {
       "analyzeBtn"
     );
 
-
   const status =
     document.getElementById(
       "analysisStatus"
     );
-
 
   const summary =
     document.getElementById(
@@ -3362,9 +2824,7 @@ async () => {
   }
 
 
-  if (
-    total > 8
-  ) {
+  if (total > 8) {
 
     status.textContent =
       "사진은 최대 8장입니다.";
@@ -3375,9 +2835,7 @@ async () => {
 
   try {
 
-    button.disabled =
-      true;
-
+    button.disabled = true;
 
     status.textContent =
       `사진 ${total}장 분석 중...`;
@@ -3395,9 +2853,7 @@ async () => {
       await Promise.all(
         newFiles.map(
           file =>
-            compressForAI(
-              file
-            )
+            compressForAI(file)
         )
       );
 
@@ -3419,21 +2875,10 @@ async () => {
     );
 
 
-    if (
-      error
-    ) {
+    if (error) throw error;
 
-      throw error;
-    }
-
-
-    if (
-      data?.error
-    ) {
-
-      throw new Error(
-        data.error
-      );
+    if (data?.error) {
+      throw new Error(data.error);
     }
 
 
@@ -3447,9 +2892,7 @@ async () => {
 
     analysisMeta = {
       notes:
-        data?.notes ||
-        "",
-
+        data?.notes || "",
       ai_analyzed:
         true
     };
@@ -3458,8 +2901,7 @@ async () => {
     setRows(
       rows,
       Number(
-        data?.section_count ||
-        0
+        data?.section_count || 0
       )
     );
 
@@ -3469,8 +2911,7 @@ async () => {
         row =>
           row.needs_review ||
           Number(
-            row.confidence ||
-            0
+            row.confidence || 0
           ) < 0.8
       ).length;
 
@@ -3501,24 +2942,18 @@ async () => {
 
   } finally {
 
-    button.disabled =
-      false;
+    button.disabled = false;
   }
 };
 
 
-/* =========================================
-   Invalid key 방지 업로드
-========================================= */
+/* 안전한 파일 경로 */
 
-function getUploadExtension(
-  file
-) {
+function getUploadExtension(file) {
 
   const mime =
     String(
-      file.type ||
-      ""
+      file.type || ""
     ).toLowerCase();
 
 
@@ -3532,33 +2967,22 @@ function getUploadExtension(
   };
 
 
-  if (
-    map[mime]
-  ) {
-
+  if (map[mime]) {
     return map[mime];
   }
 
 
   const match =
     String(
-      file.name ||
-      ""
+      file.name || ""
     ).match(
       /\.([a-zA-Z0-9]{1,8})$/
     );
 
 
-  if (
-    match
-  ) {
-
-    return match[1]
-      .toLowerCase();
-  }
-
-
-  return "jpg";
+  return match
+    ? match[1].toLowerCase()
+    : "jpg";
 }
 
 
@@ -3570,8 +2994,7 @@ function makeUploadId() {
       "function"
   ) {
 
-    return window.crypto
-      .randomUUID();
+    return window.crypto.randomUUID();
   }
 
 
@@ -3592,17 +3015,12 @@ async function uploadNewFiles() {
       ...photosInput.files
     ];
 
-
-  const paths =
-    [];
+  const paths = [];
 
 
   const folderDate =
     localToday()
-      .replaceAll(
-        "-",
-        ""
-      );
+      .replaceAll("-", "");
 
 
   for (
@@ -3614,33 +3032,22 @@ async function uploadNewFiles() {
     const file =
       files[i];
 
-
     const ext =
-      getUploadExtension(
-        file
-      );
+      getUploadExtension(file);
 
 
-    /*
-     * 중요:
-     * 한글 이름, 구역, 원래 파일명 등을
-     * Supabase object key에 사용하지 않음.
-     */
     const path =
       `uploads/${folderDate}/` +
       `${Date.now()}-` +
       `${i + 1}-` +
-      `${makeUploadId()}.` +
-      `${ext}`;
+      `${makeUploadId()}.${ext}`;
 
 
     const {
       error
     } =
     await supabase.storage
-      .from(
-        "bhd-images"
-      )
+      .from("bhd-images")
       .upload(
         path,
         file,
@@ -3653,17 +3060,10 @@ async function uploadNewFiles() {
       );
 
 
-    if (
-      error
-    ) {
-
-      throw error;
-    }
+    if (error) throw error;
 
 
-    paths.push(
-      path
-    );
+    paths.push(path);
   }
 
 
@@ -3671,9 +3071,7 @@ async function uploadNewFiles() {
 }
 
 
-/* =========================================
-   저장
-========================================= */
+/* 저장 */
 
 document.getElementById(
   "saveBtn"
@@ -3684,7 +3082,6 @@ async () => {
     document.getElementById(
       "saveBtn"
     );
-
 
   const status =
     document.getElementById(
@@ -3697,18 +3094,15 @@ async () => {
       "shipNo"
     ).value.trim();
 
-
   const area =
     document.getElementById(
       "area"
     ).value.trim();
 
-
   const name =
     document.getElementById(
       "bhdNo"
     ).value.trim();
-
 
   const workDate =
     document.getElementById(
@@ -3733,9 +3127,7 @@ async () => {
     collectRows();
 
 
-  if (
-    !rows.length
-  ) {
+  if (!rows.length) {
 
     status.textContent =
       "결선표가 비어 있습니다.";
@@ -3759,8 +3151,7 @@ async () => {
 
   try {
 
-    button.disabled =
-      true;
+    button.disabled = true;
 
 
     status.textContent =
@@ -3781,22 +3172,14 @@ async () => {
 
     const payload = {
 
-      ship_no:
-        shipNo,
-
-      area:
-        area,
-
-      bhd_no:
-        name,
-
+      ship_no: shipNo,
+      area: area,
+      bhd_no: name,
       work_date:
-        workDate ||
-        null,
+        workDate || null,
 
       original_image:
-        allPaths[0] ||
-        null,
+        allPaths[0] || null,
 
       original_images:
         allPaths,
@@ -3818,32 +3201,21 @@ async () => {
     };
 
 
-    if (
-      editingId
-    ) {
+    if (editingId) {
 
       const {
         error
       } =
       await supabase
-        .from(
-          "bhd_records"
-        )
-        .update(
-          payload
-        )
+        .from("bhd_records")
+        .update(payload)
         .eq(
           "id",
           editingId
         );
 
 
-      if (
-        error
-      ) {
-
-        throw error;
-      }
+      if (error) throw error;
 
 
       existingPaths =
@@ -3856,9 +3228,7 @@ async () => {
         );
 
 
-      photosInput.value =
-        "";
-
+      photosInput.value = "";
 
       renderPreviews();
 
@@ -3869,13 +3239,20 @@ async () => {
 
     } else {
 
-      payload.is_completed =
+      payload.is_completed = false;
+      payload.completed_at = null;
+      payload.completed_by = null;
+
+      payload.delete_requested =
         false;
 
-      payload.completed_at =
+      payload.delete_requested_at =
         null;
 
-      payload.completed_by =
+      payload.delete_requested_by =
+        null;
+
+      payload.delete_request_reason =
         null;
 
 
@@ -3883,24 +3260,15 @@ async () => {
         error
       } =
       await supabase
-        .from(
-          "bhd_records"
-        )
-        .insert(
-          payload
-        );
+        .from("bhd_records")
+        .insert(payload);
 
 
-      if (
-        error
-      ) {
-
-        throw error;
-      }
+      if (error) throw error;
 
 
       status.textContent =
-        "등록 완료 · 미완료 상태로 저장되었습니다.";
+        "등록 완료되었습니다. 잘못 등록한 경우 목록에서 '삭제 요청'을 눌러주세요.";
     }
 
 
@@ -3915,62 +3283,269 @@ async () => {
 
   } finally {
 
-    button.disabled =
-      false;
+    button.disabled = false;
   }
 };
 
 
-/* =========================================
-   후작업 반전표
-========================================= */
+/* 삭제요청 */
+
+async function requestDelete(record) {
+
+  if (isAdmin) {
+    return;
+  }
+
+
+  if (record.delete_requested) {
+
+    alert(
+      "이미 삭제 요청된 자료입니다."
+    );
+
+    return;
+  }
+
+
+  const requester =
+    prompt(
+      "삭제 요청자 이름을 입력하세요."
+    );
+
+
+  if (requester === null) {
+    return;
+  }
+
+
+  const requesterName =
+    requester.trim();
+
+
+  if (!requesterName) {
+
+    alert(
+      "삭제 요청자 이름을 입력해야 합니다."
+    );
+
+    return;
+  }
+
+
+  const reasonInput =
+    prompt(
+      "삭제 요청 사유를 입력하세요.\n예: 이름 잘못 기재 / 위치 오기재",
+      "잘못 기재"
+    );
+
+
+  if (reasonInput === null) {
+    return;
+  }
+
+
+  const reason =
+    reasonInput.trim() ||
+    "잘못 기재";
+
+
+  const ok =
+    confirm(
+      `삭제 요청하시겠습니까?\n\n` +
+      `호선: ${record.ship_no || "-"}\n` +
+      `위치: ${record.area || "-"}\n` +
+      `이름: ${record.bhd_no || "-"}\n` +
+      `요청자: ${requesterName}\n` +
+      `사유: ${reason}\n\n` +
+      `※ 즉시 삭제되는 것은 아니며 관리자 확인 후 삭제됩니다.`
+    );
+
+
+  if (!ok) return;
+
+
+  const now =
+    new Date().toISOString();
+
+
+  const {
+    error
+  } =
+  await supabase
+    .from("bhd_records")
+    .update({
+      delete_requested:
+        true,
+
+      delete_requested_at:
+        now,
+
+      delete_requested_by:
+        requesterName,
+
+      delete_request_reason:
+        reason
+    })
+    .eq(
+      "id",
+      record.id
+    );
+
+
+  if (error) {
+
+    alert(
+      "삭제 요청 실패: " +
+      error.message
+    );
+
+    return;
+  }
+
+
+  record.delete_requested =
+    true;
+
+  record.delete_requested_at =
+    now;
+
+  record.delete_requested_by =
+    requesterName;
+
+  record.delete_request_reason =
+    reason;
+
+
+  alert(
+    "삭제 요청이 접수되었습니다.\n관리자가 확인 후 처리합니다."
+  );
+
+
+  if (
+    !document.getElementById(
+      "listSection"
+    ).classList.contains(
+      "hidden"
+    )
+  ) {
+
+    await loadRecordList();
+
+  } else {
+
+    await searchRecords();
+  }
+}
+
+
+/* 관리자 삭제요청 해제 */
+
+async function clearDeleteRequest(
+  record
+) {
+
+  if (!isAdmin) {
+    return;
+  }
+
+
+  const ok =
+    confirm(
+      `${record.ship_no || ""} / ` +
+      `${record.area || ""} / ` +
+      `${record.bhd_no || ""}\n\n` +
+      `삭제 요청을 해제하시겠습니까?\n` +
+      `자료 자체는 삭제되지 않습니다.`
+    );
+
+
+  if (!ok) return;
+
+
+  const {
+    error
+  } =
+  await supabase
+    .from("bhd_records")
+    .update({
+      delete_requested:
+        false,
+
+      delete_requested_at:
+        null,
+
+      delete_requested_by:
+        null,
+
+      delete_request_reason:
+        null
+    })
+    .eq(
+      "id",
+      record.id
+    );
+
+
+  if (error) {
+
+    alert(
+      "요청 해제 실패: " +
+      error.message
+    );
+
+    return;
+  }
+
+
+  alert(
+    "삭제 요청을 해제했습니다."
+  );
+
+
+  await loadRecordList();
+}
+
+
+/* 후작업 반전표 */
 
 function buildMirroredTableHTML(
   rows,
   sections
 ) {
 
-  const map =
-    new Map();
+  const map = new Map();
+
+  let maxPos = 1;
 
 
-  let maxPos =
-    1;
+  rows.forEach(row => {
 
-
-  rows.forEach(
-    row => {
-
-      const section =
-        Number(
-          row.section ||
-          1
-        );
-
-
-      const position =
-        Number(
-          row.position ||
-          1
-        );
-
-
-      maxPos =
-        Math.max(
-          maxPos,
-          position
-        );
-
-
-      map.set(
-        rowKey(
-          section,
-          position
-        ),
-        row
+    const section =
+      Number(
+        row.section || 1
       );
-    }
-  );
+
+    const position =
+      Number(
+        row.position || 1
+      );
+
+
+    maxPos =
+      Math.max(
+        maxPos,
+        position
+      );
+
+
+    map.set(
+      rowKey(
+        section,
+        position
+      ),
+      row
+    );
+  });
 
 
   let html =
@@ -4061,8 +3636,7 @@ function buildMirroredTableHTML(
     }
 
 
-    html +=
-      `</tr>`;
+    html += `</tr>`;
   }
 
 
@@ -4092,9 +3666,7 @@ function renderMirroredMatrix(
 }
 
 
-/* =========================================
-   후작업 보기
-========================================= */
+/* 후작업 보기 */
 
 async function renderRecordDetail(
   record,
@@ -4105,20 +3677,13 @@ async function renderRecordDetail(
     record;
 
 
-  showApp(
-    isAdmin
-  );
-
-
-  renderTabUI(
-    "search"
-  );
+  showApp(isAdmin);
+  renderTabUI("search");
 
 
   document.getElementById(
     "exportStatus"
-  ).textContent =
-    "";
+  ).textContent = "";
 
 
   const paths =
@@ -4128,16 +3693,12 @@ async function renderRecordDetail(
     record.original_images.length
       ? record.original_images
       : record.original_image
-        ? [
-            record.original_image
-          ]
+        ? [record.original_image]
         : [];
 
 
   const urls =
-    await signedUrls(
-      paths
-    );
+    await signedUrls(paths);
 
 
   const images =
@@ -4146,8 +3707,7 @@ async function renderRecordDetail(
     );
 
 
-  images.innerHTML =
-    "";
+  images.innerHTML = "";
 
 
   urls.forEach(
@@ -4158,7 +3718,6 @@ async function renderRecordDetail(
           "div"
         );
 
-
       item.className =
         "preview-item";
 
@@ -4168,16 +3727,13 @@ async function renderRecordDetail(
           "img"
         );
 
-
-      img.src =
-        url;
+      img.src = url;
 
 
       const label =
         document.createElement(
           "div"
         );
-
 
       label.className =
         "preview-label";
@@ -4186,13 +3742,8 @@ async function renderRecordDetail(
         `반전 사진 ${i + 1}`;
 
 
-      item.appendChild(
-        img
-      );
-
-      item.appendChild(
-        label
-      );
+      item.appendChild(img);
+      item.appendChild(label);
 
 
       attachImageTools(
@@ -4204,9 +3755,7 @@ async function renderRecordDetail(
       );
 
 
-      images.appendChild(
-        item
-      );
+      images.appendChild(item);
     }
   );
 
@@ -4223,8 +3772,7 @@ async function renderRecordDetail(
     Math.max(
       1,
       Number(
-        record.section_count ||
-        1
+        record.section_count || 1
       )
     );
 
@@ -4260,13 +3808,10 @@ async function renderRecordDetail(
   );
 
 
-  activeScreen =
-    "detail";
+  activeScreen = "detail";
 
 
-  if (
-    push
-  ) {
+  if (push) {
 
     pushHistory({
       screen: "detail",
@@ -4283,8 +3828,7 @@ async function renderRecordDetail(
         top:
           document.getElementById(
             "resultBox"
-          ).offsetTop -
-          30,
+          ).offsetTop - 30,
         behavior: "smooth"
       });
 
@@ -4294,9 +3838,7 @@ async function renderRecordDetail(
 }
 
 
-async function showRecord(
-  record
-) {
+async function showRecord(record) {
 
   await renderRecordDetail(
     record,
@@ -4305,13 +3847,9 @@ async function showRecord(
 }
 
 
-/* =========================================
-   표 이미지 / 인쇄
-========================================= */
+/* 표 이미지 및 PDF */
 
-function buildExportSheet(
-  record
-) {
+function buildExportSheet(record) {
 
   const rows =
     Array.isArray(
@@ -4325,8 +3863,7 @@ function buildExportSheet(
     Math.max(
       1,
       Number(
-        record.section_count ||
-        1
+        record.section_count || 1
       )
     );
 
@@ -4401,9 +3938,7 @@ async () => {
     );
 
 
-  if (
-    !currentViewedRecord
-  ) {
+  if (!currentViewedRecord) {
 
     status.textContent =
       "먼저 후작업 기록을 선택하세요.";
@@ -4430,26 +3965,19 @@ async () => {
       );
 
 
-    const target =
-      stage.firstElementChild;
-
-
     const canvas =
       await window.html2canvas(
-        target,
+        stage.firstElementChild,
         {
           backgroundColor:
             "#ffffff",
-          scale:
-            2
+          scale: 2
         }
       );
 
 
     const link =
-      document.createElement(
-        "a"
-      );
+      document.createElement("a");
 
 
     link.download =
@@ -4466,18 +3994,13 @@ async () => {
       );
 
 
-    document.body.appendChild(
-      link
-    );
-
+    document.body.appendChild(link);
 
     link.click();
-
     link.remove();
 
 
-    stage.innerHTML =
-      "";
+    stage.innerHTML = "";
 
 
     status.textContent =
@@ -4507,9 +4030,7 @@ document.getElementById(
     );
 
 
-  if (
-    !currentViewedRecord
-  ) {
+  if (!currentViewedRecord) {
 
     status.textContent =
       "먼저 후작업 기록을 선택하세요.";
@@ -4531,9 +4052,7 @@ document.getElementById(
     );
 
 
-  if (
-    !printWindow
-  ) {
+  if (!printWindow) {
 
     status.textContent =
       "팝업을 허용해주세요.";
@@ -4544,87 +4063,83 @@ document.getElementById(
 
   printWindow.document.write(`
     <!DOCTYPE html>
-
     <html lang="ko">
 
     <head>
 
-      <meta charset="UTF-8">
+    <meta charset="UTF-8">
 
-      <title>
-        BHD 후작업 결선표
-      </title>
+    <title>BHD 후작업 결선표</title>
 
-      <style>
+    <style>
 
-      @page {
-        size: A4 landscape;
-        margin: 10mm;
-      }
+    @page {
+      size: A4 landscape;
+      margin: 10mm;
+    }
 
-      body {
-        font-family: Arial, "Noto Sans KR", sans-serif;
-        margin: 0;
-        color: #111;
-      }
+    body {
+      font-family: Arial, "Noto Sans KR", sans-serif;
+      margin: 0;
+      color: #111;
+    }
 
-      .export-sheet-title {
-        text-align: center;
-        font-size: 24px;
-        font-weight: 800;
-        margin-bottom: 14px;
-      }
+    .export-sheet-title {
+      text-align: center;
+      font-size: 24px;
+      font-weight: 800;
+      margin-bottom: 14px;
+    }
 
-      .export-sheet-info {
-        border: 1px solid #333;
-        padding: 10px;
-        margin-bottom: 14px;
-        line-height: 1.6;
-      }
+    .export-sheet-info {
+      border: 1px solid #333;
+      padding: 10px;
+      margin-bottom: 14px;
+      line-height: 1.6;
+    }
 
-      table {
-        width: 100%;
-        border-collapse: collapse;
-        table-layout: fixed;
-      }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      table-layout: fixed;
+    }
 
-      th,
-      td {
-        border: 1px solid #333;
-        padding: 7px 4px;
-        text-align: center;
-        font-size: 13px;
-      }
+    th,
+    td {
+      border: 1px solid #333;
+      padding: 7px 4px;
+      text-align: center;
+      font-size: 13px;
+    }
 
-      th {
-        background: #e8eef3;
-      }
+    th {
+      background: #e8eef3;
+    }
 
-      </style>
+    </style>
 
     </head>
 
     <body>
 
-      ${content}
+    ${content}
 
-      <script>
+    <script>
 
-      window.onload =
-      function() {
+    window.onload =
+    function() {
 
-        setTimeout(
-          function() {
-            window.print();
-          },
-          300
-        );
-      };
+      setTimeout(
+        function() {
+          window.print();
+        },
+        300
+      );
+    };
 
-      <\/script>
+    <\/script>
 
     </body>
-
     </html>
   `);
 
@@ -4637,25 +4152,19 @@ document.getElementById(
 };
 
 
-/* =========================================
-   작업완료
-========================================= */
+/* 후작업 완료 */
 
-function updateCompleteButton(
-  record
-) {
+function updateCompleteButton(record) {
 
   const btn =
     document.getElementById(
       "completeBtn"
     );
 
-
   const status =
     document.getElementById(
       "completeStatus"
     );
-
 
   const workerInput =
     document.getElementById(
@@ -4663,23 +4172,18 @@ function updateCompleteButton(
     );
 
 
-  if (
-    record.is_completed
-  ) {
+  if (record.is_completed) {
 
     workerInput.value =
-      record.completed_by ||
-      "";
+      record.completed_by || "";
 
-    workerInput.disabled =
-      true;
+    workerInput.disabled = true;
 
 
     btn.textContent =
       "후작업 완료됨";
 
-    btn.disabled =
-      true;
+    btn.disabled = true;
 
     btn.className =
       "completed-btn";
@@ -4696,18 +4200,14 @@ function updateCompleteButton(
 
   } else {
 
-    workerInput.value =
-      "";
-
-    workerInput.disabled =
-      false;
+    workerInput.value = "";
+    workerInput.disabled = false;
 
 
     btn.textContent =
       "후작업 작업완료";
 
-    btn.disabled =
-      false;
+    btn.disabled = false;
 
     btn.className =
       "complete-btn";
@@ -4739,20 +4239,16 @@ async () => {
     ).value.trim();
 
 
-  if (
-    !completedBy
-  ) {
+  if (!completedBy) {
 
     document.getElementById(
       "completeStatus"
     ).textContent =
       "후작업 작업자 이름을 입력하세요.";
 
-
     document.getElementById(
       "completedBy"
     ).focus();
-
 
     return;
   }
@@ -4764,35 +4260,22 @@ async () => {
     );
 
 
-  if (
-    !ok
-  ) {
-
-    return;
-  }
+  if (!ok) return;
 
 
   const now =
-    new Date()
-      .toISOString();
+    new Date().toISOString();
 
 
   const {
     error
   } =
   await supabase
-    .from(
-      "bhd_records"
-    )
+    .from("bhd_records")
     .update({
-      is_completed:
-        true,
-
-      completed_at:
-        now,
-
-      completed_by:
-        completedBy
+      is_completed: true,
+      completed_at: now,
+      completed_by: completedBy
     })
     .eq(
       "id",
@@ -4800,9 +4283,7 @@ async () => {
     );
 
 
-  if (
-    error
-  ) {
+  if (error) {
 
     document.getElementById(
       "completeStatus"
@@ -4839,17 +4320,11 @@ async () => {
 };
 
 
-/* =========================================
-   관리자 삭제
-========================================= */
+/* 관리자 실제 삭제 */
 
-async function deleteRecord(
-  record
-) {
+async function deleteRecord(record) {
 
-  if (
-    !isAdmin
-  ) {
+  if (!isAdmin) {
 
     alert(
       "관리자만 삭제할 수 있습니다."
@@ -4863,9 +4338,7 @@ async function deleteRecord(
     await checkCurrentUserAdmin();
 
 
-  if (
-    !allowed
-  ) {
+  if (!allowed) {
 
     alert(
       "관리자 인증이 확인되지 않았습니다."
@@ -4877,18 +4350,15 @@ async function deleteRecord(
 
   const ok =
     confirm(
-      `${record.ship_no || ""} / ${record.bhd_no || ""}\n\n` +
+      `${record.ship_no || ""} / ` +
+      `${record.area || ""} / ` +
+      `${record.bhd_no || ""}\n\n` +
       `이 기록을 정말 삭제하시겠습니까?\n` +
       `삭제 후에는 복구할 수 없습니다.`
     );
 
 
-  if (
-    !ok
-  ) {
-
-    return;
-  }
+  if (!ok) return;
 
 
   try {
@@ -4900,32 +4370,21 @@ async function deleteRecord(
       record.original_images.length
         ? record.original_images
         : record.original_image
-          ? [
-              record.original_image
-            ]
+          ? [record.original_image]
           : [];
 
 
-    if (
-      paths.length
-    ) {
+    if (paths.length) {
 
       const {
         error: storageError
       } =
       await supabase.storage
-        .from(
-          "bhd-images"
-        )
-        .remove(
-          paths
-        );
+        .from("bhd-images")
+        .remove(paths);
 
 
-      if (
-        storageError
-      ) {
-
+      if (storageError) {
         throw storageError;
       }
     }
@@ -4936,23 +4395,16 @@ async function deleteRecord(
       error: deleteError
     } =
     await supabase
-      .from(
-        "bhd_records"
-      )
+      .from("bhd_records")
       .delete()
       .eq(
         "id",
         record.id
       )
-      .select(
-        "id"
-      );
+      .select("id");
 
 
-    if (
-      deleteError
-    ) {
-
+    if (deleteError) {
       throw deleteError;
     }
 
@@ -4989,9 +4441,7 @@ async function deleteRecord(
 }
 
 
-/* =========================================
-   카드
-========================================= */
+/* 목록 카드 */
 
 function recordCard(
   record,
@@ -5011,6 +4461,14 @@ function recordCard(
         ? "completed"
         : "incomplete"
     );
+
+
+  if (record.delete_requested) {
+
+    card.classList.add(
+      "delete-requested"
+    );
+  }
 
 
   const badgeClass =
@@ -5039,9 +4497,23 @@ function recordCard(
 
       </div>
 
-      <span class="badge ${badgeClass}">
-        ${statusText}
-      </span>
+      <div class="record-badges">
+
+        <span class="badge ${badgeClass}">
+          ${statusText}
+        </span>
+
+        ${
+          record.delete_requested
+            ? `
+              <span class="badge badge-delete-request">
+                삭제요청
+              </span>
+            `
+            : ""
+        }
+
+      </div>
 
     </div>
 
@@ -5071,6 +4543,34 @@ function recordCard(
       }
 
     </div>
+
+
+    ${
+      record.delete_requested
+        ? `
+        <div class="delete-request-info">
+
+          <strong>삭제 요청 접수</strong>
+
+          <br>
+
+          요청자:
+          ${escapeHtml(record.delete_requested_by || "-")}
+
+          <br>
+
+          사유:
+          ${escapeHtml(record.delete_request_reason || "-")}
+
+          <br>
+
+          요청시간:
+          ${formatDateTime(record.delete_requested_at)}
+
+        </div>
+        `
+        : ""
+    }
     `;
 
 
@@ -5089,19 +4589,15 @@ function recordCard(
       "button"
     );
 
-
   view.className =
     "secondary";
 
   view.textContent =
     "후작업 보기";
 
-
   view.onclick =
     () =>
-      showRecord(
-        record
-      );
+      showRecord(record);
 
 
   const edit =
@@ -5109,13 +4605,11 @@ function recordCard(
       "button"
     );
 
-
   edit.className =
     "warning";
 
   edit.textContent =
     "수정";
-
 
   edit.onclick =
     () =>
@@ -5125,19 +4619,86 @@ function recordCard(
       );
 
 
-  actions.appendChild(
-    view
-  );
-
-  actions.appendChild(
-    edit
-  );
+  actions.appendChild(view);
+  actions.appendChild(edit);
 
 
+  /*
+   * 일반 작업자
+   * 실제 삭제는 불가능하고 요청만 가능
+   */
+  if (!isAdmin) {
+
+    const requestBtn =
+      document.createElement(
+        "button"
+      );
+
+
+    requestBtn.className =
+      "delete-request-btn";
+
+
+    if (record.delete_requested) {
+
+      requestBtn.textContent =
+        "삭제 요청됨";
+
+      requestBtn.disabled =
+        true;
+
+    } else {
+
+      requestBtn.textContent =
+        "삭제 요청";
+
+      requestBtn.onclick =
+        () =>
+          requestDelete(record);
+    }
+
+
+    actions.appendChild(
+      requestBtn
+    );
+  }
+
+
+  /*
+   * 관리자 목록
+   */
   if (
     allowDelete &&
     isAdmin
   ) {
+
+    if (record.delete_requested) {
+
+      const clearBtn =
+        document.createElement(
+          "button"
+        );
+
+
+      clearBtn.className =
+        "request-clear-btn";
+
+      clearBtn.textContent =
+        "요청 해제";
+
+
+      clearBtn.onclick =
+        () =>
+          clearDeleteRequest(
+            record
+          );
+
+
+      actions.appendChild(
+        clearBtn
+      );
+    }
+
 
     const deleteBtn =
       document.createElement(
@@ -5149,14 +4710,14 @@ function recordCard(
       "delete-btn";
 
     deleteBtn.textContent =
-      "삭제";
+      record.delete_requested
+        ? "요청건 삭제"
+        : "삭제";
 
 
     deleteBtn.onclick =
       () =>
-        deleteRecord(
-          record
-        );
+        deleteRecord(record);
 
 
     actions.appendChild(
@@ -5165,18 +4726,14 @@ function recordCard(
   }
 
 
-  card.appendChild(
-    actions
-  );
+  card.appendChild(actions);
 
 
   return card;
 }
 
 
-/* =========================================
-   검색
-========================================= */
+/* 검색 */
 
 async function searchRecords() {
 
@@ -5185,12 +4742,10 @@ async function searchRecords() {
       "searchShip"
     ).value.trim();
 
-
   const area =
     document.getElementById(
       "searchArea"
     ).value.trim();
-
 
   const name =
     document.getElementById(
@@ -5210,15 +4765,12 @@ async function searchRecords() {
     );
 
 
-  results.innerHTML =
-    "";
+  results.innerHTML = "";
 
 
   document.getElementById(
     "resultBox"
-  ).classList.add(
-    "hidden"
-  );
+  ).classList.add("hidden");
 
 
   if (
@@ -5240,22 +4792,17 @@ async function searchRecords() {
 
   let query =
     supabase
-      .from(
-        "bhd_records"
-      )
+      .from("bhd_records")
       .select("*")
       .order(
         "created_at",
         {
-          ascending:
-            false
+          ascending: false
         }
       );
 
 
-  if (
-    ship
-  ) {
+  if (ship) {
 
     query =
       query.ilike(
@@ -5265,9 +4812,7 @@ async function searchRecords() {
   }
 
 
-  if (
-    area
-  ) {
+  if (area) {
 
     query =
       query.ilike(
@@ -5277,9 +4822,7 @@ async function searchRecords() {
   }
 
 
-  if (
-    name
-  ) {
+  if (name) {
 
     query =
       query.ilike(
@@ -5296,9 +4839,7 @@ async function searchRecords() {
   await query;
 
 
-  if (
-    error
-  ) {
+  if (error) {
 
     status.textContent =
       "조회 오류: " +
@@ -5308,9 +4849,7 @@ async function searchRecords() {
   }
 
 
-  if (
-    !data?.length
-  ) {
+  if (!data?.length) {
 
     status.textContent =
       "조건에 맞는 등록 자료가 없습니다.";
@@ -5321,35 +4860,42 @@ async function searchRecords() {
 
   const incompleteCount =
     data.filter(
-      x =>
-        !x.is_completed
+      x => !x.is_completed
     ).length;
 
 
   const completedCount =
     data.filter(
-      x =>
-        x.is_completed
+      x => x.is_completed
+    ).length;
+
+
+  const requestCount =
+    data.filter(
+      x => x.delete_requested
     ).length;
 
 
   status.textContent =
     `${data.length}건 검색됨` +
     ` · 미완료 ${incompleteCount}건` +
-    ` · 완료 ${completedCount}건`;
+    ` · 완료 ${completedCount}건` +
+    (
+      requestCount
+        ? ` · 삭제요청 ${requestCount}건`
+        : ""
+    );
 
 
-  data.forEach(
-    record => {
+  data.forEach(record => {
 
-      results.appendChild(
-        recordCard(
-          record,
-          false
-        )
-      );
-    }
-  );
+    results.appendChild(
+      recordCard(
+        record,
+        false
+      )
+    );
+  });
 }
 
 
@@ -5363,32 +4909,23 @@ document.getElementById(
   "searchShip",
   "searchArea",
   "searchBhd"
-].forEach(
-  id => {
+].forEach(id => {
 
-    document
-      .getElementById(
-        id
-      )
-      .addEventListener(
-        "keydown",
-        e => {
+  document
+    .getElementById(id)
+    .addEventListener(
+      "keydown",
+      e => {
 
-          if (
-            e.key === "Enter"
-          ) {
-
-            searchRecords();
-          }
+        if (e.key === "Enter") {
+          searchRecords();
         }
-      );
-  }
-);
+      }
+    );
+});
 
 
-/* =========================================
-   목록
-========================================= */
+/* 목록 */
 
 async function loadRecordList() {
 
@@ -5404,9 +4941,7 @@ async function loadRecordList() {
     );
 
 
-  container.innerHTML =
-    "";
-
+  container.innerHTML = "";
 
   status.textContent =
     "목록 불러오는 중...";
@@ -5417,22 +4952,17 @@ async function loadRecordList() {
     error
   } =
   await supabase
-    .from(
-      "bhd_records"
-    )
+    .from("bhd_records")
     .select("*")
     .order(
       "created_at",
       {
-        ascending:
-          false
+        ascending: false
       }
     );
 
 
-  if (
-    error
-  ) {
+  if (error) {
 
     status.textContent =
       "목록 조회 실패: " +
@@ -5442,13 +4972,9 @@ async function loadRecordList() {
   }
 
 
-  if (
-    !data?.length
-  ) {
+  if (!data?.length) {
 
-    status.textContent =
-      "";
-
+    status.textContent = "";
 
     container.innerHTML =
       `
@@ -5461,17 +4987,60 @@ async function loadRecordList() {
   }
 
 
+  /*
+   * 관리자에서는 삭제요청 건을 맨 위로 표시
+   */
+  if (isAdmin) {
+
+    data.sort(
+      (a, b) => {
+
+        const requestDiff =
+          Number(
+            Boolean(
+              b.delete_requested
+            )
+          ) -
+          Number(
+            Boolean(
+              a.delete_requested
+            )
+          );
+
+
+        if (requestDiff !== 0) {
+          return requestDiff;
+        }
+
+
+        return (
+          new Date(
+            b.created_at
+          ).getTime() -
+          new Date(
+            a.created_at
+          ).getTime()
+        );
+      }
+    );
+  }
+
+
   const incompleteCount =
     data.filter(
-      x =>
-        !x.is_completed
+      x => !x.is_completed
     ).length;
 
 
   const completedCount =
     data.filter(
-      x =>
-        x.is_completed
+      x => x.is_completed
+    ).length;
+
+
+  const requestCount =
+    data.filter(
+      x => x.delete_requested
     ).length;
 
 
@@ -5479,24 +5048,27 @@ async function loadRecordList() {
     `전체 ${data.length}건` +
     ` · 미완료 ${incompleteCount}건` +
     ` · 완료 ${completedCount}건` +
-    `${
+    (
+      requestCount
+        ? ` · 삭제요청 ${requestCount}건`
+        : ""
+    ) +
+    (
       isAdmin
         ? " · 관리자 모드"
         : ""
-    }`;
+    );
 
 
-  data.forEach(
-    record => {
+  data.forEach(record => {
 
-      container.appendChild(
-        recordCard(
-          record,
-          true
-        )
-      );
-    }
-  );
+    container.appendChild(
+      recordCard(
+        record,
+        true
+      )
+    );
+  });
 }
 
 
@@ -5506,22 +5078,16 @@ document.getElementById(
   loadRecordList;
 
 
-/* =========================================
-   뒤로가기용 DB 재조회
-========================================= */
+/* 뒤로가기 */
 
-async function fetchRecordById(
-  id
-) {
+async function fetchRecordById(id) {
 
   const {
     data,
     error
   } =
   await supabase
-    .from(
-      "bhd_records"
-    )
+    .from("bhd_records")
     .select("*")
     .eq(
       "id",
@@ -5543,13 +5109,7 @@ async function fetchRecordById(
 }
 
 
-/* =========================================
-   실제 브라우저 뒤로가기
-========================================= */
-
-async function renderHistoryState(
-  state
-) {
+async function renderHistoryState(state) {
 
   const target =
     state ||
@@ -5559,7 +5119,8 @@ async function renderHistoryState(
 
 
   if (
-    target.screen !== "image"
+    target.screen !==
+    "image"
   ) {
 
     hideImageModalOnly();
@@ -5567,15 +5128,12 @@ async function renderHistoryState(
 
 
   if (
-    target.screen === "entry"
+    target.screen ===
+    "entry"
   ) {
 
-    isAdmin =
-      false;
-
-    currentViewedRecord =
-      null;
-
+    isAdmin = false;
+    currentViewedRecord = null;
 
     showEntry();
 
@@ -5583,20 +5141,15 @@ async function renderHistoryState(
   }
 
 
-  if (
-    target.admin
-  ) {
+  if (target.admin) {
 
     const allowed =
       await checkCurrentUserAdmin();
 
 
-    if (
-      !allowed
-    ) {
+    if (!allowed) {
 
-      isAdmin =
-        false;
+      isAdmin = false;
 
       showEntry();
 
@@ -5608,28 +5161,23 @@ async function renderHistoryState(
     }
 
 
-    isAdmin =
-      true;
+    isAdmin = true;
 
   } else {
 
-    isAdmin =
-      false;
+    isAdmin = false;
   }
 
 
-  showApp(
-    isAdmin
-  );
+  showApp(isAdmin);
 
 
   if (
-    target.screen === "tab"
+    target.screen ===
+    "tab"
   ) {
 
-    currentViewedRecord =
-      null;
-
+    currentViewedRecord = null;
 
     document.getElementById(
       "resultBox"
@@ -5644,15 +5192,15 @@ async function renderHistoryState(
     );
 
 
-    activeScreen =
-      "tab";
+    activeScreen = "tab";
 
     return;
   }
 
 
   if (
-    target.screen === "detail"
+    target.screen ===
+    "detail"
   ) {
 
     const record =
@@ -5661,16 +5209,10 @@ async function renderHistoryState(
       );
 
 
-    if (
-      !record
-    ) {
+    if (!record) {
 
-      renderTabUI(
-        "list"
-      );
-
-      activeScreen =
-        "tab";
+      renderTabUI("list");
+      activeScreen = "tab";
 
       return;
     }
@@ -5686,7 +5228,8 @@ async function renderHistoryState(
 
 
   if (
-    target.screen === "edit"
+    target.screen ===
+    "edit"
   ) {
 
     const record =
@@ -5695,16 +5238,10 @@ async function renderHistoryState(
       );
 
 
-    if (
-      !record
-    ) {
+    if (!record) {
 
-      renderTabUI(
-        "list"
-      );
-
-      activeScreen =
-        "tab";
+      renderTabUI("list");
+      activeScreen = "tab";
 
       return;
     }
@@ -5720,7 +5257,8 @@ async function renderHistoryState(
 
 
   if (
-    target.screen === "image"
+    target.screen ===
+    "image"
   ) {
 
     showImageModalOnly(
@@ -5731,8 +5269,6 @@ async function renderHistoryState(
         target.mirror
       )
     );
-
-    return;
   }
 }
 
@@ -5748,9 +5284,7 @@ window.addEventListener(
 );
 
 
-/* =========================================
-   시작
-========================================= */
+/* 시작 */
 
 document.getElementById(
   "workDate"
@@ -5758,11 +5292,7 @@ document.getElementById(
   localToday();
 
 
-setRows(
-  [],
-  1
-);
-
+setRows([], 1);
 
 showEntry();
 
