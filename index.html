@@ -17,12 +17,55 @@ body {
   color: #222;
 }
 
+.hidden {
+  display: none !important;
+}
+
 header {
   background: #16324f;
   color: white;
-  padding: 17px 18px;
+  padding: 14px 16px;
+}
+
+.header-inner {
+  max-width: 1100px;
+  margin: 0 auto;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 10px;
+}
+
+.header-title {
   font-size: 20px;
   font-weight: 700;
+}
+
+.header-right {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+}
+
+.mode-badge {
+  font-size: 12px;
+  font-weight: 700;
+  border-radius: 20px;
+  padding: 6px 9px;
+  background: #e8edf2;
+  color: #16324f;
+}
+
+.mode-badge.admin {
+  background: #dcefe5;
+  color: #145c39;
+}
+
+.exit-btn {
+  background: white;
+  color: #16324f;
+  padding: 8px 10px;
+  font-size: 12px;
 }
 
 .container {
@@ -79,13 +122,6 @@ button:disabled {
   color: white;
 }
 
-.ai {
-  width: 100%;
-  margin-top: 12px;
-  background: #265f91;
-  color: white;
-}
-
 .secondary {
   background: #e8edf2;
   color: #222;
@@ -98,6 +134,13 @@ button:disabled {
 
 .delete-btn {
   background: #d64545;
+  color: white;
+}
+
+.ai {
+  width: 100%;
+  margin-top: 12px;
+  background: #265f91;
   color: white;
 }
 
@@ -114,27 +157,6 @@ button:disabled {
   margin-top: 16px;
   background: #dfe8e3;
   color: #315c47;
-}
-
-.tabs {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 7px;
-  margin-bottom: 15px;
-}
-
-.tabs button {
-  width: 100%;
-  background: #e7edf2;
-}
-
-.tabs .active {
-  background: #16324f;
-  color: white;
-}
-
-.hidden {
-  display: none !important;
 }
 
 .status {
@@ -157,6 +179,88 @@ button:disabled {
   border: 1px solid #cbddea;
   border-radius: 8px;
   line-height: 1.5;
+}
+
+.entry-wrap {
+  min-height: 82vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 25px 14px;
+}
+
+.entry-card {
+  width: 100%;
+  max-width: 430px;
+  background: white;
+  border-radius: 16px;
+  padding: 30px 22px;
+  box-shadow: 0 4px 18px rgba(0,0,0,.1);
+  text-align: center;
+}
+
+.entry-title {
+  font-size: 24px;
+  font-weight: 800;
+  color: #16324f;
+  margin-bottom: 8px;
+}
+
+.entry-subtitle {
+  font-size: 14px;
+  color: #666;
+  margin-bottom: 28px;
+}
+
+.worker-entry-btn {
+  width: 100%;
+  padding: 17px;
+  font-size: 19px;
+  background: #16324f;
+  color: white;
+}
+
+.admin-entry-btn {
+  margin-top: 15px;
+  padding: 7px 10px;
+  background: transparent;
+  color: #777;
+  font-size: 13px;
+  text-decoration: underline;
+}
+
+.admin-login-box {
+  margin-top: 20px;
+  text-align: left;
+  padding-top: 18px;
+  border-top: 1px solid #e2e5e8;
+}
+
+.admin-actions {
+  display: flex;
+  gap: 8px;
+  margin-top: 14px;
+}
+
+.admin-actions button {
+  flex: 1;
+}
+
+.tabs {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 7px;
+  margin-bottom: 15px;
+}
+
+.tabs button {
+  width: 100%;
+  background: #e7edf2;
+}
+
+.tabs .active {
+  background: #16324f;
+  color: white;
 }
 
 .edit-banner {
@@ -336,326 +440,422 @@ th {
   padding: 25px;
   color: #777;
 }
-
-#loadingScreen {
-  text-align: center;
-  padding: 60px 15px;
-  font-weight: 700;
-}
 </style>
 </head>
 
 <body>
 
-<header>
-  HWDK BHD 결선관리
-</header>
 
-<div class="container">
+<!-- 처음 접속 화면 -->
+<div id="entryScreen" class="entry-wrap">
 
-  <div id="loadingScreen">
-    접속 중입니다...
+  <div class="entry-card">
+
+    <div class="entry-title">
+      HWDK BHD 결선관리
+    </div>
+
+    <div class="entry-subtitle">
+      작업 유형을 선택하세요.
+    </div>
+
+
+    <button id="workerEntryBtn"
+            class="worker-entry-btn">
+      등록하기
+    </button>
+
+
+    <button id="adminEntryBtn"
+            class="admin-entry-btn">
+      관리자 모드
+    </button>
+
+
+    <div id="entryStatus"
+         class="status">
+    </div>
+
+
+    <!-- 관리자 로그인 -->
+    <div id="adminLoginBox"
+         class="admin-login-box hidden">
+
+      <label>
+        관리자 이메일
+      </label>
+
+      <input id="adminEmail"
+             type="email"
+             value="g.s.lee@daekong.com"
+             autocomplete="username">
+
+
+      <label>
+        관리자 비밀번호
+      </label>
+
+      <input id="adminPassword"
+             type="password"
+             autocomplete="current-password"
+             placeholder="비밀번호 입력">
+
+
+      <div class="admin-actions">
+
+        <button id="adminLoginBtn"
+                class="primary"
+                style="margin-top:0;">
+          관리자 로그인
+        </button>
+
+        <button id="adminCancelBtn"
+                class="secondary">
+          취소
+        </button>
+
+      </div>
+
+
+      <div id="adminStatus"
+           class="status">
+      </div>
+
+    </div>
+
   </div>
 
-  <div id="app" class="hidden">
+</div>
 
-    <div class="tabs">
 
-      <button id="registerTab" class="active">
-        BHD 등록
-      </button>
+<!-- 작업 화면 헤더 -->
+<header id="appHeader"
+        class="hidden">
 
-      <button id="searchTab">
-        BHD 조회
-      </button>
+  <div class="header-inner">
 
-      <button id="listTab">
-        목록
+    <div class="header-title">
+      HWDK BHD 결선관리
+    </div>
+
+    <div class="header-right">
+
+      <span id="modeBadge"
+            class="mode-badge">
+        일반 모드
+      </span>
+
+      <button id="exitBtn"
+              class="exit-btn">
+        처음 화면
       </button>
 
     </div>
 
+  </div>
 
-    <!-- BHD 등록 -->
-    <section id="registerSection">
+</header>
 
-      <div class="card">
 
-        <div id="editBanner"
-             class="edit-banner hidden">
+<div id="app"
+     class="container hidden">
 
-          <strong>
-            기존 기록 수정 중
-          </strong>
 
-          <div id="editInfo"
-               class="hint">
-          </div>
+  <div class="tabs">
 
-          <button id="cancelEditBtn"
-                  class="secondary"
-                  style="margin-top:8px;">
-            수정 취소 · 새 등록
-          </button>
+    <button id="registerTab"
+            class="active">
+      BHD 등록
+    </button>
 
+    <button id="searchTab">
+      BHD 조회
+    </button>
+
+    <button id="listTab">
+      목록
+    </button>
+
+  </div>
+
+
+  <!-- BHD 등록 -->
+  <section id="registerSection">
+
+    <div class="card">
+
+      <div id="editBanner"
+           class="edit-banner hidden">
+
+        <strong>
+          기존 기록 수정 중
+        </strong>
+
+        <div id="editInfo"
+             class="hint">
         </div>
 
-
-        <h2 id="registerTitle">
-          선작업 BHD 등록
-        </h2>
-
-
-        <label>
-          호선
-        </label>
-
-        <input id="shipNo"
-               placeholder="예: 2751">
-
-
-        <label>
-          구역 / 위치
-        </label>
-
-        <input id="area"
-               placeholder="예: ER / 3DECK">
-
-
-        <label>
-          이름
-        </label>
-
-        <input id="bhdNo"
-               placeholder="예: PORT BHD / BHD-17">
-
-
-        <label>
-          작업일
-        </label>
-
-        <input id="workDate"
-               type="date">
-
-
-        <label>
-          선작업 사진
-        </label>
-
-        <input id="photos"
-               type="file"
-               accept="image/*"
-               multiple>
-
-
-        <div class="hint">
-          전체사진과 근접사진을 함께 선택할 수 있습니다.
-          한 건당 최대 8장입니다.
-        </div>
-
-
-        <div id="previewGrid"
-             class="preview-grid">
-        </div>
-
-
-        <button id="analyzeBtn"
-                class="ai">
-          AI 자동분석
+        <button id="cancelEditBtn"
+                class="secondary"
+                style="margin-top:8px;">
+          수정 취소 · 새 등록
         </button>
 
+      </div>
 
-        <div id="analysisStatus"
-             class="status">
+
+      <h2 id="registerTitle">
+        선작업 BHD 등록
+      </h2>
+
+
+      <label>
+        호선
+      </label>
+
+      <input id="shipNo"
+             placeholder="예: 2751">
+
+
+      <label>
+        구역 / 위치
+      </label>
+
+      <input id="area"
+             placeholder="예: ER / 3DECK">
+
+
+      <label>
+        이름
+      </label>
+
+      <input id="bhdNo"
+             placeholder="홍길동">
+
+
+      <label>
+        작업일
+      </label>
+
+      <input id="workDate"
+             type="date">
+
+
+      <label>
+        선작업 사진
+      </label>
+
+      <input id="photos"
+             type="file"
+             accept="image/*"
+             multiple>
+
+
+      <div class="hint">
+        전체사진과 근접사진을 함께 선택할 수 있습니다.
+        한 건당 최대 8장입니다.
+      </div>
+
+
+      <div id="previewGrid"
+           class="preview-grid">
+      </div>
+
+
+      <button id="analyzeBtn"
+              class="ai">
+        AI 자동분석
+      </button>
+
+
+      <div id="analysisStatus"
+           class="status">
+      </div>
+
+
+      <div id="analysisSummary"
+           class="summary hidden">
+      </div>
+
+
+      <h3>
+        결선 배치표
+      </h3>
+
+      <div class="hint">
+        실제 사진 배열 기준으로
+        세로는 위치,
+        가로는 구역별 좌·우입니다.
+      </div>
+
+
+      <div id="matrixWrap"
+           class="table-wrap">
+      </div>
+
+
+      <div class="matrix-controls">
+
+        <button id="addPositionBtn"
+                class="secondary">
+          + 위치(행) 추가
+        </button>
+
+        <button id="addSectionBtn"
+                class="secondary">
+          + 구역(열) 추가
+        </button>
+
+      </div>
+
+
+      <button id="saveBtn"
+              class="primary">
+        BHD 저장
+      </button>
+
+
+      <div id="saveStatus"
+           class="status">
+      </div>
+
+    </div>
+
+  </section>
+
+
+  <!-- BHD 조회 -->
+  <section id="searchSection"
+           class="hidden">
+
+    <div class="card">
+
+      <h2>
+        BHD 조회
+      </h2>
+
+
+      <div class="hint">
+        호선 · 위치 · 이름 중 하나만 입력해도 조회할 수 있습니다.
+        여러 항목 입력 시 입력한 조건을 모두 만족하는 자료를 찾습니다.
+      </div>
+
+
+      <label>
+        호선
+      </label>
+
+      <input id="searchShip"
+             placeholder="예: 2751">
+
+
+      <label>
+        위치
+      </label>
+
+      <input id="searchArea"
+             placeholder="예: ER / 3DECK">
+
+
+      <label>
+        이름
+      </label>
+
+      <input id="searchBhd"
+             placeholder="예: 홍길동">
+
+
+      <button id="searchBtn"
+              class="primary">
+        기록 찾기
+      </button>
+
+
+      <div id="searchStatus"
+           class="status">
+      </div>
+
+
+      <div id="searchResults">
+      </div>
+
+
+      <div id="resultBox"
+           class="hidden">
+
+        <div class="result-title">
+          후작업 기준 화면
         </div>
 
 
-        <div id="analysisSummary"
-             class="summary hidden">
+        <div id="resultInfo"
+             class="summary">
         </div>
 
 
-        <h3>
-          결선 배치표
-        </h3>
-
-
-        <div class="hint">
-          실제 사진 배열 기준으로
-          세로는 위치,
-          가로는 구역별 좌·우입니다.
+        <div id="resultImages"
+             class="preview-grid result-grid">
         </div>
 
 
-        <div id="matrixWrap"
+        <div id="resultMatrix"
              class="table-wrap">
         </div>
 
 
-        <div class="matrix-controls">
-
-          <button id="addPositionBtn"
-                  class="secondary">
-            + 위치(행) 추가
-          </button>
-
-          <button id="addSectionBtn"
-                  class="secondary">
-            + 구역(열) 추가
-          </button>
-
-        </div>
-
-
-        <button id="saveBtn"
-                class="primary">
-          BHD 저장
+        <button id="completeBtn"
+                class="complete-btn">
+          후작업 작업완료
         </button>
 
 
-        <div id="saveStatus"
+        <div id="completeStatus"
              class="status">
         </div>
 
       </div>
 
-    </section>
+    </div>
+
+  </section>
 
 
-    <!-- BHD 조회 -->
-    <section id="searchSection"
-             class="hidden">
+  <!-- 목록 -->
+  <section id="listSection"
+           class="hidden">
 
-      <div class="card">
+    <div class="card">
 
-        <h2>
-          BHD 조회
+      <div class="list-header">
+
+        <h2 style="margin:0;">
+          BHD 목록
         </h2>
 
-
-        <div class="hint">
-          호선 · 위치 · 이름 중 하나만 입력해도 조회할 수 있습니다.
-          여러 항목을 입력하면 입력한 조건을 모두 만족하는 자료를 찾습니다.
-        </div>
-
-
-        <label>
-          호선
-        </label>
-
-        <input id="searchShip"
-               placeholder="예: 2751">
-
-
-        <label>
-          위치
-        </label>
-
-        <input id="searchArea"
-               placeholder="예: ER / 3DECK">
-
-
-        <label>
-          이름
-        </label>
-
-        <input id="searchBhd"
-               placeholder="예: PORT BHD / BHD-17">
-
-
-        <button id="searchBtn"
-                class="primary">
-          기록 찾기
+        <button id="refreshListBtn"
+                class="refresh-btn">
+          새로고침
         </button>
 
-
-        <div id="searchStatus"
-             class="status">
-        </div>
-
-
-        <div id="searchResults">
-        </div>
-
-
-        <div id="resultBox"
-             class="hidden">
-
-          <div class="result-title">
-            후작업 기준 화면
-          </div>
-
-
-          <div id="resultInfo"
-               class="summary">
-          </div>
-
-
-          <div id="resultImages"
-               class="preview-grid result-grid">
-          </div>
-
-
-          <div id="resultMatrix"
-               class="table-wrap">
-          </div>
-
-
-          <button id="completeBtn"
-                  class="complete-btn">
-            후작업 작업완료
-          </button>
-
-
-          <div id="completeStatus"
-               class="status">
-          </div>
-
-        </div>
-
       </div>
 
-    </section>
 
-
-    <!-- 목록 -->
-    <section id="listSection"
-             class="hidden">
-
-      <div class="card">
-
-        <div class="list-header">
-
-          <h2 style="margin:0;">
-            BHD 목록
-          </h2>
-
-          <button id="refreshListBtn"
-                  class="refresh-btn">
-            새로고침
-          </button>
-
-        </div>
-
-
-        <div class="hint">
-          최근 등록된 자료가 가장 위에 표시됩니다.
-        </div>
-
-
-        <div id="listStatus"
-             class="status">
-        </div>
-
-
-        <div id="recordList">
-        </div>
-
+      <div class="hint">
+        최근 등록된 자료가 가장 위에 표시됩니다.
       </div>
 
-    </section>
 
-  </div>
+      <div id="listStatus"
+           class="status">
+      </div>
+
+
+      <div id="recordList">
+      </div>
+
+    </div>
+
+  </section>
 
 </div>
 
@@ -681,26 +881,14 @@ const supabase =
   );
 
 
-let editingId =
-  null;
-
-let currentViewedRecord =
-  null;
-
-let existingPaths =
-  [];
-
-let existingPreviewUrls =
-  [];
-
-let rowMap =
-  new Map();
-
-let sectionCount =
-  1;
-
-let maxPosition =
-  1;
+let isAdmin = false;
+let editingId = null;
+let currentViewedRecord = null;
+let existingPaths = [];
+let existingPreviewUrls = [];
+let rowMap = new Map();
+let sectionCount = 1;
+let maxPosition = 1;
 
 let analysisMeta = {
   notes: "",
@@ -708,14 +896,19 @@ let analysisMeta = {
 };
 
 
+const entryScreen =
+  document.getElementById(
+    "entryScreen"
+  );
+
+const appHeader =
+  document.getElementById(
+    "appHeader"
+  );
+
 const app =
   document.getElementById(
     "app"
-  );
-
-const loadingScreen =
-  document.getElementById(
-    "loadingScreen"
   );
 
 const photosInput =
@@ -726,11 +919,9 @@ const photosInput =
 
 function localToday() {
 
-  const d =
-    new Date();
+  const d = new Date();
 
-  const y =
-    d.getFullYear();
+  const y = d.getFullYear();
 
   const m =
     String(
@@ -776,17 +967,497 @@ function formatDateTime(
 }
 
 
-function showApp() {
+function escapeHtml(
+  value
+) {
 
-  loadingScreen.classList.add(
+  return String(
+    value ?? ""
+  )
+  .replaceAll(
+    "&",
+    "&amp;"
+  )
+  .replaceAll(
+    "<",
+    "&lt;"
+  )
+  .replaceAll(
+    ">",
+    "&gt;"
+  )
+  .replaceAll(
+    '"',
+    "&quot;"
+  )
+  .replaceAll(
+    "'",
+    "&#039;"
+  );
+}
+
+
+function showApp(
+  adminMode = false
+) {
+
+  isAdmin =
+    adminMode;
+
+
+  entryScreen.classList.add(
+    "hidden"
+  );
+
+  appHeader.classList.remove(
     "hidden"
   );
 
   app.classList.remove(
     "hidden"
   );
+
+
+  const badge =
+    document.getElementById(
+      "modeBadge"
+    );
+
+
+  if (
+    isAdmin
+  ) {
+
+    badge.textContent =
+      "관리자 모드";
+
+    badge.className =
+      "mode-badge admin";
+
+  } else {
+
+    badge.textContent =
+      "일반 모드";
+
+    badge.className =
+      "mode-badge";
+  }
 }
 
+
+function showEntry() {
+
+  appHeader.classList.add(
+    "hidden"
+  );
+
+  app.classList.add(
+    "hidden"
+  );
+
+  entryScreen.classList.remove(
+    "hidden"
+  );
+
+
+  document.getElementById(
+    "adminLoginBox"
+  ).classList.add(
+    "hidden"
+  );
+
+
+  document.getElementById(
+    "adminPassword"
+  ).value =
+    "";
+
+
+  document.getElementById(
+    "adminStatus"
+  ).textContent =
+    "";
+
+
+  document.getElementById(
+    "entryStatus"
+  ).textContent =
+    "";
+}
+
+
+/* =========================================
+   일반 작업자 입장
+========================================= */
+
+document.getElementById(
+  "workerEntryBtn"
+).onclick =
+async () => {
+
+  const button =
+    document.getElementById(
+      "workerEntryBtn"
+    );
+
+  const status =
+    document.getElementById(
+      "entryStatus"
+    );
+
+
+  button.disabled =
+    true;
+
+  status.textContent =
+    "접속 중...";
+
+
+  try {
+
+    /*
+     * 기존 관리자 세션이 남아 있더라도
+     * 반드시 로그아웃 후 익명 작업자로 다시 접속
+     */
+    await supabase.auth
+      .signOut();
+
+
+    const {
+      error
+    } =
+    await supabase.auth
+      .signInAnonymously();
+
+
+    if (
+      error
+    ) {
+
+      throw error;
+    }
+
+
+    isAdmin =
+      false;
+
+
+    showApp(
+      false
+    );
+
+
+    await resetRegister();
+
+    setTab(
+      "register"
+    );
+
+
+    status.textContent =
+      "";
+
+
+  } catch (
+    error
+  ) {
+
+    status.textContent =
+      "접속 실패: " +
+      (
+        error?.message ||
+        "오류"
+      );
+
+  } finally {
+
+    button.disabled =
+      false;
+  }
+};
+
+
+/* =========================================
+   관리자 로그인 화면
+========================================= */
+
+document.getElementById(
+  "adminEntryBtn"
+).onclick =
+() => {
+
+  document.getElementById(
+    "adminLoginBox"
+  ).classList.remove(
+    "hidden"
+  );
+
+
+  document.getElementById(
+    "adminStatus"
+  ).textContent =
+    "";
+
+
+  document.getElementById(
+    "adminPassword"
+  ).focus();
+};
+
+
+document.getElementById(
+  "adminCancelBtn"
+).onclick =
+() => {
+
+  document.getElementById(
+    "adminLoginBox"
+  ).classList.add(
+    "hidden"
+  );
+
+
+  document.getElementById(
+    "adminPassword"
+  ).value =
+    "";
+
+
+  document.getElementById(
+    "adminStatus"
+  ).textContent =
+    "";
+};
+
+
+async function checkCurrentUserAdmin() {
+
+  const {
+    data: sessionData
+  } =
+  await supabase.auth
+    .getSession();
+
+
+  const session =
+    sessionData.session;
+
+
+  if (
+    !session
+  ) {
+
+    return false;
+  }
+
+
+  const {
+    data,
+    error
+  } =
+  await supabase
+    .from(
+      "admin_users"
+    )
+    .select(
+      "user_id"
+    )
+    .eq(
+      "user_id",
+      session.user.id
+    )
+    .maybeSingle();
+
+
+  return (
+    !error &&
+    Boolean(data)
+  );
+}
+
+
+document.getElementById(
+  "adminLoginBtn"
+).onclick =
+async () => {
+
+  const email =
+    document.getElementById(
+      "adminEmail"
+    ).value.trim();
+
+
+  const password =
+    document.getElementById(
+      "adminPassword"
+    ).value;
+
+
+  const status =
+    document.getElementById(
+      "adminStatus"
+    );
+
+
+  const button =
+    document.getElementById(
+      "adminLoginBtn"
+    );
+
+
+  if (
+    !email ||
+    !password
+  ) {
+
+    status.textContent =
+      "이메일과 비밀번호를 입력하세요.";
+
+    return;
+  }
+
+
+  button.disabled =
+    true;
+
+  status.textContent =
+    "관리자 확인 중...";
+
+
+  try {
+
+    /*
+     * 익명 세션 또는 기존 세션 제거
+     */
+    await supabase.auth
+      .signOut();
+
+
+    const {
+      error
+    } =
+    await supabase.auth
+      .signInWithPassword({
+        email,
+        password
+      });
+
+
+    if (
+      error
+    ) {
+
+      throw error;
+    }
+
+
+    const allowed =
+      await checkCurrentUserAdmin();
+
+
+    if (
+      !allowed
+    ) {
+
+      await supabase.auth
+        .signOut();
+
+
+      throw new Error(
+        "삭제 권한이 없는 계정입니다."
+      );
+    }
+
+
+    isAdmin =
+      true;
+
+
+    document.getElementById(
+      "adminPassword"
+    ).value =
+      "";
+
+
+    showApp(
+      true
+    );
+
+
+    /*
+     * 관리자는 삭제를 주로 사용하므로
+     * 목록 화면으로 바로 이동
+     */
+    setTab(
+      "list"
+    );
+
+
+  } catch (
+    error
+  ) {
+
+    status.textContent =
+      "관리자 로그인 실패: " +
+      (
+        error?.message ||
+        "오류"
+      );
+
+  } finally {
+
+    button.disabled =
+      false;
+  }
+};
+
+
+document.getElementById(
+  "adminPassword"
+).addEventListener(
+  "keydown",
+  e => {
+
+    if (
+      e.key === "Enter"
+    ) {
+
+      document.getElementById(
+        "adminLoginBtn"
+      ).click();
+    }
+  }
+);
+
+
+/* =========================================
+   처음 화면으로
+========================================= */
+
+document.getElementById(
+  "exitBtn"
+).onclick =
+async () => {
+
+  await supabase.auth
+    .signOut();
+
+
+  isAdmin =
+    false;
+
+
+  currentViewedRecord =
+    null;
+
+
+  showEntry();
+};
+
+
+/* =========================================
+   탭
+========================================= */
 
 function setTab(
   mode
@@ -887,6 +1558,37 @@ function setTab(
 }
 
 
+document.getElementById(
+  "registerTab"
+).onclick =
+() =>
+  setTab(
+    "register"
+  );
+
+
+document.getElementById(
+  "searchTab"
+).onclick =
+() =>
+  setTab(
+    "search"
+  );
+
+
+document.getElementById(
+  "listTab"
+).onclick =
+() =>
+  setTab(
+    "list"
+  );
+
+
+/* =========================================
+   결선 테이블
+========================================= */
+
 function rowKey(
   section,
   position
@@ -955,12 +1657,15 @@ function setRows(
 
       const section =
         Number(
-          raw.section || 1
+          raw.section ||
+          1
         );
+
 
       const position =
         Number(
-          raw.position || 1
+          raw.position ||
+          1
         );
 
 
@@ -969,6 +1674,7 @@ function setRows(
           detectedSection,
           section
         );
+
 
       detectedPosition =
         Math.max(
@@ -986,12 +1692,15 @@ function setRows(
           section,
           position,
           left:
-            raw.left || "",
+            raw.left ||
+            "",
           right:
-            raw.right || "",
+            raw.right ||
+            "",
           confidence:
             Number(
-              raw.confidence ?? 1
+              raw.confidence ??
+              1
             ),
           needs_review:
             Boolean(
@@ -1007,7 +1716,8 @@ function setRows(
     Math.max(
       1,
       Number(
-        suppliedSections || 0
+        suppliedSections ||
+        0
       ),
       detectedSection
     );
@@ -1032,10 +1742,12 @@ function collectRows() {
   .filter(
     row =>
       String(
-        row.left || ""
+        row.left ||
+        ""
       ).trim() ||
       String(
-        row.right || ""
+        row.right ||
+        ""
       ).trim()
   )
   .map(
@@ -1052,17 +1764,20 @@ function collectRows() {
 
       left:
         String(
-          row.left || ""
+          row.left ||
+          ""
         ).trim(),
 
       right:
         String(
-          row.right || ""
+          row.right ||
+          ""
         ).trim(),
 
       confidence:
         Number(
-          row.confidence ?? 1
+          row.confidence ??
+          1
         ),
 
       needs_review:
@@ -1073,8 +1788,10 @@ function collectRows() {
   )
   .sort(
     (a, b) =>
-      a.section - b.section ||
-      a.position - b.position
+      a.section -
+      b.section ||
+      a.position -
+      b.position
   );
 }
 
@@ -1292,7 +2009,8 @@ function renderEditableMatrix() {
             "matrix-input";
 
           input.value =
-            row[side] || "";
+            row[side] ||
+            "";
 
           input.placeholder =
             "-";
@@ -1346,6 +2064,10 @@ function renderEditableMatrix() {
   );
 }
 
+
+/* =========================================
+   사진
+========================================= */
 
 async function signedUrls(
   paths
@@ -1579,18 +2301,20 @@ async function compressForAI(
 }
 
 
+/* =========================================
+   등록 초기화 / 수정
+========================================= */
+
 async function resetRegister() {
 
   editingId =
     null;
-
 
   existingPaths =
     [];
 
   existingPreviewUrls =
     [];
-
 
   photosInput.value =
     "";
@@ -1805,6 +2529,19 @@ async function loadForEdit(
 }
 
 
+document.getElementById(
+  "cancelEditBtn"
+).onclick =
+async () => {
+
+  await resetRegister();
+
+  setTab(
+    "register"
+  );
+};
+
+
 photosInput.addEventListener(
   "change",
   () => {
@@ -1850,6 +2587,10 @@ document.getElementById(
   renderEditableMatrix();
 };
 
+
+/* =========================================
+   AI 분석
+========================================= */
 
 document.getElementById(
   "analyzeBtn"
@@ -1951,7 +2692,10 @@ async () => {
     );
 
 
-    if (error) {
+    if (
+      error
+    ) {
+
       throw error;
     }
 
@@ -2038,6 +2782,10 @@ async () => {
 };
 
 
+/* =========================================
+   파일 업로드
+========================================= */
+
 function safePart(
   value
 ) {
@@ -2098,7 +2846,10 @@ async function uploadNewFiles(
       );
 
 
-    if (error) {
+    if (
+      error
+    ) {
+
       throw error;
     }
 
@@ -2112,6 +2863,10 @@ async function uploadNewFiles(
   return paths;
 }
 
+
+/* =========================================
+   저장
+========================================= */
 
 document.getElementById(
   "saveBtn"
@@ -2154,13 +2909,18 @@ async () => {
     ).value;
 
 
+  /*
+   * 호선 + 구역/위치 + 이름
+   * 모두 필수
+   */
   if (
     !shipNo ||
+    !area ||
     !name
   ) {
 
     status.textContent =
-      "호선과 이름은 필수입니다.";
+      "호선, 구역 / 위치, 이름을 모두 입력하세요.";
 
     return;
   }
@@ -2278,7 +3038,10 @@ async () => {
         );
 
 
-      if (error) {
+      if (
+        error
+      ) {
+
         throw error;
       }
 
@@ -2325,7 +3088,10 @@ async () => {
         );
 
 
-      if (error) {
+      if (
+        error
+      ) {
+
         throw error;
       }
 
@@ -2353,6 +3119,10 @@ async () => {
   }
 };
 
+
+/* =========================================
+   후작업 반전 화면
+========================================= */
 
 function renderMirroredMatrix(
   rows,
@@ -2420,11 +3190,9 @@ function renderMirroredMatrix(
 
   let html =
     `
-    <thead>
-      <tr>
-        <th rowspan="2">
-          위치
-        </th>
+      <thead>
+        <tr>
+          <th rowspan="2">위치</th>
     `;
 
 
@@ -2441,8 +3209,8 @@ function renderMirroredMatrix(
 
   html +=
     `
-      </tr>
-      <tr>
+        </tr>
+        <tr>
     `;
 
 
@@ -2459,9 +3227,9 @@ function renderMirroredMatrix(
 
   html +=
     `
-      </tr>
-    </thead>
-    <tbody>
+        </tr>
+      </thead>
+      <tbody>
     `;
 
 
@@ -2501,8 +3269,8 @@ function renderMirroredMatrix(
 
 
       html +=
-        `<td>${source?.right || ""}</td>` +
-        `<td>${source?.left || ""}</td>`;
+        `<td>${escapeHtml(source?.right || "")}</td>` +
+        `<td>${escapeHtml(source?.left || "")}</td>`;
     }
 
 
@@ -2636,12 +3404,7 @@ async function showRecord(
   ).textContent =
     `${record.ship_no || ""}` +
     ` / ${record.bhd_no || ""}` +
-    `${
-      record.area
-        ? " / " +
-          record.area
-        : ""
-    }` +
+    ` / ${record.area || ""}` +
     ` · ${
       record.is_completed
         ? "완료"
@@ -2676,11 +3439,16 @@ async function showRecord(
     top:
       document.getElementById(
         "resultBox"
-      ).offsetTop - 30,
+      ).offsetTop -
+      30,
     behavior: "smooth"
   });
 }
 
+
+/* =========================================
+   작업 완료
+========================================= */
 
 function updateCompleteButton(
   record
@@ -2705,10 +3473,8 @@ function updateCompleteButton(
     btn.textContent =
       "후작업 완료됨";
 
-
     btn.disabled =
       true;
-
 
     btn.className =
       "completed-btn";
@@ -2725,10 +3491,8 @@ function updateCompleteButton(
     btn.textContent =
       "후작업 작업완료";
 
-
     btn.disabled =
       false;
-
 
     btn.className =
       "complete-btn";
@@ -2817,9 +3581,41 @@ async () => {
 };
 
 
+/* =========================================
+   관리자 삭제
+========================================= */
+
 async function deleteRecord(
   record
 ) {
+
+  if (
+    !isAdmin
+  ) {
+
+    alert(
+      "관리자만 삭제할 수 있습니다."
+    );
+
+    return;
+  }
+
+
+  const allowed =
+    await checkCurrentUserAdmin();
+
+
+  if (
+    !allowed
+  ) {
+
+    alert(
+      "관리자 인증이 확인되지 않았습니다."
+    );
+
+    return;
+  }
+
 
   const ok =
     confirm(
@@ -2837,6 +3633,7 @@ async function deleteRecord(
   try {
 
     const {
+      data: deletedRows,
       error: deleteError
     } =
     await supabase
@@ -2847,6 +3644,9 @@ async function deleteRecord(
       .eq(
         "id",
         record.id
+      )
+      .select(
+        "id"
       );
 
 
@@ -2855,6 +3655,17 @@ async function deleteRecord(
     ) {
 
       throw deleteError;
+    }
+
+
+    if (
+      !deletedRows ||
+      deletedRows.length === 0
+    ) {
+
+      throw new Error(
+        "삭제 권한이 없거나 이미 삭제된 기록입니다."
+      );
     }
 
 
@@ -2922,6 +3733,10 @@ async function deleteRecord(
 }
 
 
+/* =========================================
+   목록 카드
+========================================= */
+
 function recordCard(
   record,
   allowDelete = false
@@ -2959,8 +3774,8 @@ function recordCard(
     <div class="record-top">
 
       <div class="record-title">
-        ${record.ship_no || ""}
-        / ${record.bhd_no || ""}
+        ${escapeHtml(record.ship_no || "")}
+        / ${escapeHtml(record.bhd_no || "")}
       </div>
 
       <span class="badge ${badgeClass}">
@@ -2971,20 +3786,16 @@ function recordCard(
 
     <div class="record-meta">
 
-      ${
-        record.area
-          ? `위치: ${record.area}<br>`
-          : ""
-      }
+      위치:
+      ${escapeHtml(record.area || "-")}
+      <br>
 
       작업일:
-      ${record.work_date || "-"}
+      ${escapeHtml(record.work_date || "-")}
       <br>
 
       등록:
-      ${formatDateTime(
-        record.created_at
-      )}
+      ${formatDateTime(record.created_at)}
 
       ${
         record.is_completed &&
@@ -3016,7 +3827,6 @@ function recordCard(
   view.className =
     "secondary";
 
-
   view.textContent =
     "후작업 보기";
 
@@ -3036,7 +3846,6 @@ function recordCard(
 
   edit.className =
     "warning";
-
 
   edit.textContent =
     "수정";
@@ -3059,8 +3868,12 @@ function recordCard(
   );
 
 
+  /*
+   * 관리자 + 목록 화면에서만 삭제
+   */
   if (
-    allowDelete
+    allowDelete &&
+    isAdmin
   ) {
 
     const deleteBtn =
@@ -3071,7 +3884,6 @@ function recordCard(
 
     deleteBtn.className =
       "delete-btn";
-
 
     deleteBtn.textContent =
       "삭제";
@@ -3098,6 +3910,10 @@ function recordCard(
   return card;
 }
 
+
+/* =========================================
+   조회
+========================================= */
 
 async function searchRecords() {
 
@@ -3168,7 +3984,8 @@ async function searchRecords() {
       .order(
         "created_at",
         {
-          ascending: false
+          ascending:
+            false
         }
       );
 
@@ -3306,6 +4123,10 @@ document.getElementById(
 );
 
 
+/* =========================================
+   전체 목록
+========================================= */
+
 async function loadRecordList() {
 
   const container =
@@ -3340,7 +4161,8 @@ async function loadRecordList() {
     .order(
       "created_at",
       {
-        ascending: false
+        ascending:
+          false
       }
     );
 
@@ -3393,7 +4215,12 @@ async function loadRecordList() {
   status.textContent =
     `전체 ${data.length}건` +
     ` · 미완료 ${incompleteCount}건` +
-    ` · 완료 ${completedCount}건`;
+    ` · 완료 ${completedCount}건` +
+    `${
+      isAdmin
+        ? " · 관리자 모드"
+        : ""
+    }`;
 
 
   data.forEach(
@@ -3416,45 +4243,9 @@ document.getElementById(
   loadRecordList;
 
 
-document.getElementById(
-  "registerTab"
-).onclick =
-  () =>
-    setTab(
-      "register"
-    );
-
-
-document.getElementById(
-  "searchTab"
-).onclick =
-  () =>
-    setTab(
-      "search"
-    );
-
-
-document.getElementById(
-  "listTab"
-).onclick =
-  () =>
-    setTab(
-      "list"
-    );
-
-
-document.getElementById(
-  "cancelEditBtn"
-).onclick =
-async () => {
-
-  await resetRegister();
-
-  setTab(
-    "register"
-  );
-};
-
+/* =========================================
+   초기 상태
+========================================= */
 
 document.getElementById(
   "workDate"
@@ -3468,41 +4259,11 @@ setRows(
 );
 
 
-const {
-  data: sessionData
-} =
-await supabase.auth
-  .getSession();
-
-
-if (
-  sessionData.session
-) {
-
-  showApp();
-
-} else {
-
-  const {
-    error
-  } =
-  await supabase.auth
-    .signInAnonymously();
-
-
-  if (
-    error
-  ) {
-
-    loadingScreen.textContent =
-      "자동 접속 실패: " +
-      error.message;
-
-  } else {
-
-    showApp();
-  }
-}
+/*
+ * 페이지를 열자마자 작업 권한을 사용하지 않음.
+ * 반드시 '등록하기' 또는 '관리자 모드'를 선택해야 함.
+ */
+showEntry();
 
 </script>
 
