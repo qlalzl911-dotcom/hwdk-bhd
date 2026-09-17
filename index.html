@@ -6,7 +6,9 @@
 <title>HWDK BHD 결선관리</title>
 
 <style>
-* { box-sizing: border-box; }
+* {
+  box-sizing: border-box;
+}
 
 body {
   margin: 0;
@@ -176,6 +178,18 @@ button:disabled {
 }
 
 .complete-worker-box label {
+  margin-top: 0;
+}
+
+.modifier-box {
+  margin-top: 18px;
+  padding: 14px;
+  background: #fff8e7;
+  border: 1px solid #e5c76f;
+  border-radius: 9px;
+}
+
+.modifier-box label {
   margin-top: 0;
 }
 
@@ -525,9 +539,7 @@ th {
 }
 
 
-/* ============================
-   수정이력
-============================ */
+/* 수정이력 */
 
 .log-section {
   margin-top: 22px;
@@ -564,6 +576,7 @@ th {
   margin-top: 4px;
   color: #666;
   font-size: 12px;
+  line-height: 1.5;
 }
 
 .log-current {
@@ -572,9 +585,7 @@ th {
 }
 
 
-/* ============================
-   사진 확대
-============================ */
+/* 사진 확대 */
 
 .image-modal {
   position: fixed;
@@ -638,9 +649,7 @@ th {
 }
 
 
-/* ============================
-   수정이력 상세 모달
-============================ */
+/* 수정이력 상세 */
 
 .history-modal {
   position: fixed;
@@ -695,9 +704,7 @@ th {
 }
 
 
-/* ============================
-   PNG 출력
-============================ */
+/* 출력 */
 
 #exportStage {
   position: fixed;
@@ -767,13 +774,10 @@ th {
 </style>
 </head>
 
-
 <body>
 
 
-<!-- ============================
-     첫 화면
-============================ -->
+<!-- 첫 화면 -->
 
 <div id="entryScreen"
      class="entry-wrap">
@@ -852,9 +856,7 @@ th {
 </div>
 
 
-<!-- ============================
-     헤더
-============================ -->
+<!-- 헤더 -->
 
 <header id="appHeader"
         class="hidden">
@@ -906,9 +908,7 @@ th {
   </div>
 
 
-  <!-- ============================
-       등록
-  ============================ -->
+  <!-- 등록 -->
 
   <section id="registerSection">
 
@@ -1039,6 +1039,26 @@ th {
       </div>
 
 
+      <!-- 수정일 때만 표시 -->
+
+      <div id="modifierBox"
+           class="modifier-box hidden">
+
+        <label>
+          수정자 이름
+        </label>
+
+        <input id="modifiedBy"
+               type="text"
+               placeholder="수정자 이름 입력">
+
+        <div class="hint">
+          기존 자료를 수정할 때는 수정자 이름을 반드시 입력해야 합니다.
+        </div>
+
+      </div>
+
+
       <button id="saveBtn"
               class="primary">
         BHD 저장
@@ -1050,7 +1070,6 @@ th {
       </div>
 
 
-      <!-- 수정 화면에서도 이전 이력 확인 -->
       <div id="editLogSection"
            class="log-section hidden">
 
@@ -1059,7 +1078,7 @@ th {
         </div>
 
         <div class="hint">
-          아래 기록을 누르면 당시 저장내용을 확인할 수 있습니다.
+          기록을 누르면 당시 저장된 정보를 확인할 수 있습니다.
         </div>
 
         <div id="editLogList">
@@ -1072,9 +1091,7 @@ th {
   </section>
 
 
-  <!-- ============================
-       조회
-  ============================ -->
+  <!-- 조회 -->
 
   <section id="searchSection"
            class="hidden">
@@ -1088,7 +1105,7 @@ th {
 
       <div class="hint">
         호선 · 위치 · 이름 중 하나만 입력해도 조회할 수 있습니다.
-        이름은 최초 등록자 또는 후작업 작업자 이름 모두 검색됩니다.
+        이름은 최초 등록 이름 또는 후작업 작업자 이름 모두 검색됩니다.
       </div>
 
 
@@ -1203,7 +1220,6 @@ th {
         </div>
 
 
-        <!-- 후작업 화면 이력 -->
         <div id="detailLogSection"
              class="log-section">
 
@@ -1228,9 +1244,7 @@ th {
   </section>
 
 
-  <!-- ============================
-       목록
-  ============================ -->
+  <!-- 목록 -->
 
   <section id="listSection"
            class="hidden">
@@ -1272,9 +1286,7 @@ th {
 </div>
 
 
-<!-- ============================
-     사진 확대
-============================ -->
+<!-- 사진 확대 -->
 
 <div id="imageModal"
      class="image-modal hidden">
@@ -1324,9 +1336,7 @@ th {
 </div>
 
 
-<!-- ============================
-     수정이력 상세
-============================ -->
+<!-- 수정이력 상세 -->
 
 <div id="historyModal"
      class="history-modal hidden">
@@ -1404,19 +1414,14 @@ const supabase =
 
 
 let isAdmin = false;
-
 let editingId = null;
-
 let currentViewedRecord = null;
 
 let existingPaths = [];
-
 let existingPreviewUrls = [];
 
 let rowMap = new Map();
-
 let sectionCount = 1;
-
 let maxPosition = 1;
 
 let analysisMeta = {
@@ -1425,12 +1430,8 @@ let analysisMeta = {
 };
 
 let modalImageUrl = "";
-
-let modalDownloadName =
-  "BHD-photo.jpg";
-
+let modalDownloadName = "BHD-photo.jpg";
 let modalZoom = 1;
-
 let modalMirror = false;
 
 
@@ -1455,9 +1456,7 @@ const photosInput =
   );
 
 
-/* ============================
-   공통
-============================ */
+/* 공통 */
 
 function localToday() {
 
@@ -1577,9 +1576,7 @@ function replaceHistory(
 }
 
 
-/* ============================
-   로그인 / 첫화면
-============================ */
+/* 로그인 / 처음화면 */
 
 function showApp(
   adminMode = false
@@ -2035,15 +2032,14 @@ async () => {
 };
 
 
-/* ============================
-   탭
-============================ */
+/* 탭 */
 
 function renderTabUI(
   mode
 ) {
 
   const tabs = {
+
     register:
       document.getElementById(
         "registerTab"
@@ -2062,6 +2058,7 @@ function renderTabUI(
 
 
   const sections = {
+
     register:
       document.getElementById(
         "registerSection"
@@ -2175,9 +2172,7 @@ document.getElementById(
   );
 
 
-/* ============================
-   결선표
-============================ */
+/* 결선표 */
 
 function rowKey(
   section,
@@ -2659,9 +2654,7 @@ function renderEditableMatrix() {
 }
 
 
-/* ============================
-   읽기전용 원본표
-============================ */
+/* 읽기전용 원본표 */
 
 function buildOriginalTableHTML(
   rows,
@@ -2809,9 +2802,7 @@ function buildOriginalTableHTML(
 }
 
 
-/* ============================
-   반전표
-============================ */
+/* 반전표 */
 
 function buildMirroredTableHTML(
   rows,
@@ -2965,9 +2956,7 @@ function buildMirroredTableHTML(
 }
 
 
-/* ============================
-   사진 URL
-============================ */
+/* 사진 URL */
 
 async function signedUrls(
   paths
@@ -3011,9 +3000,7 @@ async function signedUrls(
 }
 
 
-/* ============================
-   사진 확대
-============================ */
+/* 사진 확대 */
 
 function showImageModalOnly(
   url,
@@ -3371,9 +3358,7 @@ function attachImageTools(
 }
 
 
-/* ============================
-   등록 사진 미리보기
-============================ */
+/* 등록 사진 미리보기 */
 
 function renderPreviews() {
 
@@ -3519,9 +3504,7 @@ function renderPreviews() {
 }
 
 
-/* ============================
-   수정 로그 스냅샷
-============================ */
+/* 수정로그 */
 
 function getRecordLogs(
   record
@@ -3539,7 +3522,8 @@ function makeLogSnapshot(
   source,
   version,
   action,
-  changedAt
+  changedAt,
+  changedBy = null
 ) {
 
   return {
@@ -3548,6 +3532,9 @@ function makeLogSnapshot(
 
     changed_at:
       changedAt,
+
+    changed_by:
+      changedBy,
 
     ship_no:
       source.ship_no ||
@@ -3624,9 +3611,7 @@ function makeLogSnapshot(
 }
 
 
-/* ============================
-   로그 목록
-============================ */
+/* 로그 목록 */
 
 function renderLogList(
   record,
@@ -3706,22 +3691,40 @@ function renderLogList(
       btn.innerHTML =
         `
         <div>
+
           <span class="log-version">
             ${version}차
           </span>
-          ·
-          ${escapeHtml(log.action || "수정")}
+
+          · ${escapeHtml(log.action || "수정")}
+
           ${
-            index === logs.length - 1
-              ? " · 현재 저장본"
+            log.changed_by
+              ? ` · 수정자 ${escapeHtml(log.changed_by)}`
               : ""
           }
+
+          ${
+            index === logs.length - 1
+              ? " · 최종 수정본"
+              : ""
+          }
+
         </div>
 
         <div class="log-date">
+
           ${formatDateTime(log.changed_at)}
+
+          ${
+            log.changed_by
+              ? ` · 수정자 ${escapeHtml(log.changed_by)}`
+              : ""
+          }
+
           · 이름 ${escapeHtml(log.bhd_no || "-")}
           · 위치 ${escapeHtml(log.area || "-")}
+
         </div>
         `;
 
@@ -3760,9 +3763,7 @@ function renderRecordLogs(
 }
 
 
-/* ============================
-   로그 상세
-============================ */
+/* 로그 상세 */
 
 async function openHistoryModal(
   record,
@@ -3808,6 +3809,16 @@ async function openHistoryModal(
     <strong>저장시간:</strong>
     ${escapeHtml(formatDateTime(log.changed_at))}
     <br>
+
+    ${
+      log.changed_by
+        ? `
+          <strong>수정자:</strong>
+          ${escapeHtml(log.changed_by)}
+          <br>
+        `
+        : ""
+    }
 
     <strong>호선:</strong>
     ${escapeHtml(log.ship_no || "-")}
@@ -4035,9 +4046,7 @@ document.getElementById(
 };
 
 
-/* ============================
-   등록 초기화
-============================ */
+/* 등록 초기화 */
 
 async function resetRegister() {
 
@@ -4135,6 +4144,19 @@ async function resetRegister() {
     "";
 
 
+  document.getElementById(
+    "modifierBox"
+  ).classList.add(
+    "hidden"
+  );
+
+
+  document.getElementById(
+    "modifiedBy"
+  ).value =
+    "";
+
+
   setRows(
     [],
     1
@@ -4145,9 +4167,7 @@ async function resetRegister() {
 }
 
 
-/* ============================
-   수정 로드
-============================ */
+/* 수정 로드 */
 
 async function loadForEdit(
   record,
@@ -4210,6 +4230,7 @@ async function loadForEdit(
 
 
   analysisMeta = {
+
     notes:
       record.analysis_notes ||
       "",
@@ -4262,6 +4283,19 @@ async function loadForEdit(
     "saveBtn"
   ).textContent =
     "수정 저장";
+
+
+  document.getElementById(
+    "modifierBox"
+  ).classList.remove(
+    "hidden"
+  );
+
+
+  document.getElementById(
+    "modifiedBy"
+  ).value =
+    "";
 
 
   document.getElementById(
@@ -4376,9 +4410,7 @@ document.getElementById(
 };
 
 
-/* ============================
-   AI 분석
-============================ */
+/* AI 분석 */
 
 async function compressForAI(
   file,
@@ -4582,6 +4614,7 @@ async () => {
 
 
     analysisMeta = {
+
       notes:
         data?.notes ||
         "",
@@ -4645,9 +4678,7 @@ async () => {
 };
 
 
-/* ============================
-   안전한 사진 업로드
-============================ */
+/* 안전한 사진 업로드 */
 
 function getUploadExtension(
   file
@@ -4775,7 +4806,8 @@ async function uploadNewFiles() {
         path,
         file,
         {
-          upsert: false,
+          upsert:
+            false,
 
           contentType:
             file.type ||
@@ -4802,9 +4834,7 @@ async function uploadNewFiles() {
 }
 
 
-/* ============================
-   한 건 조회
-============================ */
+/* 한 건 조회 */
 
 async function fetchRecordById(
   id
@@ -4841,9 +4871,7 @@ async function fetchRecordById(
 }
 
 
-/* ============================
-   저장 + 수정로그
-============================ */
+/* 저장 */
 
 document.getElementById(
   "saveBtn"
@@ -4886,6 +4914,12 @@ async () => {
     ).value;
 
 
+  const modifiedBy =
+    document.getElementById(
+      "modifiedBy"
+    ).value.trim();
+
+
   if (
     !shipNo ||
     !area ||
@@ -4894,6 +4928,24 @@ async () => {
 
     status.textContent =
       "호선, 구역 / 위치, 이름을 모두 입력하세요.";
+
+    return;
+  }
+
+
+  if (
+    editingId &&
+    !modifiedBy
+  ) {
+
+    status.textContent =
+      "수정자 이름을 입력하세요.";
+
+
+    document.getElementById(
+      "modifiedBy"
+    ).focus();
+
 
     return;
   }
@@ -4988,9 +5040,8 @@ async () => {
     };
 
 
-    /*
-     * 기존자료 수정
-     */
+    /* 기존자료 수정 */
+
     if (
       editingId
     ) {
@@ -5022,8 +5073,8 @@ async () => {
 
 
       /*
-       * 과거자료인데 로그가 없으면
-       * 수정 전 현재값부터 보존
+       * 예전 자료인데 로그가 없는 경우
+       * 수정 전 상태를 1차로 먼저 보존
        */
       if (
         !logs.length
@@ -5035,7 +5086,9 @@ async () => {
             1,
             "기존 상태",
             current.created_at ||
-              new Date().toISOString()
+              new Date()
+                .toISOString(),
+            null
           )
         );
       }
@@ -5057,7 +5110,8 @@ async () => {
           nextState,
           logs.length + 1,
           "수정",
-          now
+          now,
+          modifiedBy
         )
       );
 
@@ -5071,6 +5125,7 @@ async () => {
         )
         .update({
           ...basePayload,
+
           change_log:
             logs
         })
@@ -5121,15 +5176,19 @@ async () => {
       }
 
 
+      document.getElementById(
+        "modifiedBy"
+      ).value =
+        "";
+
+
       status.textContent =
-        `수정 완료 · ${logs.length}차 이력으로 저장되었습니다.`;
+        `수정 완료 · ${logs.length}차 이력 저장 · 수정자 ${modifiedBy}`;
 
 
     } else {
 
-      /*
-       * 최초 등록
-       */
+      /* 최초 등록 */
 
       const now =
         new Date()
@@ -5137,6 +5196,7 @@ async () => {
 
 
       const initialState = {
+
         ...basePayload,
 
         is_completed:
@@ -5155,11 +5215,13 @@ async () => {
           initialState,
           1,
           "최초 등록",
-          now
+          now,
+          null
         );
 
 
       const payload = {
+
         ...basePayload,
 
         is_completed:
@@ -5233,9 +5295,7 @@ async () => {
 };
 
 
-/* ============================
-   삭제요청
-============================ */
+/* 삭제 요청 */
 
 async function requestDelete(
   record
@@ -5454,9 +5514,7 @@ async function clearDeleteRequest(
 }
 
 
-/* ============================
-   후작업 보기
-============================ */
+/* 후작업 보기 */
 
 async function renderRecordDetail(
   record,
@@ -5675,9 +5733,7 @@ async function showRecord(
 }
 
 
-/* ============================
-   후작업 완료
-============================ */
+/* 후작업 완료 */
 
 function updateCompleteButton(
   record
@@ -5877,9 +5933,7 @@ async () => {
 };
 
 
-/* ============================
-   표 저장 / 인쇄
-============================ */
+/* 표 저장 / 인쇄 */
 
 function buildExportSheet(
   record
@@ -6116,6 +6170,7 @@ document.getElementById(
   printWindow.document.write(`
     <!DOCTYPE html>
     <html lang="ko">
+
     <head>
 
     <meta charset="UTF-8">
@@ -6193,6 +6248,7 @@ document.getElementById(
     <\/script>
 
     </body>
+
     </html>
   `);
 
@@ -6205,9 +6261,7 @@ document.getElementById(
 };
 
 
-/* ============================
-   실제 삭제
-============================ */
+/* 실제 삭제 */
 
 async function deleteRecord(
   record
@@ -6359,9 +6413,7 @@ async function deleteRecord(
 }
 
 
-/* ============================
-   카드
-============================ */
+/* 카드 */
 
 function recordCard(
   record,
@@ -6397,6 +6449,20 @@ function recordCard(
     record.is_completed
       ? "badge-completed"
       : "badge-incomplete";
+
+
+  const logs =
+    getRecordLogs(
+      record
+    );
+
+
+  const lastLog =
+    logs.length
+      ? logs[
+          logs.length - 1
+        ]
+      : null;
 
 
   card.innerHTML =
@@ -6463,7 +6529,13 @@ function recordCard(
       <br>
 
       수정이력:
-      ${getRecordLogs(record).length}건
+      ${logs.length}건
+
+      ${
+        lastLog?.changed_by
+          ? `<br>최근 수정자: ${escapeHtml(lastLog.changed_by)}`
+          : ""
+      }
 
     </div>
 
@@ -6675,10 +6747,7 @@ function recordCard(
 }
 
 
-/* ============================
-   조회
-   이름 = 등록자 OR 후작업 작업자
-============================ */
+/* 조회 */
 
 async function searchRecords() {
 
@@ -6781,18 +6850,20 @@ async function searchRecords() {
   }
 
 
-  /*
-   * 등록 이름(bhd_no)
-   * 또는
-   * 후작업 작업자(completed_by)
-   */
   if (
     name
   ) {
 
+    const cleanName =
+      name.replaceAll(
+        ",",
+        " "
+      );
+
+
     query =
       query.or(
-        `bhd_no.ilike.%${name}%,completed_by.ilike.%${name}%`
+        `bhd_no.ilike.%${cleanName}%,completed_by.ilike.%${cleanName}%`
       );
   }
 
@@ -6894,9 +6965,7 @@ document.getElementById(
 );
 
 
-/* ============================
-   목록
-============================ */
+/* 목록 */
 
 async function loadRecordList() {
 
@@ -7069,9 +7138,7 @@ document.getElementById(
   loadRecordList;
 
 
-/* ============================
-   뒤로가기
-============================ */
+/* 뒤로가기 */
 
 async function renderHistoryState(
   state
@@ -7093,15 +7160,9 @@ async function renderHistoryState(
   }
 
 
-  /*
-   * 이미지가 로그상세 위에 열렸을 수 있으므로
-   * image일 때는 history modal을 그대로 둔다.
-   */
   if (
-    target.screen !==
-      "log" &&
-    target.screen !==
-      "image"
+    target.screen !== "log" &&
+    target.screen !== "image"
   ) {
 
     hideHistoryModalOnly();
@@ -7320,9 +7381,7 @@ window.addEventListener(
 );
 
 
-/* ============================
-   초기실행
-============================ */
+/* 초기 실행 */
 
 document.getElementById(
   "workDate"
