@@ -5,18 +5,168 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>HWDK 작업관리 시스템</title>
 <style>
-*{box-sizing:border-box}body{margin:0;font-family:Arial,"Noto Sans KR",sans-serif;background:#f4f6f8;color:#222}.hidden{display:none!important}header{background:#16324f;color:#fff;padding:12px 14px}.header-inner{max-width:1100px;margin:auto;display:flex;justify-content:space-between;align-items:center;gap:10px}.header-title{font-size:19px;font-weight:800}.header-right{display:flex;align-items:center;gap:7px;flex-wrap:wrap}.user-badge{background:#e8edf2;color:#16324f;padding:6px 9px;border-radius:20px;font-size:12px;font-weight:800}.user-badge.admin{background:#dcefe5;color:#145c39}.header-btn{background:#fff;color:#16324f;padding:8px 10px;font-size:12px}.container{max-width:1100px;margin:auto;padding:14px}.card{background:#fff;border-radius:12px;padding:17px;margin-bottom:15px;box-shadow:0 2px 8px rgba(0,0,0,.08)}h2,h3{margin-top:0}label{display:block;margin-top:12px;margin-bottom:5px;font-weight:700}input,textarea{width:100%;padding:11px;border:1px solid #ccd2d8;border-radius:7px;font-size:16px;font-family:inherit}textarea{min-height:130px;resize:vertical}input[readonly],textarea[readonly]{background:#f3f5f7;color:#555}button{border:0;border-radius:8px;padding:12px 14px;font-size:15px;font-weight:700;cursor:pointer}button:disabled{opacity:.55;cursor:not-allowed}.primary{width:100%;margin-top:15px;background:#16324f;color:#fff}.secondary{background:#e8edf2;color:#222}.warning{background:#fff0b8;color:#533d00}.danger{background:#d64545;color:#fff}.success{background:#167148;color:#fff}.ai{width:100%;margin-top:12px;background:#265f91;color:#fff}.status{margin-top:10px;line-height:1.5;font-weight:700}.hint{color:#666;font-size:13px;line-height:1.5;margin-top:6px}.summary{margin-top:12px;padding:11px;background:#eef5fb;border:1px solid #cbddea;border-radius:8px;line-height:1.6}.auth-wrap,.home-wrap{min-height:82vh;display:flex;align-items:center;justify-content:center;padding:25px 14px}.auth-card,.home-card{width:100%;max-width:470px;background:#fff;border-radius:16px;padding:28px 22px;box-shadow:0 4px 18px rgba(0,0,0,.1)}.auth-title,.home-title{font-size:25px;font-weight:900;color:#16324f;text-align:center;margin-bottom:8px}.auth-subtitle,.home-subtitle{text-align:center;color:#666;font-size:14px;margin-bottom:22px}.auth-actions{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:15px}.auth-actions button{width:100%}.admin-entry{display:block;margin:14px auto 0;background:transparent;color:#777;font-size:13px;text-decoration:underline}.admin-box{margin-top:18px;padding-top:16px;border-top:1px solid #e2e5e8}.dashboard-stack{display:flex;flex-direction:column;gap:16px;margin-top:20px}.dashboard-section{background:#f8fafb;border:1px solid #dfe5ea;border-radius:14px;padding:14px}.dashboard-section-title{font-size:17px;font-weight:900;color:#16324f;margin-bottom:10px;display:flex;align-items:center;gap:8px}.dashboard-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:10px}.module-btn{width:100%;min-height:96px;padding:16px 12px;font-size:16px;position:relative;display:flex;flex-direction:column;align-items:flex-start;justify-content:space-between;text-align:left}.module-number{font-size:12px;opacity:.75}.module-name{font-size:17px;font-weight:900;line-height:1.35}.module-sub{font-size:12px;opacity:.82;margin-top:4px}.module-bhd{background:#16324f;color:#fff}.module-request{background:#276a5a;color:#fff}.module-mywork{background:#7a4b16;color:#fff;min-height:86px}.module-dev{background:#e6e9ec;color:#7a8188}.mywork-wide{width:100%;position:relative}.tile-count{position:absolute;right:10px;top:10px;min-width:24px;height:24px;padding:0 7px;border-radius:999px;background:#d64545;color:#fff;display:flex;align-items:center;justify-content:center;font-size:12px}.notification-btn{position:relative;background:#fff!important;color:#16324f!important;width:38px;height:36px;padding:0!important;font-size:20px!important;display:flex;align-items:center;justify-content:center}.notification-count{position:absolute;right:-5px;top:-6px;min-width:19px;height:19px;padding:0 5px;border-radius:999px;background:#d64545;color:#fff;font-size:11px;display:flex;align-items:center;justify-content:center;border:2px solid #16324f}.mywork-unread{background:#fff8ed;border:2px solid #e4a04a}.new-badge{display:inline-block;margin-left:6px;background:#d64545;color:#fff;border-radius:10px;padding:2px 6px;font-size:11px;font-weight:800}.tabs{display:grid;grid-template-columns:repeat(3,1fr);gap:7px;margin-bottom:15px}.tabs button{width:100%;background:#e7edf2}.tabs .active{background:#16324f;color:#fff}.edit-banner{padding:12px;margin-bottom:14px;background:#fff3c8;border:1px solid #e7ce73;border-radius:8px}.preview-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:9px;margin-top:12px}.preview-item img{width:100%;height:210px;object-fit:contain;background:#eee;border:1px solid #d9dee3;border-radius:8px}.preview-label{text-align:center;font-size:12px;margin-top:4px;color:#555}.result-grid img{transform:scaleX(-1)}.image-tools{display:flex;gap:6px;margin-top:6px}.image-tools button{flex:1;padding:8px 6px;font-size:13px}.table-wrap{width:100%;overflow-x:auto;margin-top:10px}table{width:100%;border-collapse:collapse;min-width:620px}th,td{border:1px solid #ccd3d9;padding:6px;text-align:center}th{background:#e8eef3;white-space:nowrap}.section-head{background:#dce7f0}.position-cell{width:60px;font-weight:700;background:#f3f5f7}.matrix-input{min-width:90px;padding:8px;text-align:center}.review-cell{background:#fff2c4}.matrix-controls,.record-actions,.request-actions,.export-actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:10px}.export-actions button{flex:1}.record-card,.request-card{border:1px solid #d6dde3;border-radius:10px;padding:13px;margin-top:10px;background:#fff}.record-card.completed,.request-card.completed{border-left:5px solid #278159}.record-card.incomplete,.request-card.pending{border-left:5px solid #e09a24}.record-card.delete-requested{background:#fff9f4;border-top:2px solid #df6b39;border-right:2px solid #df6b39;border-bottom:2px solid #df6b39}.record-top{display:flex;justify-content:space-between;align-items:flex-start;gap:8px}.record-title{font-size:17px;font-weight:800}.record-meta{font-size:13px;color:#666;margin-top:7px;line-height:1.65}.badge{display:inline-block;padding:5px 9px;border-radius:20px;font-size:12px;font-weight:800;white-space:nowrap}.badge-pending{background:#fff0c9;color:#8a5700}.badge-completed{background:#dcefe5;color:#16603c}.badge-delete{background:#ffe0d2;color:#a33e12}.delete-info{margin-top:9px;padding:9px;background:#fff0e8;border:1px solid #f0b695;border-radius:7px;font-size:13px;color:#803100;line-height:1.6}.log-section{margin-top:22px;padding-top:16px;border-top:2px solid #e5e8eb}.log-title{font-size:17px;font-weight:800}.log-item{width:100%;margin-top:7px;padding:11px;text-align:left;background:#f7f9fb;color:#222;border:1px solid #d9dfe5}.log-current{background:#eaf5ef;border-color:#a8cfb7}.log-version{font-weight:900;color:#16324f}.log-date{margin-top:4px;color:#666;font-size:12px;line-height:1.5}.modifier-box,.complete-worker-box,.confirm-box,.reconfirm-box{margin-top:16px;padding:14px;border-radius:9px}.modifier-box{background:#fff8e7;border:1px solid #e5c76f}.complete-worker-box{background:#f4f8f6;border:1px solid #c8ddd1}.confirm-box{background:#eef6f4;border:1px solid #b9d7cf}.reconfirm-box{background:#fff8e7;border:1px solid #e5c76f}.delete-ready-box{background:#eaf5ef;border:1px solid #a8cfb7;color:#145c39;font-weight:800}.modifier-box label,.complete-worker-box label,.confirm-box label{margin-top:0}.result-title{margin-top:18px;padding:10px;color:#fff;background:#16324f;border-radius:6px;font-weight:800}.request-result-title{background:#276a5a}.image-modal{position:fixed;inset:0;z-index:10000;background:rgba(0,0,0,.92);display:flex;flex-direction:column}.image-modal-top{display:flex;justify-content:flex-end;padding:10px}.image-modal-viewer{flex:1;min-height:0;overflow:auto;display:flex;align-items:center;justify-content:center;padding:15px}.image-modal-viewer img{max-width:95vw;max-height:82vh;object-fit:contain;transform-origin:center;transition:transform .15s ease}.image-modal-bottom{padding:10px 10px 18px;display:flex;gap:7px;justify-content:center;flex-wrap:wrap}.history-modal{position:fixed;inset:0;z-index:9000;background:rgba(0,0,0,.75);overflow-y:auto;padding:18px}.history-card{width:100%;max-width:1050px;margin:auto;background:#fff;border-radius:12px;padding:18px}.history-head{display:flex;justify-content:space-between;align-items:center;gap:10px;border-bottom:1px solid #ddd;padding-bottom:12px}.history-title{font-size:20px;font-weight:800}.history-info{background:#eef5fb;border:1px solid #cbddea;border-radius:8px;padding:12px;margin-top:13px;line-height:1.7}.history-subtitle{font-size:17px;font-weight:800;margin-top:18px}#exportStage{position:fixed;left:-10000px;top:0;background:#fff;padding:30px;color:#111}.export-sheet{background:#fff;padding:28px;width:max-content;min-width:1000px}.export-sheet-title{text-align:center;font-size:28px;font-weight:800;margin-bottom:18px}.export-sheet-info{border:1px solid #333;padding:12px;margin-bottom:16px;font-size:18px;line-height:1.6}.export-sheet table{min-width:900px;font-size:18px}.export-sheet th,.export-sheet td{padding:10px;border:1px solid #333}.empty{text-align:center;color:#777;padding:25px;margin-top:12px}.section-heading{display:flex;justify-content:space-between;align-items:center;gap:8px}.section-heading h2{margin:0}.refresh{background:#e8edf2}.request-content-preview{margin-top:9px;padding:9px;background:#f7f9fb;border-radius:7px;white-space:pre-wrap;line-height:1.55}.home-user{text-align:center;margin-top:10px;font-weight:700;color:#444}
-@media(max-width:600px){.header-title{font-size:16px}.user-badge{display:none}.auth-actions{grid-template-columns:1fr}.export-actions{display:grid;grid-template-columns:1fr}.history-modal{padding:8px}.history-card{padding:12px}}
+*{box-sizing:border-box}
+body{margin:0;font-family:Arial,"Noto Sans KR",sans-serif;background:#f4f6f8;color:#222}
+.hidden{display:none!important}
+header{background:#16324f;color:#fff;padding:12px 14px}
+.header-inner{max-width:1100px;margin:auto;display:flex;justify-content:space-between;align-items:center;gap:10px}
+.header-title{font-size:19px;font-weight:800}
+.header-right{display:flex;align-items:center;gap:7px;flex-wrap:wrap}
+.user-badge{background:#e8edf2;color:#16324f;padding:6px 9px;border-radius:20px;font-size:12px;font-weight:800}
+.user-badge.admin{background:#dcefe5;color:#145c39}
+.header-btn{background:#fff;color:#16324f;padding:8px 10px;font-size:12px}
+.container{max-width:1100px;margin:auto;padding:14px}
+.card{background:#fff;border-radius:12px;padding:17px;margin-bottom:15px;box-shadow:0 2px 8px rgba(0,0,0,.08)}
+h2,h3{margin-top:0}
+label{display:block;margin-top:12px;margin-bottom:5px;font-weight:700}
+input,textarea{width:100%;padding:11px;border:1px solid #ccd2d8;border-radius:7px;font-size:16px;font-family:inherit}
+textarea{min-height:130px;resize:vertical}
+input[readonly],textarea[readonly]{background:#f3f5f7;color:#555}
+button{border:0;border-radius:8px;padding:12px 14px;font-size:15px;font-weight:700;cursor:pointer}
+button:disabled{opacity:.55;cursor:not-allowed}
+.primary{width:100%;margin-top:15px;background:#16324f;color:#fff}
+.secondary{background:#e8edf2;color:#222}
+.warning{background:#fff0b8;color:#533d00}
+.danger{background:#d64545;color:#fff}
+.success{background:#167148;color:#fff}
+.ai{width:100%;margin-top:12px;background:#265f91;color:#fff}
+.status{margin-top:10px;line-height:1.5;font-weight:700}
+.hint{color:#666;font-size:13px;line-height:1.5;margin-top:6px}
+.summary{margin-top:12px;padding:11px;background:#eef5fb;border:1px solid #cbddea;border-radius:8px;line-height:1.6}
+
+.auth-wrap,.home-wrap{min-height:82vh;display:flex;align-items:center;justify-content:center;padding:25px 14px}
+.auth-card,.home-card{width:100%;max-width:470px;background:#fff;border-radius:16px;padding:28px 22px;box-shadow:0 4px 18px rgba(0,0,0,.1)}
+.auth-title,.home-title{font-size:25px;font-weight:900;color:#16324f;text-align:center;margin-bottom:8px}
+.auth-subtitle,.home-subtitle{text-align:center;color:#666;font-size:14px;margin-bottom:22px}
+.auth-actions{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:15px}
+.auth-actions button{width:100%}
+.admin-entry{display:block;margin:14px auto 0;background:transparent;color:#777;font-size:13px;text-decoration:underline}
+.admin-box{margin-top:18px;padding-top:16px;border-top:1px solid #e2e5e8}
+
+.dashboard-stack{display:flex;flex-direction:column;gap:16px;margin-top:20px}
+.dashboard-section{background:#f8fafb;border:1px solid #dfe5ea;border-radius:14px;padding:14px}
+.dashboard-section-title{font-size:17px;font-weight:900;color:#16324f;margin-bottom:10px}
+.dashboard-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:10px}
+.module-btn{width:100%;min-height:96px;padding:16px 12px;font-size:16px;position:relative;display:flex;flex-direction:column;align-items:flex-start;justify-content:space-between;text-align:left}
+.module-name{font-size:17px;font-weight:900;line-height:1.35}
+.module-sub{font-size:12px;opacity:.82;margin-top:4px}
+.module-bhd{background:#16324f;color:#fff}
+.module-request{background:#276a5a;color:#fff}
+.module-mywork{background:#7a4b16;color:#fff;min-height:86px}
+.module-dev{background:#e6e9ec;color:#7a8188}
+.mywork-wide{width:100%;position:relative}
+
+.tile-count{position:absolute;right:10px;top:10px;min-width:24px;height:24px;padding:0 7px;border-radius:999px;background:#d64545;color:#fff;display:flex;align-items:center;justify-content:center;font-size:12px}
+.notification-btn{position:relative;background:#fff!important;color:#16324f!important;width:38px;height:36px;padding:0!important;font-size:20px!important;display:flex;align-items:center;justify-content:center}
+.notification-count{position:absolute;right:-5px;top:-6px;min-width:19px;height:19px;padding:0 5px;border-radius:999px;background:#d64545;color:#fff;font-size:11px;display:flex;align-items:center;justify-content:center;border:2px solid #16324f}
+.mywork-unread{background:#fff8ed;border:2px solid #e4a04a}
+.new-badge{display:inline-block;margin-left:6px;background:#d64545;color:#fff;border-radius:10px;padding:2px 6px;font-size:11px;font-weight:800}
+
+.tabs{display:grid;grid-template-columns:repeat(3,1fr);gap:7px;margin-bottom:15px}
+.tabs button{width:100%;background:#e7edf2}
+.tabs .active{background:#16324f;color:#fff}
+
+.edit-banner{padding:12px;margin-bottom:14px;background:#fff3c8;border:1px solid #e7ce73;border-radius:8px}
+.preview-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:9px;margin-top:12px}
+.preview-item img{width:100%;height:210px;object-fit:contain;background:#eee;border:1px solid #d9dee3;border-radius:8px}
+.preview-label{text-align:center;font-size:12px;margin-top:4px;color:#555}
+.result-grid img{transform:scaleX(-1)}
+.image-tools{display:flex;gap:6px;margin-top:6px}
+.image-tools button{flex:1;padding:8px 6px;font-size:13px}
+
+.table-wrap{width:100%;overflow-x:auto;margin-top:10px}
+table{width:100%;border-collapse:collapse;min-width:620px}
+th,td{border:1px solid #ccd3d9;padding:6px;text-align:center}
+th{background:#e8eef3;white-space:nowrap}
+.section-head{background:#dce7f0}
+.position-cell{width:60px;font-weight:700;background:#f3f5f7}
+.matrix-input{min-width:90px;padding:8px;text-align:center}
+.review-cell{background:#fff2c4}
+
+.matrix-controls,.record-actions,.request-actions,.export-actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:10px}
+.export-actions button{flex:1}
+.record-card,.request-card{border:1px solid #d6dde3;border-radius:10px;padding:13px;margin-top:10px;background:#fff}
+.record-card.completed,.request-card.completed{border-left:5px solid #278159}
+.record-card.incomplete,.request-card.pending{border-left:5px solid #e09a24}
+.record-card.delete-requested{background:#fff9f4;border-top:2px solid #df6b39;border-right:2px solid #df6b39;border-bottom:2px solid #df6b39}
+.record-top{display:flex;justify-content:space-between;align-items:flex-start;gap:8px}
+.record-title{font-size:17px;font-weight:800}
+.record-meta{font-size:13px;color:#666;margin-top:7px;line-height:1.65}
+
+.badge{display:inline-block;padding:5px 9px;border-radius:20px;font-size:12px;font-weight:800;white-space:nowrap}
+.badge-pending{background:#fff0c9;color:#8a5700}
+.badge-completed{background:#dcefe5;color:#16603c}
+.badge-delete{background:#ffe0d2;color:#a33e12}
+
+.delete-info{margin-top:9px;padding:9px;background:#fff0e8;border:1px solid #f0b695;border-radius:7px;font-size:13px;color:#803100;line-height:1.6}
+.log-section{margin-top:22px;padding-top:16px;border-top:2px solid #e5e8eb}
+.log-title{font-size:17px;font-weight:800}
+.log-item{width:100%;margin-top:7px;padding:11px;text-align:left;background:#f7f9fb;color:#222;border:1px solid #d9dfe5}
+.log-current{background:#eaf5ef;border-color:#a8cfb7}
+.log-version{font-weight:900;color:#16324f}
+.log-date{margin-top:4px;color:#666;font-size:12px;line-height:1.5}
+
+.modifier-box,.complete-worker-box,.confirm-box,.reconfirm-box{margin-top:16px;padding:14px;border-radius:9px}
+.modifier-box{background:#fff8e7;border:1px solid #e5c76f}
+.complete-worker-box{background:#f4f8f6;border:1px solid #c8ddd1}
+.confirm-box{background:#eef6f4;border:1px solid #b9d7cf}
+.reconfirm-box{background:#fff8e7;border:1px solid #e5c76f}
+.delete-ready-box{background:#eaf5ef;border:1px solid #a8cfb7;color:#145c39;font-weight:800}
+.result-title{margin-top:18px;padding:10px;color:#fff;background:#16324f;border-radius:6px;font-weight:800}
+.request-result-title{background:#276a5a}
+
+.request-content-preview{margin-top:9px;padding:9px;background:#f7f9fb;border-radius:7px;white-space:pre-wrap;line-height:1.55}
+.home-user{text-align:center;margin-top:10px;font-weight:700;color:#444}
+.empty{text-align:center;color:#777;padding:25px;margin-top:12px}
+.section-heading{display:flex;justify-content:space-between;align-items:center;gap:8px}
+.section-heading h2{margin:0}
+.refresh{background:#e8edf2}
+
+/* 확인요청자 3명 + 버튼 배치 */
+.requester-grid{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin-top:7px}
+.requester-item{position:relative;flex:0 0 calc((100% - 66px)/3);min-width:0}
+.requester-item input{width:100%;min-width:0;padding:9px 29px 9px 9px;font-size:14px}
+.requester-remove-btn{position:absolute;right:4px;top:50%;transform:translateY(-50%);width:24px;height:24px;padding:0;border-radius:50%;background:#e8edf2;color:#555;font-size:15px}
+.requester-add-btn{flex:0 0 42px;width:42px;height:42px;padding:0;border-radius:8px;background:#16324f;color:#fff;font-size:23px;font-weight:900}
+.requester-help{margin-top:6px;color:#666;font-size:13px;line-height:1.5}
+
+.admin-delete-wrap{margin-top:12px;padding:12px;border:1px solid #efb0b0;background:#fff5f5;border-radius:9px}
+
+.image-modal{position:fixed;inset:0;z-index:10000;background:rgba(0,0,0,.92);display:flex;flex-direction:column}
+.image-modal-top{display:flex;justify-content:flex-end;padding:10px}
+.image-modal-viewer{flex:1;min-height:0;overflow:auto;display:flex;align-items:center;justify-content:center;padding:15px}
+.image-modal-viewer img{max-width:95vw;max-height:82vh;object-fit:contain;transform-origin:center}
+.image-modal-bottom{padding:10px 10px 18px;display:flex;gap:7px;justify-content:center;flex-wrap:wrap}
+
+.history-modal{position:fixed;inset:0;z-index:9000;background:rgba(0,0,0,.75);overflow-y:auto;padding:18px}
+.history-card{width:100%;max-width:1050px;margin:auto;background:#fff;border-radius:12px;padding:18px}
+.history-head{display:flex;justify-content:space-between;align-items:center;gap:10px;border-bottom:1px solid #ddd;padding-bottom:12px}
+.history-title{font-size:20px;font-weight:800}
+.history-info{background:#eef5fb;border:1px solid #cbddea;border-radius:8px;padding:12px;margin-top:13px;line-height:1.7}
+.history-subtitle{font-size:17px;font-weight:800;margin-top:18px}
+
+#exportStage{position:fixed;left:-10000px;top:0;background:#fff;padding:30px;color:#111}
+
+@media(max-width:600px){
+  .header-title{font-size:16px}
+  .user-badge{display:none}
+  .auth-actions{grid-template-columns:1fr}
+  .history-modal{padding:8px}
+  .history-card{padding:12px}
+}
 </style>
 </head>
+
 <body>
 
 <div id="authScreen" class="auth-wrap">
   <div class="auth-card">
     <div class="auth-title">HWDK 작업관리 시스템</div>
     <div id="authSubtitle" class="auth-subtitle">이름과 비밀번호로 로그인합니다.</div>
+
     <label>이름</label>
     <input id="loginName" type="text" autocomplete="username" placeholder="이름 입력">
+
     <label>비밀번호</label>
     <input id="loginPassword" type="password" autocomplete="current-password" placeholder="비밀번호 입력">
 
@@ -30,16 +180,15 @@
       <button id="backLoginBtn" class="secondary">로그인 화면으로</button>
     </div>
 
-    <div id="authHint" class="hint">회원가입을 누르면 회원가입 화면으로 전환됩니다.</div>
     <div id="authStatus" class="status"></div>
 
     <button id="adminEntryBtn" class="admin-entry">관리자 모드</button>
 
     <div id="adminBox" class="admin-box hidden">
       <label>관리자 이메일</label>
-      <input id="adminEmail" type="email" value="g.s.lee@daekong.com" autocomplete="username">
+      <input id="adminEmail" type="email" value="g.s.lee@daekong.com">
       <label>관리자 비밀번호</label>
-      <input id="adminPassword" type="password" autocomplete="current-password" placeholder="비밀번호 입력">
+      <input id="adminPassword" type="password">
       <div class="auth-actions">
         <button id="adminLoginBtn" class="primary" style="margin-top:0">관리자 로그인</button>
         <button id="adminCancelBtn" class="secondary">취소</button>
@@ -54,7 +203,7 @@
     <div class="header-title">HWDK 작업관리 시스템</div>
     <div class="header-right">
       <span id="userBadge" class="user-badge"></span>
-      <button id="notificationBtn" class="notification-btn" title="나의 알림" aria-label="나의 알림">🔔<span id="notificationCount" class="notification-count hidden">0</span></button>
+      <button id="notificationBtn" class="notification-btn">🔔<span id="notificationCount" class="notification-count hidden">0</span></button>
       <button id="homeBtn" class="header-btn">업무 선택</button>
       <button id="logoutBtn" class="header-btn">로그아웃</button>
     </div>
@@ -68,15 +217,17 @@
     <div id="homeUser" class="home-user"></div>
 
     <div class="dashboard-stack">
+
       <button id="openMyWorkBtn" class="module-btn module-mywork mywork-wide">
         <span id="myWorkHomeCount" class="tile-count hidden">0</span>
         <span class="module-name">나의 업무</span>
-        <span class="module-sub">나에게 요청된 업무 · 재확인 알림 · 완료 알림</span>
+        <span class="module-sub">나에게 요청된 업무 · 재확인 업무</span>
       </button>
 
       <div class="dashboard-section">
         <div class="dashboard-section-title">1. 생산운영관리</div>
         <div class="dashboard-grid">
+
           <button id="openRequestBtn" class="module-btn module-request">
             <span class="module-name">업무요청등록</span>
             <span class="module-sub">현장 확인 및 작업 요청</span>
@@ -94,13 +245,14 @@
 
           <button class="module-btn module-dev" disabled>
             <span class="module-name">개발중</span>
-            <span class="module-sub">추가 기능 예정</span>
           </button>
+
         </div>
       </div>
 
       <div class="dashboard-section">
         <div class="dashboard-section-title">2. 품질관리</div>
+
         <div class="dashboard-grid">
           <button id="openBhdBtn" class="module-btn module-bhd">
             <span class="module-name">BHD 결선관리</span>
@@ -109,10 +261,10 @@
 
           <button class="module-btn module-dev" disabled>
             <span class="module-name">개발중</span>
-            <span class="module-sub">추가 품질 기능 예정</span>
           </button>
         </div>
       </div>
+
     </div>
   </div>
 </div>
@@ -129,24 +281,37 @@
       <div id="editBanner" class="edit-banner hidden">
         <strong>기존 기록 수정 중</strong>
         <div id="editInfo" class="hint"></div>
-        <button id="cancelEditBtn" class="secondary" style="margin-top:8px">수정 취소 · 새 등록</button>
+        <button id="cancelEditBtn" class="secondary">수정 취소 · 새 등록</button>
       </div>
 
       <h2 id="registerTitle">선작업 BHD 등록</h2>
-      <label>호선</label><input id="shipNo" placeholder="예: 2751">
-      <label>구역 / 위치</label><input id="area" placeholder="예: ER / 3DECK">
-      <label>작성자</label><input id="bhdNo" readonly>
-      <label>작업일</label><input id="workDate" type="date">
-      <label>선작업 사진</label><input id="photos" type="file" accept="image/*" multiple>
-      <div class="hint">전체사진과 근접사진을 함께 선택할 수 있습니다. 한 건당 최대 8장입니다.</div>
+
+      <label>호선</label>
+      <input id="shipNo">
+
+      <label>구역 / 위치</label>
+      <input id="area">
+
+      <label>작성자</label>
+      <input id="bhdNo" readonly>
+
+      <label>작업일</label>
+      <input id="workDate" type="date">
+
+      <label>선작업 사진</label>
+      <input id="photos" type="file" accept="image/*" multiple>
+
       <div id="previewGrid" class="preview-grid"></div>
+
       <button id="analyzeBtn" class="ai">AI 자동분석</button>
+
       <div id="analysisStatus" class="status"></div>
       <div id="analysisSummary" class="summary hidden"></div>
 
       <h3 style="margin-top:20px">결선 배치표</h3>
-      <div class="hint">실제 사진 배열 기준으로 세로는 위치, 가로는 구역별 좌·우입니다.</div>
+
       <div id="matrixWrap" class="table-wrap"></div>
+
       <div class="matrix-controls">
         <button id="addPositionBtn" class="secondary">+ 위치(행) 추가</button>
         <button id="addSectionBtn" class="secondary">+ 구역(열) 추가</button>
@@ -155,7 +320,6 @@
       <div id="modifierBox" class="modifier-box hidden">
         <label>수정자 이름</label>
         <input id="modifiedBy" readonly>
-        <div class="hint">현재 로그인한 사용자가 수정자로 자동 기록됩니다.</div>
       </div>
 
       <button id="saveBtn" class="primary">BHD 저장</button>
@@ -163,65 +327,76 @@
 
       <div id="editLogSection" class="log-section hidden">
         <div class="log-title">수정 이력</div>
-        <div class="hint">기록을 누르면 당시 저장된 정보를 확인할 수 있습니다.</div>
         <div id="editLogList"></div>
       </div>
+
     </div>
   </section>
 
   <section id="bhdSearchSection" class="hidden">
     <div class="card">
+
       <h2>BHD 조회</h2>
-      <div class="hint">호선 · 위치 · 이름 중 하나만 입력해도 조회됩니다. 이름은 최초 작성자 또는 후작업 작업자 이름을 모두 검색합니다.</div>
-      <label>호선</label><input id="searchShip" placeholder="예: 2751">
-      <label>위치</label><input id="searchArea" placeholder="예: ER / 3DECK">
-      <label>이름</label><input id="searchBhd" placeholder="작성자 또는 후작업 작업자 이름">
+
+      <label>호선</label>
+      <input id="searchShip">
+
+      <label>위치</label>
+      <input id="searchArea">
+
+      <label>이름</label>
+      <input id="searchBhd">
+
       <button id="searchBtn" class="primary">기록 찾기</button>
+
       <div id="searchStatus" class="status"></div>
       <div id="searchResults"></div>
 
       <div id="resultBox" class="hidden">
+
         <div class="result-title">후작업 기준 화면</div>
+
         <div id="resultInfo" class="summary"></div>
+
         <div id="resultImages" class="preview-grid result-grid"></div>
+
         <div id="resultMatrix" class="table-wrap"></div>
-        <div class="export-actions">
-          <button id="exportTableImageBtn" class="ai">표 이미지 저장</button>
-          <button id="printTableBtn" class="secondary">인쇄 / PDF 저장</button>
-        </div>
-        <div id="exportStatus" class="status"></div>
 
         <div class="complete-worker-box">
           <label>후작업 작업자 이름</label>
           <input id="completedBy" readonly>
-          <div class="hint">현재 로그인한 사용자가 후작업 작업자로 자동 입력됩니다.</div>
         </div>
 
         <button id="completeBtn" class="success" style="width:100%;margin-top:12px">후작업 작업완료</button>
+
         <div id="completeStatus" class="status"></div>
 
         <div class="log-section">
           <div class="log-title">수정 이력</div>
-          <div class="hint">최초 등록 및 수정 기록입니다.</div>
           <div id="detailLogList"></div>
         </div>
+
       </div>
     </div>
   </section>
 
   <section id="bhdListSection" class="hidden">
     <div class="card">
+
       <div class="section-heading">
         <h2>BHD 목록</h2>
         <button id="refreshBhdListBtn" class="refresh">새로고침</button>
       </div>
+
       <div id="bhdListStatus" class="status"></div>
       <div id="recordList"></div>
+
     </div>
   </section>
 </div>
 
 <div id="requestApp" class="container hidden">
+
   <div class="tabs">
     <button id="requestRegisterTab" class="active">확인요청 등록</button>
     <button id="requestSearchTab">확인요청 조회</button>
@@ -230,96 +405,176 @@
 
   <section id="requestRegisterSection">
     <div class="card">
+
       <h2>현장 확인요청 등록</h2>
-      <label>호선</label><input id="reqShip" placeholder="예: 2751">
-      <label>위치</label><input id="reqArea" placeholder="예: ER / 3DECK / BHD 위치">
-      <label>작성자</label><input id="reqAuthor" readonly>
-      <label>확인요청자</label><input id="reqTarget" list="userNameOptions" placeholder="업무를 요청할 사람 이름 입력">
+
+      <label>호선</label>
+      <input id="reqShip">
+
+      <label>위치</label>
+      <input id="reqArea">
+
+      <label>작성자</label>
+      <input id="reqAuthor" readonly>
+
+      <label>확인요청자</label>
+
+      <div id="requesterGrid" class="requester-grid"></div>
+
       <datalist id="userNameOptions"></datalist>
-      <div class="hint">회원가입된 사용자 이름을 입력하세요.</div>
-      <label>확인 필요한 내용</label><textarea id="reqContent" placeholder="현장에서 확인이 필요한 사항을 작성하세요."></textarea>
-      <label>첨부사진 (선택)</label><input id="reqPhotos" type="file" accept="image/*" multiple>
-      <div class="hint">최대 5장입니다.</div>
+
+      <div class="requester-help">
+        한 줄에 최대 3명씩 표시됩니다.
+        + 버튼으로 인원을 추가할 수 있습니다.
+      </div>
+
+      <label>확인 필요한 내용</label>
+      <textarea id="reqContent"></textarea>
+
+      <label>첨부사진</label>
+      <input id="reqPhotos" type="file" accept="image/*" multiple>
+
       <div id="reqPreviewGrid" class="preview-grid"></div>
+
       <button id="saveRequestBtn" class="primary">확인요청 등록</button>
+
       <div id="reqSaveStatus" class="status"></div>
+
     </div>
   </section>
 
   <section id="requestSearchSection" class="hidden">
     <div class="card">
+
       <h2>확인요청 조회</h2>
-      <label>호선</label><input id="reqSearchShip">
-      <label>위치</label><input id="reqSearchArea">
-      <label>이름</label><input id="reqSearchName" placeholder="작성자 · 확인요청자 · 확인자">
+
+      <label>호선</label>
+      <input id="reqSearchShip">
+
+      <label>위치</label>
+      <input id="reqSearchArea">
+
+      <label>이름</label>
+      <input id="reqSearchName">
+
       <button id="reqSearchBtn" class="primary">확인요청 찾기</button>
+
       <div id="reqSearchStatus" class="status"></div>
       <div id="reqSearchResults"></div>
 
       <div id="requestDetailBox" class="hidden">
+
         <div class="result-title request-result-title">확인요청 상세</div>
+
         <div id="requestDetailInfo" class="summary"></div>
+
         <div id="requestDetailContent" class="request-content-preview"></div>
+
         <div id="requestDetailImages" class="preview-grid"></div>
 
         <div class="confirm-box">
-          <label>확인자</label><input id="confirmBy" readonly>
+
+          <label>확인자</label>
+          <input id="confirmBy" readonly>
+
           <label>답변 / 확인내용</label>
-          <textarea id="confirmAnswer" placeholder="확인 결과 또는 조치 내용을 작성하세요."></textarea>
+          <textarea id="confirmAnswer"></textarea>
 
           <div id="responseUploadBox">
-            <label>완료 / 답변 사진 (선택)</label>
+
+            <label>완료 / 답변 사진</label>
+
             <input id="responsePhotos" type="file" accept="image/*" multiple>
-            <div class="hint">작업성 요청은 완료사진을 첨부할 수 있습니다. 최대 5장입니다.</div>
+
             <div id="responsePreviewGrid" class="preview-grid"></div>
+
           </div>
 
           <div id="responseCompletedBox" class="hidden">
             <label>완료 회신 사진</label>
             <div id="responseDetailImages" class="preview-grid"></div>
           </div>
+
         </div>
 
-        <button id="confirmRequestBtn" class="success" style="width:100%;margin-top:12px">답변 등록 및 확인완료</button>
+        <button id="confirmRequestBtn" class="success" style="width:100%;margin-top:12px">
+          답변 등록 및 확인완료
+        </button>
+
         <div id="confirmStatus" class="status"></div>
 
         <div id="reconfirmBox" class="reconfirm-box hidden">
+
           <strong>작성자 최종 재확인</strong>
-          <div id="reconfirmInfo" class="hint">답변과 완료사진을 확인한 뒤 재확인하세요.</div>
-          <button id="reconfirmBtn" class="warning" style="width:100%;margin-top:10px">재확인 완료</button>
+
+          <div id="reconfirmInfo" class="hint">
+            답변과 완료사진을 확인한 뒤 재확인 완료하세요.
+          </div>
+
+          <button id="reconfirmBtn" class="warning" style="width:100%;margin-top:10px">
+            재확인 완료
+          </button>
+
           <div id="reconfirmStatus" class="status"></div>
+
         </div>
+
+        <div id="adminDeleteRequestWrap" class="admin-delete-wrap hidden">
+
+          <strong>관리자 삭제</strong>
+
+          <div class="hint">
+            작성자 최종 재확인 완료 건만 삭제할 수 있습니다.
+          </div>
+
+          <button id="adminDeleteRequestBtn" class="danger" style="width:100%;margin-top:10px">
+            이 업무요청 삭제
+          </button>
+
+        </div>
+
       </div>
     </div>
   </section>
 
   <section id="requestListSection" class="hidden">
     <div class="card">
+
       <div class="section-heading">
         <h2>확인요청 목록</h2>
         <button id="refreshRequestListBtn" class="refresh">새로고침</button>
       </div>
+
       <div id="requestListStatus" class="status"></div>
       <div id="requestList"></div>
+
     </div>
   </section>
 </div>
 
 <div id="myWorkApp" class="container hidden">
   <div class="card">
+
     <div class="section-heading">
       <h2>나의 업무</h2>
       <button id="refreshMyWorkBtn" class="refresh">새로고침</button>
     </div>
-    <div class="hint">나에게 요청된 업무와 내가 작성한 요청의 재확인 업무가 표시됩니다.</div>
+
     <div id="myWorkStatus" class="status"></div>
     <div id="myWorkList"></div>
+
   </div>
 </div>
 
 <div id="imageModal" class="image-modal hidden">
-  <div class="image-modal-top"><button id="modalCloseBtn" class="danger">닫기</button></div>
-  <div class="image-modal-viewer"><img id="modalImage"></div>
+  <div class="image-modal-top">
+    <button id="modalCloseBtn" class="danger">닫기</button>
+  </div>
+
+  <div class="image-modal-viewer">
+    <img id="modalImage">
+  </div>
+
   <div class="image-modal-bottom">
     <button id="zoomOutBtn" class="secondary">축소 -</button>
     <button id="zoomResetBtn" class="secondary">원래크기</button>
@@ -330,15 +585,20 @@
 
 <div id="historyModal" class="history-modal hidden">
   <div class="history-card">
+
     <div class="history-head">
       <div id="historyModalTitle" class="history-title">수정 이력 상세</div>
       <button id="historyCloseBtn" class="danger">닫기</button>
     </div>
+
     <div id="historyInfo" class="history-info"></div>
+
     <div class="history-subtitle">당시 등록 사진</div>
     <div id="historyImages" class="preview-grid"></div>
+
     <div class="history-subtitle">당시 결선 배치표</div>
     <div id="historyMatrix" class="table-wrap"></div>
+
   </div>
 </div>
 
@@ -351,38 +611,39 @@ import {createClient} from "https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2
 
 const SUPABASE_URL="https://dcxplqljfadjrqyvpvoy.supabase.co";
 const SUPABASE_ANON_KEY="sb_publishable_1XT8EGC8iNLtrFRMhqN41w_kLvgEKcR";
+
 const supabase=createClient(SUPABASE_URL,SUPABASE_ANON_KEY);
+
+const $=id=>document.getElementById(id);
 
 let isAdmin=false;
 let currentUserName="";
 let currentUserId=null;
+
 let editingId=null;
 let currentViewedRecord=null;
 let currentRequestRecord=null;
+
 let existingPaths=[];
 let existingPreviewUrls=[];
+
 let rowMap=new Map();
 let sectionCount=1;
 let maxPosition=1;
-let analysisMeta={notes:"",ai_analyzed:false};
+
 let modalImageUrl="";
-let modalDownloadName="HWDK-photo.jpg";
+let modalDownloadName="";
 let modalZoom=1;
 let modalMirror=false;
+
 let notificationTimer=null;
 
-const $=id=>document.getElementById(id);
 const photosInput=$("photos");
 const reqPhotos=$("reqPhotos");
 const responsePhotos=$("responsePhotos");
 
-function localToday(){
-  const d=new Date();
-  return `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,"0")}-${String(d.getDate()).padStart(2,"0")}`;
-}
-
-function formatDateTime(v){
-  return v?new Date(v).toLocaleString("ko-KR"):"-";
+function normalizeName(v){
+  return String(v||"").trim().replace(/\s+/g," ");
 }
 
 function escapeHtml(v){
@@ -394,26 +655,25 @@ function escapeHtml(v){
     .replaceAll("'","&#039;");
 }
 
-function normalizeName(v){
-  return String(v||"").trim().replace(/\s+/g," ");
+function formatDateTime(v){
+  if(!v)return "-";
+  return new Date(v).toLocaleString("ko-KR");
+}
+
+function localToday(){
+  const d=new Date();
+  return d.getFullYear()+"-"+String(d.getMonth()+1).padStart(2,"0")+"-"+String(d.getDate()).padStart(2,"0");
 }
 
 function safeFilename(v){
   return String(v||"HWDK").replace(/[\\/:*?"<>|]/g,"_");
 }
 
-function pushState(state){
-  history.pushState(state,"",location.href);
-}
+async function syntheticEmail(name){
+  const value=normalizeName(name).toLowerCase();
+  const data=new TextEncoder().encode(value);
+  const hash=await crypto.subtle.digest("SHA-256",data);
 
-function replaceState(state){
-  history.replaceState(state,"",location.href);
-}
-
-async function nameToSyntheticEmail(name){
-  const normalized=normalizeName(name).toLowerCase();
-  const bytes=new TextEncoder().encode(normalized);
-  const hash=await crypto.subtle.digest("SHA-256",bytes);
   const hex=[...new Uint8Array(hash)]
     .map(b=>b.toString(16).padStart(2,"0"))
     .join("");
@@ -421,152 +681,174 @@ async function nameToSyntheticEmail(name){
   return `u_${hex.slice(0,40)}@hwdk-bhd.com`;
 }
 
-function hideAllMain(){
+function hideAll(){
   ["authScreen","moduleHome","bhdApp","requestApp","myWorkApp"]
     .forEach(id=>$(id).classList.add("hidden"));
 }
 
-function setAuthMode(mode){
-  const signup=mode==="signup";
-
+function setSignupMode(signup){
   $("loginActions").classList.toggle("hidden",signup);
   $("signupActions").classList.toggle("hidden",!signup);
 
-  $("authSubtitle").textContent=signup
-    ?"사용할 이름과 비밀번호를 등록하세요."
-    :"이름과 비밀번호로 로그인합니다.";
+  $("authSubtitle").textContent=
+    signup
+      ?"사용할 이름과 비밀번호를 등록하세요."
+      :"이름과 비밀번호로 로그인합니다.";
 
   $("authStatus").textContent="";
 }
 
 function showAuth(){
-  hideAllMain();
+  hideAll();
   $("appHeader").classList.add("hidden");
   $("authScreen").classList.remove("hidden");
-  setAuthMode("login");
+  setSignupMode(false);
 }
 
 function showHeader(){
   $("appHeader").classList.remove("hidden");
-  $("userBadge").textContent=isAdmin?`관리자 · ${currentUserName}`:currentUserName;
+
+  $("userBadge").textContent=
+    isAdmin
+      ?"관리자"
+      :currentUserName;
+
   refreshNotificationBadge();
 }
 
-function showHome(add=true){
-  hideAllMain();
+function showHome(){
+  hideAll();
   showHeader();
-  $("moduleHome").classList.remove("hidden");
-  $("homeUser").textContent=`현재 사용자: ${currentUserName}`;
-  refreshNotificationBadge();
 
-  if(add){
-    pushState({
-      screen:"home",
-      admin:isAdmin
-    });
-  }
+  $("moduleHome").classList.remove("hidden");
+  $("homeUser").textContent="현재 사용자: "+currentUserName;
 }
 
-async function loadMyProfile(userId){
-  const {data,error}=await supabase
+async function checkAdmin(){
+  const {data}=await supabase.auth.getSession();
+
+  if(!data.session)return false;
+
+  const result=await supabase
+    .from("admin_users")
+    .select("user_id")
+    .eq("user_id",data.session.user.id)
+    .maybeSingle();
+
+  return !result.error&&!!result.data;
+}
+
+async function getProfile(userId){
+  const {data}=await supabase
     .from("user_profiles")
     .select("name")
     .eq("user_id",userId)
     .maybeSingle();
 
-  return error||!data?null:data.name;
+  return data?.name||null;
 }
 
-async function checkCurrentUserAdmin(){
-  const {data:sessionData}=await supabase.auth.getSession();
-
-  if(!sessionData.session)return false;
-
-  const {data,error}=await supabase
-    .from("admin_users")
-    .select("user_id")
-    .eq("user_id",sessionData.session.user.id)
-    .maybeSingle();
-
-  return !error&&!!data;
-}
-
-async function loadAssignableUsers(){
+async function loadUsers(){
   const {data,error}=await supabase
     .from("user_profiles")
     .select("user_id,name")
-    .order("name",{ascending:true});
+    .order("name");
 
-  if(error)return[];
+  if(error)return [];
 
-  $("userNameOptions").innerHTML=(data||[])
-    .map(user=>`<option value="${escapeHtml(user.name)}"></option>`)
-    .join("");
+  $("userNameOptions").innerHTML=
+    (data||[])
+      .map(x=>`<option value="${escapeHtml(x.name)}"></option>`)
+      .join("");
 
   return data||[];
 }
 
-async function findUserByName(name){
-  const {data,error}=await supabase
-    .from("user_profiles")
-    .select("user_id,name")
-    .eq("name",normalizeName(name))
-    .maybeSingle();
-
-  return error||!data?null:data;
-}
-
-async function refreshNotificationBadge(){
-  if(!currentUserId||isAdmin){
-    $("notificationCount").classList.add("hidden");
-    $("myWorkHomeCount").classList.add("hidden");
-    return;
+function requestedIds(record){
+  if(Array.isArray(record?.requested_to_user_ids)&&record.requested_to_user_ids.length){
+    return record.requested_to_user_ids.map(String);
   }
 
-  const [incoming,reconfirm]=await Promise.all([
-    supabase
-      .from("check_requests")
-      .select("id",{count:"exact",head:true})
-      .eq("requested_to_user_id",currentUserId)
-      .eq("status","pending")
-      .is("recipient_read_at",null),
+  if(record?.requested_to_user_id){
+    return [String(record.requested_to_user_id)];
+  }
 
-    supabase
-      .from("check_requests")
-      .select("id",{count:"exact",head:true})
-      .eq("created_by",currentUserId)
-      .eq("status","completed")
-      .eq("author_reconfirmed",false)
-      .is("author_completion_read_at",null)
-  ]);
-
-  if(incoming.error||reconfirm.error)return;
-
-  const count=Number(incoming.count||0)+Number(reconfirm.count||0);
-
-  ["notificationCount","myWorkHomeCount"].forEach(id=>{
-    $(id).textContent=count>99?"99+":String(count);
-    $(id).classList.toggle("hidden",count===0);
-  });
+  return [];
 }
 
-function startNotificationPolling(){
-  if(notificationTimer)clearInterval(notificationTimer);
+function requestedNames(record){
+  if(Array.isArray(record?.requested_to_names)&&record.requested_to_names.length){
+    return record.requested_to_names;
+  }
 
-  refreshNotificationBadge();
-  notificationTimer=setInterval(refreshNotificationBadge,15000);
+  if(record?.requested_to_name){
+    return [record.requested_to_name];
+  }
+
+  return [];
 }
+
+function assignedToMe(record){
+  return requestedIds(record).includes(String(currentUserId));
+}
+
+async function validateRequesterNames(names){
+
+  const users=await loadUsers();
+
+  const userMap=new Map(
+    users.map(user=>[
+      normalizeName(user.name).toLowerCase(),
+      user
+    ])
+  );
+
+  const result=[];
+  const used=new Set();
+
+  for(const inputName of names){
+
+    const name=normalizeName(inputName);
+
+    if(!name)continue;
+
+    const key=name.toLowerCase();
+
+    if(used.has(key)){
+      throw new Error("중복된 확인요청자입니다: "+name);
+    }
+
+    used.add(key);
+
+    const user=userMap.get(key);
+
+    if(!user){
+      throw new Error("등록되지 않은 인원입니다: "+name);
+    }
+
+    result.push(user);
+  }
+
+  if(!result.length){
+    throw new Error("확인요청자를 1명 이상 입력하세요.");
+  }
+
+  return result;
+}
+
+/* 로그인 */
 
 $("showSignupBtn").onclick=()=>{
-  setAuthMode("signup");
+  setSignupMode(true);
 };
 
 $("backLoginBtn").onclick=()=>{
   $("loginPassword").value="";
-  setAuthMode("login");
+  setSignupMode(false);
 };
 
 $("signupBtn").onclick=async()=>{
+
   const name=normalizeName($("loginName").value);
   const password=$("loginPassword").value;
   const status=$("authStatus");
@@ -582,18 +864,15 @@ $("signupBtn").onclick=async()=>{
   }
 
   try{
-    status.textContent="회원가입 중...";
 
     await supabase.auth.signOut();
 
-    const email=await nameToSyntheticEmail(name);
+    const email=await syntheticEmail(name);
 
     let {data,error}=await supabase.auth.signUp({
       email,
       password,
-      options:{
-        data:{name}
-      }
+      options:{data:{name}}
     });
 
     if(error)throw error;
@@ -605,53 +884,50 @@ $("signupBtn").onclick=async()=>{
       });
 
       if(login.error)throw login.error;
+
       data=login.data;
     }
 
-    const user=data.user||data.session?.user;
+    const user=data.user||data.session.user;
 
-    const {error:profileError}=await supabase
+    const profile=await supabase
       .from("user_profiles")
-      .upsert(
-        {
-          user_id:user.id,
-          name
-        },
-        {
-          onConflict:"user_id"
-        }
-      );
+      .upsert({
+        user_id:user.id,
+        name
+      },{
+        onConflict:"user_id"
+      });
 
-    if(profileError)throw profileError;
+    if(profile.error)throw profile.error;
 
     currentUserId=user.id;
     currentUserName=name;
     isAdmin=false;
 
     startNotificationPolling();
-    showHome(true);
+    showHome();
 
   }catch(error){
-    status.textContent="회원가입 실패: "+(error?.message||"오류");
+    status.textContent="회원가입 실패: "+error.message;
   }
 };
 
 $("loginBtn").onclick=async()=>{
+
   const name=normalizeName($("loginName").value);
   const password=$("loginPassword").value;
-  const status=$("authStatus");
 
   if(!name||!password){
-    status.textContent="이름과 비밀번호를 입력하세요.";
+    $("authStatus").textContent="이름과 비밀번호를 입력하세요.";
     return;
   }
 
   try{
-    status.textContent="로그인 중...";
 
     await supabase.auth.signOut();
 
-    const email=await nameToSyntheticEmail(name);
+    const email=await syntheticEmail(name);
 
     const {data,error}=await supabase.auth.signInWithPassword({
       email,
@@ -660,33 +936,23 @@ $("loginBtn").onclick=async()=>{
 
     if(error)throw error;
 
-    const profileName=await loadMyProfile(data.user.id);
+    const profile=await getProfile(data.user.id);
 
-    if(!profileName){
+    if(!profile){
       throw new Error("사용자 정보를 찾을 수 없습니다.");
     }
 
     currentUserId=data.user.id;
-    currentUserName=profileName;
+    currentUserName=profile;
     isAdmin=false;
 
     startNotificationPolling();
-    showHome(true);
+    showHome();
 
   }catch{
-    status.textContent="로그인 실패: 이름 또는 비밀번호를 확인하세요.";
+    $("authStatus").textContent="로그인 실패: 이름 또는 비밀번호를 확인하세요.";
   }
 };
-
-$("loginPassword").addEventListener("keydown",event=>{
-  if(event.key!=="Enter")return;
-
-  if(!$("signupActions").classList.contains("hidden")){
-    $("signupBtn").click();
-  }else{
-    $("loginBtn").click();
-  }
-});
 
 $("adminEntryBtn").onclick=()=>{
   $("adminBox").classList.remove("hidden");
@@ -694,13 +960,12 @@ $("adminEntryBtn").onclick=()=>{
 
 $("adminCancelBtn").onclick=()=>{
   $("adminBox").classList.add("hidden");
-  $("adminPassword").value="";
 };
 
 $("adminLoginBtn").onclick=async()=>{
-  const status=$("adminStatus");
 
   try{
+
     await supabase.auth.signOut();
 
     const {data,error}=await supabase.auth.signInWithPassword({
@@ -712,25 +977,23 @@ $("adminLoginBtn").onclick=async()=>{
 
     currentUserId=data.user.id;
 
-    if(!await checkCurrentUserAdmin()){
+    if(!await checkAdmin()){
+      await supabase.auth.signOut();
       throw new Error("관리자 권한이 없습니다.");
     }
 
-    currentUserName="관리자";
     isAdmin=true;
+    currentUserName="관리자";
 
-    showHome(true);
+    showHome();
 
   }catch(error){
-    status.textContent="관리자 로그인 실패: "+(error?.message||"오류");
+    $("adminStatus").textContent="관리자 로그인 실패: "+error.message;
   }
 };
 
-$("homeBtn").onclick=()=>showHome(true);
-
 $("logoutBtn").onclick=async()=>{
   if(notificationTimer)clearInterval(notificationTimer);
-
   await supabase.auth.signOut();
 
   currentUserId=null;
@@ -738,14 +1001,1147 @@ $("logoutBtn").onclick=async()=>{
   isAdmin=false;
 
   showAuth();
-  replaceState({screen:"auth"});
 };
+
+$("homeBtn").onclick=showHome;
+
+/* 알림 */
+
+async function refreshNotificationBadge(){
+
+  if(!currentUserId||isAdmin){
+    $("notificationCount").classList.add("hidden");
+    $("myWorkHomeCount").classList.add("hidden");
+    return;
+  }
+
+  const [assigned,author]=await Promise.all([
+
+    supabase
+      .from("check_requests")
+      .select("id",{count:"exact",head:true})
+      .contains("requested_to_user_ids",[currentUserId])
+      .eq("status","pending"),
+
+    supabase
+      .from("check_requests")
+      .select("id",{count:"exact",head:true})
+      .eq("created_by",currentUserId)
+      .eq("status","completed")
+      .eq("author_reconfirmed",false)
+      .is("author_completion_read_at",null)
+
+  ]);
+
+  if(assigned.error||author.error)return;
+
+  const count=
+    Number(assigned.count||0)+
+    Number(author.count||0);
+
+  for(const id of ["notificationCount","myWorkHomeCount"]){
+
+    const el=$(id);
+
+    el.textContent=count>99?"99+":count;
+    el.classList.toggle("hidden",count===0);
+  }
+}
+
+function startNotificationPolling(){
+
+  if(notificationTimer){
+    clearInterval(notificationTimer);
+  }
+
+  refreshNotificationBadge();
+
+  notificationTimer=setInterval(
+    refreshNotificationBadge,
+    15000
+  );
+}
+
+/* 메뉴 */
+
+$("openMyWorkBtn").onclick=showMyWork;
+$("notificationBtn").onclick=showMyWork;
+
+$("openRequestBtn").onclick=async()=>{
+  resetRequestForm();
+  showRequestTab("register");
+};
+
+$("openBhdBtn").onclick=()=>{
+  resetBhdForm();
+  showBhdTab("register");
+};
+
+/* 사진 */
+
+function fileExt(file){
+
+  const map={
+    "image/jpeg":"jpg",
+    "image/png":"png",
+    "image/webp":"webp",
+    "image/heic":"heic",
+    "image/heif":"heif"
+  };
+
+  if(map[file.type])return map[file.type];
+
+  const match=(file.name||"").match(/\.([A-Za-z0-9]+)$/);
+
+  return match?match[1]:"jpg";
+}
+
+function randomId(){
+  return crypto.randomUUID
+    ?crypto.randomUUID()
+    :Date.now()+"-"+Math.random().toString(36).slice(2);
+}
+
+async function uploadFiles(files,prefix){
+
+  const result=[];
+  const date=localToday().replaceAll("-","");
+
+  for(let i=0;i<files.length;i++){
+
+    const file=files[i];
+
+    const path=
+      `${prefix}/${date}/${Date.now()}-${i}-${randomId()}.${fileExt(file)}`;
+
+    const upload=await supabase.storage
+      .from("bhd-images")
+      .upload(path,file,{
+        upsert:false,
+        contentType:file.type||undefined
+      });
+
+    if(upload.error)throw upload.error;
+
+    result.push(path);
+  }
+
+  return result;
+}
+
+async function signedUrls(paths){
+
+  const urls=[];
+
+  for(const path of paths||[]){
+
+    const result=await supabase.storage
+      .from("bhd-images")
+      .createSignedUrl(path,3600);
+
+    if(!result.error&&result.data?.signedUrl){
+      urls.push(result.data.signedUrl);
+    }
+  }
+
+  return urls;
+}
+
+function openImage(url,name,mirror=false){
+
+  modalImageUrl=url;
+  modalDownloadName=name;
+  modalMirror=mirror;
+  modalZoom=1;
+
+  $("modalImage").src=url;
+  updateImageTransform();
+
+  $("imageModal").classList.remove("hidden");
+}
+
+function updateImageTransform(){
+  $("modalImage").style.transform=
+    `scale(${modalMirror?-modalZoom:modalZoom},${modalZoom})`;
+}
+
+$("modalCloseBtn").onclick=()=>{
+  $("imageModal").classList.add("hidden");
+};
+
+$("zoomInBtn").onclick=()=>{
+  modalZoom=Math.min(5,modalZoom+.25);
+  updateImageTransform();
+};
+
+$("zoomOutBtn").onclick=()=>{
+  modalZoom=Math.max(.5,modalZoom-.25);
+  updateImageTransform();
+};
+
+$("zoomResetBtn").onclick=()=>{
+  modalZoom=1;
+  updateImageTransform();
+};
+
+$("modalDownloadBtn").onclick=async()=>{
+
+  if(!modalImageUrl)return;
+
+  const response=await fetch(modalImageUrl);
+  const blob=await response.blob();
+  const url=URL.createObjectURL(blob);
+
+  const a=document.createElement("a");
+  a.href=url;
+  a.download=safeFilename(modalDownloadName||"photo.jpg");
+  a.click();
+
+  URL.revokeObjectURL(url);
+};
+
+function appendImageCard(container,url,label,name,mirror=false){
+
+  const item=document.createElement("div");
+  item.className="preview-item";
+
+  const img=document.createElement("img");
+  img.src=url;
+  img.style.cursor="zoom-in";
+
+  if(mirror){
+    img.style.transform="scaleX(-1)";
+  }
+
+  img.onclick=()=>openImage(url,name,mirror);
+
+  const text=document.createElement("div");
+  text.className="preview-label";
+  text.textContent=label;
+
+  item.append(img,text);
+  container.appendChild(item);
+}
+
+/* 업무요청자 입력 */
+
+let requesterSeq=0;
+
+function requesterField(value="",removeAllowed=false){
+
+  requesterSeq++;
+
+  const wrapper=document.createElement("div");
+  wrapper.className="requester-item";
+
+  const input=document.createElement("input");
+
+  input.type="text";
+  input.className="requester-name-input";
+  input.setAttribute("list","userNameOptions");
+  input.placeholder="이름";
+  input.value=value;
+  input.autocomplete="off";
+
+  wrapper.appendChild(input);
+
+  if(removeAllowed){
+
+    const remove=document.createElement("button");
+
+    remove.type="button";
+    remove.className="requester-remove-btn";
+    remove.textContent="×";
+
+    remove.onclick=()=>{
+      wrapper.remove();
+      renderRequesterAddButton();
+    };
+
+    wrapper.appendChild(remove);
+  }
+
+  return wrapper;
+}
+
+function renderRequesterAddButton(){
+
+  const grid=$("requesterGrid");
+
+  $("addRequesterBtn")?.remove();
+
+  const button=document.createElement("button");
+
+  button.id="addRequesterBtn";
+  button.type="button";
+  button.className="requester-add-btn";
+  button.textContent="+";
+
+  button.onclick=()=>{
+
+    const field=requesterField("",true);
+
+    grid.insertBefore(
+      field,
+      button
+    );
+
+    field.querySelector("input").focus();
+  };
+
+  grid.appendChild(button);
+}
+
+function resetRequesterFields(){
+
+  const grid=$("requesterGrid");
+
+  grid.innerHTML="";
+  requesterSeq=0;
+
+  grid.appendChild(
+    requesterField("",false)
+  );
+
+  renderRequesterAddButton();
+}
+
+function requesterInputNames(){
+
+  return[
+    ...document.querySelectorAll(".requester-name-input")
+  ]
+    .map(input=>normalizeName(input.value))
+    .filter(Boolean);
+}
+
+/* 업무 요청 */
+
+function showRequestTab(mode){
+
+  hideAll();
+  showHeader();
+
+  $("requestApp").classList.remove("hidden");
+
+  const tabs={
+    register:"requestRegisterTab",
+    search:"requestSearchTab",
+    list:"requestListTab"
+  };
+
+  const sections={
+    register:"requestRegisterSection",
+    search:"requestSearchSection",
+    list:"requestListSection"
+  };
+
+  Object.values(tabs).forEach(id=>{
+    $(id).classList.remove("active");
+  });
+
+  Object.values(sections).forEach(id=>{
+    $(id).classList.add("hidden");
+  });
+
+  $(tabs[mode]).classList.add("active");
+  $(sections[mode]).classList.remove("hidden");
+
+  if(mode==="list"){
+    loadRequestList();
+  }
+}
+
+$("requestRegisterTab").onclick=()=>{
+  resetRequestForm();
+  showRequestTab("register");
+};
+
+$("requestSearchTab").onclick=()=>{
+  showRequestTab("search");
+};
+
+$("requestListTab").onclick=()=>{
+  showRequestTab("list");
+};
+
+async function resetRequestForm(){
+
+  $("reqShip").value="";
+  $("reqArea").value="";
+  $("reqAuthor").value=currentUserName;
+  $("reqContent").value="";
+  $("reqSaveStatus").textContent="";
+
+  reqPhotos.value="";
+  $("reqPreviewGrid").innerHTML="";
+
+  await loadUsers();
+
+  resetRequesterFields();
+}
+
+reqPhotos.onchange=()=>{
+
+  $("reqPreviewGrid").innerHTML="";
+
+  [...reqPhotos.files].slice(0,5).forEach((file,i)=>{
+    appendImageCard(
+      $("reqPreviewGrid"),
+      URL.createObjectURL(file),
+      `첨부 사진 ${i+1}`,
+      file.name
+    );
+  });
+};
+
+$("saveRequestBtn").onclick=async()=>{
+
+  const button=$("saveRequestBtn");
+  const status=$("reqSaveStatus");
+
+  const ship=$("reqShip").value.trim();
+  const area=$("reqArea").value.trim();
+  const content=$("reqContent").value.trim();
+  const names=requesterInputNames();
+
+  if(!ship||!area||!content){
+    status.textContent="호선, 위치, 확인내용을 입력하세요.";
+    return;
+  }
+
+  if(!names.length){
+    status.textContent="확인요청자를 1명 이상 입력하세요.";
+    return;
+  }
+
+  if(reqPhotos.files.length>5){
+    status.textContent="첨부사진은 최대 5장입니다.";
+    return;
+  }
+
+  try{
+
+    button.disabled=true;
+    status.textContent="확인요청자 확인 중...";
+
+    const targets=await validateRequesterNames(names);
+
+    const ids=targets.map(x=>x.user_id);
+    const registeredNames=targets.map(x=>x.name);
+
+    const images=await uploadFiles(
+      [...reqPhotos.files],
+      "requests"
+    );
+
+    const first=targets[0];
+
+    const insert=await supabase
+      .from("check_requests")
+      .insert({
+        ship_no:ship,
+        area,
+
+        requester_name:currentUserName,
+        author_name:currentUserName,
+
+        requested_to_name:first.name,
+        requested_to_user_id:first.user_id,
+
+        requested_to_names:registeredNames,
+        requested_to_user_ids:ids,
+
+        request_content:content,
+
+        image_paths:images,
+        response_image_paths:[],
+
+        status:"pending",
+
+        answer:null,
+        confirmed_by:null,
+        confirmed_at:null,
+
+        author_completion_read_at:null,
+
+        author_reconfirmed:false,
+        author_reconfirmed_at:null,
+        author_reconfirmed_by:null,
+
+        delete_ready:false,
+
+        created_by:currentUserId,
+        updated_at:new Date().toISOString()
+      });
+
+    if(insert.error)throw insert.error;
+
+    status.textContent=
+      registeredNames.join(", ")+
+      "님에게 업무요청을 등록했습니다.";
+
+    $("reqContent").value="";
+    reqPhotos.value="";
+    $("reqPreviewGrid").innerHTML="";
+
+    resetRequesterFields();
+
+    refreshNotificationBadge();
+
+  }catch(error){
+
+    status.textContent=error.message;
+
+  }finally{
+
+    button.disabled=false;
+  }
+};
+
+function requestStage(record){
+
+  if(record.status!=="completed"){
+    return "확인대기";
+  }
+
+  if(record.author_reconfirmed){
+    return "최종확인완료 · 삭제가능";
+  }
+
+  return "작성자 재확인 대기";
+}
+
+async function requestById(id){
+
+  const {data}=await supabase
+    .from("check_requests")
+    .select("*")
+    .eq("id",id)
+    .maybeSingle();
+
+  return data;
+}
+
+async function renderStoredImages(paths,target,prefix){
+
+  target.innerHTML="";
+
+  const urls=await signedUrls(paths||[]);
+
+  urls.forEach((url,i)=>{
+    appendImageCard(
+      target,
+      url,
+      `${prefix} ${i+1}`,
+      `${prefix}-${i+1}.jpg`
+    );
+  });
+}
+
+async function openRequest(record){
+
+  currentRequestRecord=record;
+
+  showRequestTab("search");
+
+  if(
+    !isAdmin&&
+    record.created_by===currentUserId&&
+    record.status==="completed"&&
+    !record.author_completion_read_at
+  ){
+    const now=new Date().toISOString();
+
+    await supabase
+      .from("check_requests")
+      .update({
+        author_completion_read_at:now
+      })
+      .eq("id",record.id);
+
+    record.author_completion_read_at=now;
+
+    refreshNotificationBadge();
+  }
+
+  const names=requestedNames(record);
+
+  $("requestDetailInfo").innerHTML=
+    `<strong>호선:</strong> ${escapeHtml(record.ship_no||"-")}<br>`+
+    `<strong>위치:</strong> ${escapeHtml(record.area||"-")}<br>`+
+    `<strong>작성자:</strong> ${escapeHtml(record.author_name||record.requester_name||"-")}<br>`+
+    `<strong>확인요청자:</strong> ${escapeHtml(names.join(" · ")||"-")}<br>`+
+    `<strong>상태:</strong> ${escapeHtml(requestStage(record))}`+
+    `${record.confirmed_by?`<br><strong>확인자:</strong> ${escapeHtml(record.confirmed_by)}`:""}`+
+    `${record.confirmed_at?`<br><strong>답변완료:</strong> ${formatDateTime(record.confirmed_at)}`:""}`+
+    `${record.author_reconfirmed_by?`<br><strong>작성자 재확인:</strong> ${escapeHtml(record.author_reconfirmed_by)}`:""}`;
+
+  $("requestDetailContent").textContent=
+    record.request_content||"";
+
+  await renderStoredImages(
+    record.image_paths,
+    $("requestDetailImages"),
+    "요청사진"
+  );
+
+  await renderStoredImages(
+    record.response_image_paths,
+    $("responseDetailImages"),
+    "완료사진"
+  );
+
+  $("responseCompletedBox").classList.toggle(
+    "hidden",
+    !Array.isArray(record.response_image_paths)||
+    !record.response_image_paths.length
+  );
+
+  const canAnswer=
+    isAdmin||
+    assignedToMe(record);
+
+  if(record.status==="pending"&&canAnswer){
+
+    $("confirmBy").value=currentUserName;
+
+    $("confirmAnswer").value="";
+    $("confirmAnswer").readOnly=false;
+
+    $("responseUploadBox").classList.remove("hidden");
+
+    $("confirmRequestBtn").disabled=false;
+    $("confirmRequestBtn").textContent="답변 등록 및 확인완료";
+
+  }else{
+
+    $("confirmBy").value=
+      record.confirmed_by||
+      names.join(" · ");
+
+    $("confirmAnswer").value=
+      record.answer||"";
+
+    $("confirmAnswer").readOnly=true;
+
+    $("responseUploadBox").classList.add("hidden");
+
+    $("confirmRequestBtn").disabled=true;
+
+    $("confirmRequestBtn").textContent=
+      record.status==="completed"
+        ?"확인완료됨"
+        :"확인요청 대상자만 처리 가능";
+  }
+
+  const isAuthor=
+    !isAdmin&&
+    record.created_by===currentUserId;
+
+  if(record.status==="completed"&&isAuthor){
+
+    $("reconfirmBox").classList.remove("hidden");
+
+    if(record.author_reconfirmed){
+
+      $("reconfirmBtn").disabled=true;
+      $("reconfirmBtn").textContent="재확인 완료됨";
+
+      $("reconfirmStatus").textContent=
+        "최종 재확인 완료 · 삭제 가능";
+
+    }else{
+
+      $("reconfirmBtn").disabled=false;
+      $("reconfirmBtn").textContent="재확인 완료";
+
+      $("reconfirmStatus").textContent=
+        "답변과 완료사진을 확인해 주세요.";
+    }
+
+  }else if(record.author_reconfirmed){
+
+    $("reconfirmBox").classList.remove("hidden");
+
+    $("reconfirmBtn").disabled=true;
+    $("reconfirmBtn").textContent="재확인 완료됨";
+
+    $("reconfirmStatus").textContent=
+      "최종 재확인 완료 · 삭제 가능";
+
+  }else{
+
+    $("reconfirmBox").classList.add("hidden");
+  }
+
+  $("adminDeleteRequestWrap").classList.toggle(
+    "hidden",
+    !(isAdmin&&record.delete_ready)
+  );
+
+  $("requestDetailBox").classList.remove("hidden");
+}
+
+responsePhotos.onchange=()=>{
+
+  $("responsePreviewGrid").innerHTML="";
+
+  [...responsePhotos.files].slice(0,5).forEach((file,i)=>{
+    appendImageCard(
+      $("responsePreviewGrid"),
+      URL.createObjectURL(file),
+      `완료 사진 ${i+1}`,
+      file.name
+    );
+  });
+};
+
+$("confirmRequestBtn").onclick=async()=>{
+
+  if(!currentRequestRecord)return;
+
+  if(
+    !isAdmin&&
+    !assignedToMe(currentRequestRecord)
+  ){
+    $("confirmStatus").textContent=
+      "확인요청 대상자만 답변할 수 있습니다.";
+    return;
+  }
+
+  const answer=$("confirmAnswer").value.trim();
+
+  if(!answer){
+    $("confirmStatus").textContent="답변을 입력하세요.";
+    return;
+  }
+
+  if(responsePhotos.files.length>5){
+    $("confirmStatus").textContent="완료사진은 최대 5장입니다.";
+    return;
+  }
+
+  try{
+
+    $("confirmRequestBtn").disabled=true;
+
+    const images=await uploadFiles(
+      [...responsePhotos.files],
+      "responses"
+    );
+
+    const now=new Date().toISOString();
+
+    const result=await supabase
+      .from("check_requests")
+      .update({
+        status:"completed",
+
+        answer,
+
+        response_image_paths:images,
+
+        confirmed_by:currentUserName,
+        confirmed_at:now,
+
+        author_completion_read_at:null,
+
+        author_reconfirmed:false,
+        author_reconfirmed_at:null,
+        author_reconfirmed_by:null,
+
+        delete_ready:false,
+
+        updated_at:now
+      })
+      .eq("id",currentRequestRecord.id)
+      .eq("status","pending")
+      .select("id");
+
+    if(result.error)throw result.error;
+
+    if(!result.data?.length){
+      throw new Error(
+        "다른 확인요청자가 이미 답변을 완료했습니다."
+      );
+    }
+
+    currentRequestRecord=
+      await requestById(currentRequestRecord.id);
+
+    responsePhotos.value="";
+    $("responsePreviewGrid").innerHTML="";
+
+    await openRequest(currentRequestRecord);
+
+    refreshNotificationBadge();
+
+  }catch(error){
+
+    $("confirmStatus").textContent=
+      "확인완료 실패: "+error.message;
+
+    $("confirmRequestBtn").disabled=false;
+  }
+};
+
+$("reconfirmBtn").onclick=async()=>{
+
+  const record=currentRequestRecord;
+
+  if(!record)return;
+
+  if(record.created_by!==currentUserId){
+    $("reconfirmStatus").textContent=
+      "최초 작성자만 재확인할 수 있습니다.";
+    return;
+  }
+
+  if(!confirm(
+    "답변과 완료사진을 확인하셨습니까?\n\n재확인 완료 후 삭제 가능한 상태로 변경됩니다."
+  )){
+    return;
+  }
+
+  const now=new Date().toISOString();
+
+  const result=await supabase
+    .from("check_requests")
+    .update({
+      author_reconfirmed:true,
+      author_reconfirmed_at:now,
+      author_reconfirmed_by:currentUserName,
+
+      author_completion_read_at:now,
+
+      delete_ready:true,
+
+      updated_at:now
+    })
+    .eq("id",record.id);
+
+  if(result.error){
+    $("reconfirmStatus").textContent=
+      result.error.message;
+    return;
+  }
+
+  currentRequestRecord=
+    await requestById(record.id);
+
+  await openRequest(currentRequestRecord);
+
+  refreshNotificationBadge();
+};
+
+function makeRequestCard(record){
+
+  const card=document.createElement("div");
+
+  card.className=
+    "request-card "+
+    (
+      record.status==="completed"
+        ?"completed"
+        :"pending"
+    );
+
+  const names=requestedNames(record);
+
+  card.innerHTML=
+    `<div class="record-top">`+
+      `<div class="record-title">`+
+        `${escapeHtml(record.ship_no||"")} / ${escapeHtml(record.area||"")}`+
+      `</div>`+
+      `<span class="badge ${record.status==="completed"?"badge-completed":"badge-pending"}">`+
+        `${escapeHtml(requestStage(record))}`+
+      `</span>`+
+    `</div>`+
+
+    `<div class="record-meta">`+
+      `작성자: ${escapeHtml(record.author_name||record.requester_name||"-")}`+
+      `<br>확인요청자: ${escapeHtml(names.join(" · ")||"-")}`+
+      `${record.confirmed_by?`<br>확인자: ${escapeHtml(record.confirmed_by)}`:""}`+
+      `${record.delete_ready?`<br><strong>삭제 가능</strong>`:""}`+
+    `</div>`+
+
+    `<div class="request-content-preview">`+
+      `${escapeHtml(record.request_content||"")}`+
+    `</div>`;
+
+  const actions=document.createElement("div");
+  actions.className="request-actions";
+
+  const view=document.createElement("button");
+  view.className="secondary";
+  view.textContent=
+    record.status==="completed"
+      ?"완료내용 보기"
+      :"확인 및 답변";
+
+  view.onclick=()=>openRequest(record);
+
+  actions.appendChild(view);
+
+  if(isAdmin&&record.delete_ready){
+
+    const del=document.createElement("button");
+    del.className="danger";
+    del.textContent="삭제";
+
+    del.onclick=()=>deleteRequest(record);
+
+    actions.appendChild(del);
+  }
+
+  card.appendChild(actions);
+
+  return card;
+}
+
+async function deleteRequest(record){
+
+  if(!isAdmin){
+    alert("관리자만 삭제할 수 있습니다.");
+    return;
+  }
+
+  if(!record.delete_ready){
+    alert("작성자 재확인이 완료된 건만 삭제할 수 있습니다.");
+    return;
+  }
+
+  if(!await checkAdmin()){
+    alert("관리자 인증을 확인할 수 없습니다.");
+    return;
+  }
+
+  if(!confirm("이 업무요청을 삭제하시겠습니까?")){
+    return;
+  }
+
+  try{
+
+    const imagePaths=[
+      ...(record.image_paths||[]),
+      ...(record.response_image_paths||[])
+    ];
+
+    if(imagePaths.length){
+
+      const storage=await supabase.storage
+        .from("bhd-images")
+        .remove(imagePaths);
+
+      if(storage.error)throw storage.error;
+    }
+
+    const result=await supabase
+      .from("check_requests")
+      .delete()
+      .eq("id",record.id)
+      .select("id");
+
+    if(result.error)throw result.error;
+
+    alert("삭제되었습니다.");
+
+    currentRequestRecord=null;
+    $("requestDetailBox").classList.add("hidden");
+
+    loadRequestList();
+
+  }catch(error){
+
+    alert("삭제 실패: "+error.message);
+  }
+}
+
+$("adminDeleteRequestBtn").onclick=()=>{
+  if(currentRequestRecord){
+    deleteRequest(currentRequestRecord);
+  }
+};
+
+async function loadRequestList(){
+
+  const {data,error}=await supabase
+    .from("check_requests")
+    .select("*")
+    .order("created_at",{ascending:false});
+
+  $("requestList").innerHTML="";
+
+  if(error){
+    $("requestListStatus").textContent=error.message;
+    return;
+  }
+
+  $("requestListStatus").textContent=
+    "전체 "+data.length+"건";
+
+  data.forEach(record=>{
+    $("requestList").appendChild(
+      makeRequestCard(record)
+    );
+  });
+}
+
+$("refreshRequestListBtn").onclick=loadRequestList;
+
+async function searchRequests(){
+
+  const ship=$("reqSearchShip").value.trim();
+  const area=$("reqSearchArea").value.trim();
+  const name=normalizeName($("reqSearchName").value).toLowerCase();
+
+  let query=supabase
+    .from("check_requests")
+    .select("*")
+    .order("created_at",{ascending:false});
+
+  if(ship){
+    query=query.ilike("ship_no","%"+ship+"%");
+  }
+
+  if(area){
+    query=query.ilike("area","%"+area+"%");
+  }
+
+  const {data,error}=await query;
+
+  $("reqSearchResults").innerHTML="";
+
+  if(error){
+    $("reqSearchStatus").textContent=error.message;
+    return;
+  }
+
+  const result=(data||[]).filter(record=>{
+
+    if(!name)return true;
+
+    const values=[
+      record.author_name,
+      record.requester_name,
+      record.confirmed_by,
+      ...requestedNames(record)
+    ]
+      .filter(Boolean)
+      .map(v=>normalizeName(v).toLowerCase());
+
+    return values.some(v=>v.includes(name));
+  });
+
+  $("reqSearchStatus").textContent=
+    result.length+"건 검색됨";
+
+  result.forEach(record=>{
+    $("reqSearchResults").appendChild(
+      makeRequestCard(record)
+    );
+  });
+}
+
+$("reqSearchBtn").onclick=searchRequests;
+
+/* 나의 업무 */
+
+async function showMyWork(){
+
+  hideAll();
+  showHeader();
+
+  $("myWorkApp").classList.remove("hidden");
+
+  if(isAdmin){
+    $("myWorkStatus").textContent=
+      "관리자 계정에는 개인 업무가 없습니다.";
+    $("myWorkList").innerHTML="";
+    return;
+  }
+
+  const [assigned,legacy,authored]=await Promise.all([
+
+    supabase
+      .from("check_requests")
+      .select("*")
+      .contains("requested_to_user_ids",[currentUserId]),
+
+    supabase
+      .from("check_requests")
+      .select("*")
+      .eq("requested_to_user_id",currentUserId),
+
+    supabase
+      .from("check_requests")
+      .select("*")
+      .eq("created_by",currentUserId)
+  ]);
+
+  const error=
+    assigned.error||
+    legacy.error||
+    authored.error;
+
+  if(error){
+    $("myWorkStatus").textContent=error.message;
+    return;
+  }
+
+  const map=new Map();
+
+  [
+    ...(assigned.data||[]),
+    ...(legacy.data||[]),
+    ...(authored.data||[])
+  ].forEach(record=>{
+    map.set(record.id,record);
+  });
+
+  const items=[...map.values()];
+
+  items.sort(
+    (a,b)=>
+      new Date(b.created_at)-
+      new Date(a.created_at)
+  );
+
+  const pending=items.filter(record=>
+    assignedToMe(record)&&
+    record.status==="pending"
+  ).length;
+
+  const reconfirm=items.filter(record=>
+    record.created_by===currentUserId&&
+    record.status==="completed"&&
+    !record.author_reconfirmed
+  ).length;
+
+  $("myWorkStatus").textContent=
+    `전체 ${items.length}건 · 확인대기 ${pending}건 · 재확인대기 ${reconfirm}건`;
+
+  $("myWorkList").innerHTML="";
+
+  items.forEach(record=>{
+    $("myWorkList").appendChild(
+      makeRequestCard(record)
+    );
+  });
+
+  refreshNotificationBadge();
+}
+
+$("refreshMyWorkBtn").onclick=showMyWork;
 
 /* BHD */
 
 function showBhdTab(mode){
-  hideAllMain();
+
+  hideAll();
   showHeader();
+
   $("bhdApp").classList.remove("hidden");
 
   const tabs={
@@ -760,676 +2156,223 @@ function showBhdTab(mode){
     list:"bhdListSection"
   };
 
-  Object.values(tabs).forEach(id=>$(id).classList.remove("active"));
-  Object.values(sections).forEach(id=>$(id).classList.add("hidden"));
+  Object.values(tabs).forEach(id=>{
+    $(id).classList.remove("active");
+  });
+
+  Object.values(sections).forEach(id=>{
+    $(id).classList.add("hidden");
+  });
 
   $(tabs[mode]).classList.add("active");
   $(sections[mode]).classList.remove("hidden");
 
-  if(mode==="list")loadBhdList();
+  if(mode==="list"){
+    loadBhdList();
+  }
 }
 
-$("openBhdBtn").onclick=async()=>{
-  await resetRegister();
+$("bhdRegisterTab").onclick=()=>{
   showBhdTab("register");
-  pushState({screen:"bhd-tab",tab:"register",admin:isAdmin});
 };
 
-$("bhdRegisterTab").onclick=()=>showBhdTab("register");
-$("bhdSearchTab").onclick=()=>showBhdTab("search");
-$("bhdListTab").onclick=()=>showBhdTab("list");
+$("bhdSearchTab").onclick=()=>{
+  showBhdTab("search");
+};
 
-function rowKey(section,position){
-  return `${section}-${position}`;
+$("bhdListTab").onclick=()=>{
+  showBhdTab("list");
+};
+
+function rowKey(s,p){
+  return s+"-"+p;
 }
 
-function getRow(section,position){
-  const key=rowKey(section,position);
+function setRows(rows=[],sections=1){
+
+  rowMap=new Map();
+
+  let maxS=sections;
+  let maxP=1;
+
+  rows.forEach(row=>{
+
+    const s=Number(row.section||1);
+    const p=Number(row.position||1);
+
+    maxS=Math.max(maxS,s);
+    maxP=Math.max(maxP,p);
+
+    rowMap.set(rowKey(s,p),{
+      section:s,
+      position:p,
+      left:row.left||"",
+      right:row.right||""
+    });
+  });
+
+  sectionCount=Math.max(1,maxS);
+  maxPosition=Math.max(1,maxP);
+
+  renderMatrix();
+}
+
+function getMatrixRow(s,p){
+
+  const key=rowKey(s,p);
 
   if(!rowMap.has(key)){
     rowMap.set(key,{
-      section,
-      position,
+      section:s,
+      position:p,
       left:"",
-      right:"",
-      confidence:1,
-      needs_review:false
+      right:""
     });
   }
 
   return rowMap.get(key);
 }
 
-function setRows(rows=[],suppliedSections=0){
-  rowMap=new Map();
+function renderMatrix(){
 
-  let detectedSections=0;
-  let detectedPositions=0;
+  let html="<table><thead><tr><th rowspan='2'>위치</th>";
 
-  rows.forEach(row=>{
-    const section=Number(row.section||1);
-    const position=Number(row.position||1);
-
-    detectedSections=Math.max(detectedSections,section);
-    detectedPositions=Math.max(detectedPositions,position);
-
-    rowMap.set(
-      rowKey(section,position),
-      {
-        section,
-        position,
-        left:row.left||"",
-        right:row.right||"",
-        confidence:Number(row.confidence??1),
-        needs_review:Boolean(row.needs_review)
-      }
-    );
-  });
-
-  sectionCount=Math.max(1,Number(suppliedSections||0),detectedSections);
-  maxPosition=Math.max(1,detectedPositions);
-
-  renderEditableMatrix();
-}
-
-function collectRows(){
-  return [...rowMap.values()]
-    .filter(row=>String(row.left||"").trim()||String(row.right||"").trim())
-    .map(row=>({
-      section:Number(row.section),
-      position:Number(row.position),
-      left:String(row.left||"").trim(),
-      right:String(row.right||"").trim(),
-      confidence:Number(row.confidence??1),
-      needs_review:Boolean(row.needs_review)
-    }))
-    .sort((a,b)=>a.section-b.section||a.position-b.position);
-}
-
-function renderEditableMatrix(){
-  const wrap=$("matrixWrap");
-  wrap.innerHTML="";
-
-  const table=document.createElement("table");
-  const head=document.createElement("thead");
-  const row1=document.createElement("tr");
-
-  const positionHead=document.createElement("th");
-  positionHead.textContent="위치";
-  positionHead.rowSpan=2;
-  row1.appendChild(positionHead);
-
-  for(let section=1;section<=sectionCount;section++){
-    const th=document.createElement("th");
-    th.textContent=`구역 ${section}`;
-    th.colSpan=2;
-    row1.appendChild(th);
+  for(let s=1;s<=sectionCount;s++){
+    html+=`<th colspan="2">구역 ${s}</th>`;
   }
 
-  const row2=document.createElement("tr");
+  html+="</tr><tr>";
 
-  for(let section=1;section<=sectionCount;section++){
-    ["좌","우"].forEach(text=>{
-      const th=document.createElement("th");
-      th.textContent=text;
-      row2.appendChild(th);
+  for(let s=1;s<=sectionCount;s++){
+    html+="<th>좌</th><th>우</th>";
+  }
+
+  html+="</tr></thead><tbody>";
+
+  for(let p=1;p<=maxPosition;p++){
+
+    html+=`<tr><td>${p}</td>`;
+
+    for(let s=1;s<=sectionCount;s++){
+
+      const row=getMatrixRow(s,p);
+
+      html+=
+        `<td><input class="matrix-input" data-s="${s}" data-p="${p}" data-side="left" value="${escapeHtml(row.left)}"></td>`+
+        `<td><input class="matrix-input" data-s="${s}" data-p="${p}" data-side="right" value="${escapeHtml(row.right)}"></td>`;
+    }
+
+    html+="</tr>";
+  }
+
+  html+="</tbody></table>";
+
+  $("matrixWrap").innerHTML=html;
+
+  document.querySelectorAll(".matrix-input")
+    .forEach(input=>{
+      input.oninput=()=>{
+        const row=getMatrixRow(
+          Number(input.dataset.s),
+          Number(input.dataset.p)
+        );
+
+        row[input.dataset.side]=input.value;
+      };
     });
-  }
-
-  head.append(row1,row2);
-  table.appendChild(head);
-
-  const body=document.createElement("tbody");
-
-  for(let position=1;position<=maxPosition;position++){
-    const tr=document.createElement("tr");
-
-    const positionCell=document.createElement("td");
-    positionCell.className="position-cell";
-    positionCell.textContent=position;
-    tr.appendChild(positionCell);
-
-    for(let section=1;section<=sectionCount;section++){
-      const row=getRow(section,position);
-
-      ["left","right"].forEach(side=>{
-        const td=document.createElement("td");
-        const input=document.createElement("input");
-
-        input.className="matrix-input";
-        input.value=row[side]||"";
-
-        input.oninput=()=>{
-          row[side]=input.value;
-          row.needs_review=false;
-          row.confidence=1;
-        };
-
-        td.appendChild(input);
-        tr.appendChild(td);
-      });
-    }
-
-    body.appendChild(tr);
-  }
-
-  table.appendChild(body);
-  wrap.appendChild(table);
 }
 
-function buildTableHTML(rows,sections,mirror=false){
-  const map=new Map();
-  let highestPosition=1;
-
-  rows.forEach(row=>{
-    highestPosition=Math.max(highestPosition,Number(row.position||1));
-    map.set(rowKey(Number(row.section||1),Number(row.position||1)),row);
-  });
-
-  let html='<table><thead><tr><th rowspan="2">위치</th>';
-
-  for(let section=1;section<=sections;section++){
-    html+=`<th colspan="2">구역 ${section}</th>`;
-  }
-
-  html+='</tr><tr>';
-
-  for(let section=1;section<=sections;section++){
-    html+='<th>좌</th><th>우</th>';
-  }
-
-  html+='</tr></thead><tbody>';
-
-  for(let position=1;position<=highestPosition;position++){
-    html+=`<tr><td class="position-cell">${position}</td>`;
-
-    for(let displaySection=1;displaySection<=sections;displaySection++){
-      const sourceSection=mirror?sections-displaySection+1:displaySection;
-      const row=map.get(rowKey(sourceSection,position));
-
-      if(mirror){
-        html+=`<td>${escapeHtml(row?.right||"")}</td><td>${escapeHtml(row?.left||"")}</td>`;
-      }else{
-        html+=`<td>${escapeHtml(row?.left||"")}</td><td>${escapeHtml(row?.right||"")}</td>`;
-      }
-    }
-
-    html+='</tr>';
-  }
-
-  return html+'</tbody></table>';
-}
-
-function getUploadExtension(file){
-  const mime=String(file.type||"").toLowerCase();
-
-  const map={
-    "image/jpeg":"jpg",
-    "image/jpg":"jpg",
-    "image/png":"png",
-    "image/webp":"webp",
-    "image/heic":"heic",
-    "image/heif":"heif"
-  };
-
-  if(map[mime])return map[mime];
-
-  const match=String(file.name||"").match(/\.([A-Za-z0-9]{1,8})$/);
-  return match?match[1].toLowerCase():"jpg";
-}
-
-function makeUploadId(){
-  return crypto?.randomUUID
-    ?crypto.randomUUID()
-    :`${Date.now()}-${Math.random().toString(36).slice(2)}`;
-}
-
-async function uploadFiles(files,prefix){
-  const paths=[];
-  const date=localToday().replaceAll("-","");
-
-  for(let i=0;i<files.length;i++){
-    const file=files[i];
-
-    const path=
-      `${prefix}/${date}/`+
-      `${Date.now()}-${i+1}-${makeUploadId()}.${getUploadExtension(file)}`;
-
-    const {error}=await supabase.storage
-      .from("bhd-images")
-      .upload(
-        path,
-        file,
-        {
-          upsert:false,
-          contentType:file.type||undefined
-        }
-      );
-
-    if(error)throw error;
-
-    paths.push(path);
-  }
-
-  return paths;
-}
-
-async function signedUrls(paths){
-  const urls=[];
-
-  for(const path of paths||[]){
-    const {data,error}=await supabase.storage
-      .from("bhd-images")
-      .createSignedUrl(path,3600);
-
-    if(!error&&data?.signedUrl){
-      urls.push(data.signedUrl);
-    }
-  }
-
-  return urls;
-}
-
-function showImageModalOnly(url,filename,mirror=false){
-  modalImageUrl=url;
-  modalDownloadName=filename;
-  modalMirror=mirror;
-  modalZoom=1;
-
-  $("modalImage").src=url;
-
-  applyModalTransform();
-
-  $("imageModal").classList.remove("hidden");
-  document.body.style.overflow="hidden";
-}
-
-function applyModalTransform(){
-  $("modalImage").style.transform=
-    `scale(${(modalMirror?-1:1)*modalZoom},${modalZoom})`;
-}
-
-function openImageModal(url,filename,mirror=false){
-  showImageModalOnly(url,filename,mirror);
-
-  pushState({
-    screen:"image",
-    url,
-    filename,
-    mirror,
-    admin:isAdmin
-  });
-}
-
-function hideImageModalOnly(){
-  $("imageModal").classList.add("hidden");
-  $("modalImage").src="";
-  document.body.style.overflow="";
-}
-
-$("modalCloseBtn").onclick=()=>hideImageModalOnly();
-
-$("zoomInBtn").onclick=()=>{
-  modalZoom=Math.min(5,modalZoom+.25);
-  applyModalTransform();
-};
-
-$("zoomOutBtn").onclick=()=>{
-  modalZoom=Math.max(.5,modalZoom-.25);
-  applyModalTransform();
-};
-
-$("zoomResetBtn").onclick=()=>{
-  modalZoom=1;
-  applyModalTransform();
-};
-
-async function downloadImage(url,filename){
-  try{
-    const response=await fetch(url);
-    const blob=await response.blob();
-    const objectUrl=URL.createObjectURL(blob);
-
-    const link=document.createElement("a");
-
-    link.href=objectUrl;
-    link.download=safeFilename(filename);
-
-    document.body.appendChild(link);
-    link.click();
-    link.remove();
-
-    setTimeout(()=>URL.revokeObjectURL(objectUrl),1000);
-
-  }catch{
-    window.open(url,"_blank");
-  }
-}
-
-$("modalDownloadBtn").onclick=()=>{
-  if(modalImageUrl){
-    downloadImage(modalImageUrl,modalDownloadName);
-  }
-};
-
-function attachImageTools(item,image,url,filename,mirror=false){
-  image.style.cursor="zoom-in";
-  image.onclick=()=>openImageModal(url,filename,mirror);
-
-  const tools=document.createElement("div");
-  tools.className="image-tools";
-
-  const zoom=document.createElement("button");
-  const download=document.createElement("button");
-
-  zoom.className="secondary";
-  download.className="secondary";
-
-  zoom.textContent="확대";
-  download.textContent="다운로드";
-
-  zoom.onclick=()=>openImageModal(url,filename,mirror);
-  download.onclick=()=>downloadImage(url,filename);
-
-  tools.append(zoom,download);
-  item.appendChild(tools);
-}
-
-function renderPreviews(){
-  const grid=$("previewGrid");
-  grid.innerHTML="";
-
-  existingPreviewUrls.forEach((url,index)=>{
-    const item=document.createElement("div");
-    const image=document.createElement("img");
-    const label=document.createElement("div");
-
-    item.className="preview-item";
-    image.src=url;
-    label.className="preview-label";
-    label.textContent=`기존 사진 ${index+1}`;
-
-    item.append(image,label);
-    attachImageTools(item,image,url,`BHD-${index+1}.jpg`);
-
-    grid.appendChild(item);
-  });
-
-  [...photosInput.files].forEach((file,index)=>{
-    const url=URL.createObjectURL(file);
-
-    const item=document.createElement("div");
-    const image=document.createElement("img");
-    const label=document.createElement("div");
-
-    item.className="preview-item";
-    image.src=url;
-    label.className="preview-label";
-    label.textContent=`추가 사진 ${index+1}`;
-
-    item.append(image,label);
-    attachImageTools(item,image,url,file.name);
-
-    grid.appendChild(item);
-  });
-}
-
-function getRecordLogs(record){
-  return Array.isArray(record?.change_log)?record.change_log:[];
-}
-
-function makeLogSnapshot(source,version,action,changedAt,changedBy=null){
-  return{
-    version,
-    action,
-    changed_at:changedAt,
-    changed_by:changedBy,
-    ship_no:source.ship_no||"",
-    area:source.area||"",
-    bhd_no:source.bhd_no||"",
-    work_date:source.work_date||null,
-    original_image:source.original_image||null,
-    original_images:Array.isArray(source.original_images)?source.original_images:[],
-    line_table:Array.isArray(source.line_table)?source.line_table:[],
-    section_count:Number(source.section_count||1),
-    total_positions:Number(source.total_positions||0),
-    analysis_notes:source.analysis_notes||"",
-    ai_analyzed:Boolean(source.ai_analyzed),
-    is_completed:Boolean(source.is_completed),
-    completed_at:source.completed_at||null,
-    completed_by:source.completed_by||null
-  };
-}
-
-function renderLogList(record,targetId){
-  const target=$(targetId);
-  target.innerHTML="";
-
-  const logs=getRecordLogs(record);
-
-  if(!logs.length){
-    target.innerHTML='<div class="hint">수정 이력이 없습니다.</div>';
-    return;
-  }
-
-  logs.forEach((log,index)=>{
-    const button=document.createElement("button");
-
-    button.className=
-      "log-item"+
-      (index===logs.length-1?" log-current":"");
-
-    button.innerHTML=
-      `<div><strong>${log.version||index+1}차</strong> · ${escapeHtml(log.action||"수정")}`+
-      `${log.changed_by?` · 수정자 ${escapeHtml(log.changed_by)}`:""}`+
-      `</div>`+
-      `<div class="log-date">${formatDateTime(log.changed_at)}</div>`;
-
-    button.onclick=()=>openHistoryModal(record,index,true);
-
-    target.appendChild(button);
-  });
-}
-
-function renderRecordLogs(record){
-  renderLogList(record,"editLogList");
-  renderLogList(record,"detailLogList");
-}
-
-async function openHistoryModal(record,index,addHistory=true){
-  const log=getRecordLogs(record)[index];
-
-  if(!log)return;
-
-  $("historyModalTitle").textContent=
-    `${log.version||index+1}차 · ${log.action||"수정"}`;
-
-  $("historyInfo").innerHTML=
-    `<strong>저장:</strong> ${formatDateTime(log.changed_at)}<br>`+
-    `<strong>호선:</strong> ${escapeHtml(log.ship_no||"-")}<br>`+
-    `<strong>위치:</strong> ${escapeHtml(log.area||"-")}<br>`+
-    `<strong>작성자:</strong> ${escapeHtml(log.bhd_no||"-")}`;
-
-  const imageGrid=$("historyImages");
-  imageGrid.innerHTML="";
-
-  const urls=await signedUrls(log.original_images||[]);
-
-  urls.forEach((url,imageIndex)=>{
-    const item=document.createElement("div");
-    const image=document.createElement("img");
-    const label=document.createElement("div");
-
-    item.className="preview-item";
-    image.src=url;
-    label.className="preview-label";
-    label.textContent=`사진 ${imageIndex+1}`;
-
-    item.append(image,label);
-    attachImageTools(item,image,url,`history-${imageIndex+1}.jpg`);
-
-    imageGrid.appendChild(item);
-  });
-
-  $("historyMatrix").innerHTML=
-    buildTableHTML(
-      log.line_table||[],
-      Number(log.section_count||1),
-      false
+function collectMatrix(){
+
+  return[
+    ...rowMap.values()
+  ]
+    .filter(row=>
+      row.left.trim()||
+      row.right.trim()
+    )
+    .sort((a,b)=>
+      a.section-b.section||
+      a.position-b.position
     );
-
-  $("historyModal").classList.remove("hidden");
-
-  if(addHistory){
-    pushState({
-      screen:"log",
-      recordId:record.id,
-      logIndex:index,
-      admin:isAdmin
-    });
-  }
 }
 
-$("historyCloseBtn").onclick=()=>{
-  $("historyModal").classList.add("hidden");
-};
+function resetBhdForm(){
 
-async function resetRegister(){
   editingId=null;
   existingPaths=[];
   existingPreviewUrls=[];
-  photosInput.value="";
-
-  analysisMeta={
-    notes:"",
-    ai_analyzed:false
-  };
 
   $("shipNo").value="";
   $("area").value="";
   $("bhdNo").value=currentUserName;
   $("workDate").value=localToday();
 
+  photosInput.value="";
+  $("previewGrid").innerHTML="";
+
   $("editBanner").classList.add("hidden");
   $("modifierBox").classList.add("hidden");
   $("editLogSection").classList.add("hidden");
 
-  $("registerTitle").textContent="선작업 BHD 등록";
-  $("saveBtn").textContent="BHD 저장";
-  $("saveStatus").textContent="";
-
   setRows([],1);
-  renderPreviews();
 }
-
-async function fetchRecordById(id){
-  const {data,error}=await supabase
-    .from("bhd_records")
-    .select("*")
-    .eq("id",id)
-    .maybeSingle();
-
-  return error||!data?null:data;
-}
-
-async function loadForEdit(record,addHistory=true){
-  editingId=record.id;
-
-  existingPaths=
-    Array.isArray(record.original_images)
-      ?record.original_images
-      :[];
-
-  existingPreviewUrls=await signedUrls(existingPaths);
-
-  $("shipNo").value=record.ship_no||"";
-  $("area").value=record.area||"";
-  $("bhdNo").value=record.bhd_no||"";
-  $("workDate").value=record.work_date||localToday();
-
-  $("modifiedBy").value=currentUserName;
-
-  $("editBanner").classList.remove("hidden");
-  $("modifierBox").classList.remove("hidden");
-  $("editLogSection").classList.remove("hidden");
-
-  $("registerTitle").textContent="기존 BHD 기록 수정";
-  $("saveBtn").textContent="수정 저장";
-
-  setRows(
-    record.line_table||[],
-    Number(record.section_count||1)
-  );
-
-  renderPreviews();
-  renderRecordLogs(record);
-
-  showBhdTab("register");
-
-  if(addHistory){
-    pushState({
-      screen:"bhd-edit",
-      recordId:record.id,
-      admin:isAdmin
-    });
-  }
-}
-
-$("cancelEditBtn").onclick=resetRegister;
-
-photosInput.onchange=()=>{
-  renderPreviews();
-};
 
 $("addPositionBtn").onclick=()=>{
   maxPosition++;
-  renderEditableMatrix();
+  renderMatrix();
 };
 
 $("addSectionBtn").onclick=()=>{
   sectionCount++;
-  renderEditableMatrix();
+  renderMatrix();
 };
 
-async function compressForAI(file){
-  const bitmap=await createImageBitmap(file);
-  const ratio=Math.min(1,1800/Math.max(bitmap.width,bitmap.height));
+photosInput.onchange=()=>{
 
-  const width=Math.round(bitmap.width*ratio);
-  const height=Math.round(bitmap.height*ratio);
+  $("previewGrid").innerHTML="";
 
-  const canvas=document.createElement("canvas");
-
-  canvas.width=width;
-  canvas.height=height;
-
-  canvas.getContext("2d").drawImage(bitmap,0,0,width,height);
-
-  bitmap.close();
-
-  return canvas.toDataURL("image/jpeg",.82);
-}
+  [...photosInput.files].slice(0,8).forEach((file,i)=>{
+    appendImageCard(
+      $("previewGrid"),
+      URL.createObjectURL(file),
+      `사진 ${i+1}`,
+      file.name
+    );
+  });
+};
 
 $("analyzeBtn").onclick=async()=>{
-  const files=[...photosInput.files];
-
-  if(!files.length&&!existingPaths.length){
-    $("analysisStatus").textContent="사진을 먼저 선택하세요.";
-    return;
-  }
 
   try{
+
     $("analysisStatus").textContent="AI 분석 중...";
 
-    const oldUrls=await signedUrls(existingPaths);
-    const newImages=await Promise.all(files.map(compressForAI));
+    const newImages=[];
+
+    for(const file of [...photosInput.files]){
+
+      const dataUrl=await new Promise((resolve,reject)=>{
+
+        const reader=new FileReader();
+
+        reader.onload=()=>resolve(reader.result);
+        reader.onerror=reject;
+
+        reader.readAsDataURL(file);
+      });
+
+      newImages.push(dataUrl);
+    }
+
+    const oldImages=await signedUrls(existingPaths);
 
     const {data,error}=await supabase.functions.invoke(
       "bhd-analyze",
       {
         body:{
           images:[
-            ...oldUrls,
+            ...oldImages,
             ...newImages
           ]
         }
@@ -1438,133 +2381,160 @@ $("analyzeBtn").onclick=async()=>{
 
     if(error)throw error;
 
-    const rows=Array.isArray(data?.rows)?data.rows:[];
-
-    analysisMeta={
-      notes:data?.notes||"",
-      ai_analyzed:true
-    };
-
     setRows(
-      rows,
+      data?.rows||[],
       Number(data?.section_count||1)
     );
 
-    $("analysisSummary").classList.remove("hidden");
-    $("analysisSummary").textContent=
-      `AI 분석 완료 · 구역 ${sectionCount}개 · 결선 ${rows.length}개`;
-
-    $("analysisStatus").textContent="자동분석 완료";
+    $("analysisStatus").textContent="AI 분석 완료";
 
   }catch(error){
+
     $("analysisStatus").textContent=
-      "AI 분석 실패: "+(error?.message||"오류");
+      "AI 분석 실패: "+error.message;
   }
 };
 
 $("saveBtn").onclick=async()=>{
-  const status=$("saveStatus");
 
   const ship=$("shipNo").value.trim();
   const area=$("area").value.trim();
-  const rows=collectRows();
+  const rows=collectMatrix();
 
   if(!ship||!area||!rows.length){
-    status.textContent="호선, 위치, 결선표를 확인하세요.";
+    $("saveStatus").textContent=
+      "호선, 위치, 결선표를 확인하세요.";
     return;
   }
 
   try{
-    status.textContent="저장 중...";
 
-    const addedPaths=await uploadFiles([...photosInput.files],"uploads");
+    const added=await uploadFiles(
+      [...photosInput.files],
+      "uploads"
+    );
 
-    const allPaths=[
+    const paths=[
       ...existingPaths,
-      ...addedPaths
+      ...added
     ];
 
-    const base={
+    const payload={
       ship_no:ship,
       area,
       bhd_no:$("bhdNo").value,
       work_date:$("workDate").value||null,
-      original_image:allPaths[0]||null,
-      original_images:allPaths,
+
+      original_image:paths[0]||null,
+      original_images:paths,
+
       line_table:rows,
+
       section_count:sectionCount,
-      total_positions:rows.length,
-      analysis_notes:analysisMeta.notes,
-      ai_analyzed:analysisMeta.ai_analyzed
+      total_positions:rows.length
     };
 
     if(editingId){
-      const existing=await fetchRecordById(editingId);
 
-      let logs=getRecordLogs(existing);
-
-      logs=[
-        ...logs,
-        makeLogSnapshot(
-          {
-            ...existing,
-            ...base
-          },
-          logs.length+1,
-          "수정",
-          new Date().toISOString(),
-          currentUserName
-        )
-      ];
-
-      const {error}=await supabase
+      const result=await supabase
         .from("bhd_records")
-        .update({
-          ...base,
-          change_log:logs
-        })
+        .update(payload)
         .eq("id",editingId);
 
-      if(error)throw error;
+      if(result.error)throw result.error;
 
-      status.textContent="수정 완료";
+      $("saveStatus").textContent="수정 완료";
 
     }else{
-      const now=new Date().toISOString();
 
-      const initial={
-        ...base,
-        is_completed:false,
-        completed_at:null,
-        completed_by:null
-      };
-
-      const {error}=await supabase
+      const result=await supabase
         .from("bhd_records")
         .insert({
-          ...initial,
-          change_log:[
-            makeLogSnapshot(
-              initial,
-              1,
-              "최초 등록",
-              now,
-              null
-            )
-          ]
+          ...payload,
+
+          is_completed:false,
+
+          delete_requested:false,
+
+          change_log:[]
         });
 
-      if(error)throw error;
+      if(result.error)throw result.error;
 
-      status.textContent="등록 완료";
+      $("saveStatus").textContent="등록 완료";
     }
 
   }catch(error){
-    status.textContent="저장 실패: "+(error?.message||"오류");
+
+    $("saveStatus").textContent=
+      "저장 실패: "+error.message;
   }
 };
 
-async function renderRecordDetail(record,addHistory=true){
+function mirrorTable(record){
+
+  const rows=record.line_table||[];
+  const sections=Number(record.section_count||1);
+
+  const map=new Map();
+
+  let maxP=1;
+
+  rows.forEach(row=>{
+    map.set(
+      rowKey(row.section,row.position),
+      row
+    );
+
+    maxP=Math.max(
+      maxP,
+      Number(row.position)
+    );
+  });
+
+  let html="<table><thead><tr><th rowspan='2'>위치</th>";
+
+  for(let s=1;s<=sections;s++){
+    html+=`<th colspan="2">구역 ${s}</th>`;
+  }
+
+  html+="</tr><tr>";
+
+  for(let s=1;s<=sections;s++){
+    html+="<th>좌</th><th>우</th>";
+  }
+
+  html+="</tr></thead><tbody>";
+
+  for(let p=1;p<=maxP;p++){
+
+    html+=`<tr><td>${p}</td>`;
+
+    for(let ds=1;ds<=sections;ds++){
+
+      const sourceS=
+        sections-ds+1;
+
+      const row=
+        map.get(
+          rowKey(sourceS,p)
+        );
+
+      html+=
+        `<td>${escapeHtml(row?.right||"")}</td>`+
+        `<td>${escapeHtml(row?.left||"")}</td>`;
+    }
+
+    html+="</tr>";
+  }
+
+  html+="</tbody></table>";
+
+  return html;
+}
+
+async function openBhd(record){
+
   currentViewedRecord=record;
 
   showBhdTab("search");
@@ -1573,38 +2543,28 @@ async function renderRecordDetail(record,addHistory=true){
     `${record.ship_no||""} / ${record.area||""} / ${record.bhd_no||""}`;
 
   $("resultMatrix").innerHTML=
-    buildTableHTML(
-      record.line_table||[],
-      Number(record.section_count||1),
-      true
+    mirrorTable(record);
+
+  $("resultImages").innerHTML="";
+
+  const paths=
+    record.original_images||
+    (
+      record.original_image
+        ?[record.original_image]
+        :[]
     );
 
-  const urls=await signedUrls(record.original_images||[]);
-  const grid=$("resultImages");
+  const urls=await signedUrls(paths);
 
-  grid.innerHTML="";
-
-  urls.forEach((url,index)=>{
-    const item=document.createElement("div");
-    const image=document.createElement("img");
-    const label=document.createElement("div");
-
-    item.className="preview-item";
-    image.src=url;
-    label.className="preview-label";
-    label.textContent=`반전사진 ${index+1}`;
-
-    item.append(image,label);
-
-    attachImageTools(
-      item,
-      image,
+  urls.forEach((url,i)=>{
+    appendImageCard(
+      $("resultImages"),
       url,
-      `BHD-${index+1}.jpg`,
+      `반전사진 ${i+1}`,
+      `BHD-${i+1}.jpg`,
       true
     );
-
-    grid.appendChild(item);
   });
 
   $("completedBy").value=
@@ -1612,37 +2572,24 @@ async function renderRecordDetail(record,addHistory=true){
       ?record.completed_by||""
       :currentUserName;
 
-  $("completeBtn").disabled=Boolean(record.is_completed);
-
-  $("completeBtn").textContent=
-    record.is_completed
-      ?"후작업 완료됨"
-      :"후작업 작업완료";
+  $("completeBtn").disabled=
+    !!record.is_completed;
 
   $("completeStatus").textContent=
     record.is_completed
-      ?`완료자: ${record.completed_by||"-"} · ${formatDateTime(record.completed_at)}`
+      ?`완료자: ${record.completed_by||"-"}`
       :"";
 
-  renderRecordLogs(record);
-
   $("resultBox").classList.remove("hidden");
-
-  if(addHistory){
-    pushState({
-      screen:"bhd-detail",
-      recordId:record.id,
-      admin:isAdmin
-    });
-  }
 }
 
 $("completeBtn").onclick=async()=>{
-  if(!currentViewedRecord||currentViewedRecord.is_completed)return;
+
+  if(!currentViewedRecord)return;
 
   const now=new Date().toISOString();
 
-  const {error}=await supabase
+  const result=await supabase
     .from("bhd_records")
     .update({
       is_completed:true,
@@ -1651,62 +2598,22 @@ $("completeBtn").onclick=async()=>{
     })
     .eq("id",currentViewedRecord.id);
 
-  if(error){
-    $("completeStatus").textContent=error.message;
+  if(result.error){
+    $("completeStatus").textContent=result.error.message;
     return;
   }
 
   currentViewedRecord.is_completed=true;
-  currentViewedRecord.completed_at=now;
   currentViewedRecord.completed_by=currentUserName;
+  currentViewedRecord.completed_at=now;
 
   $("completeBtn").disabled=true;
-  $("completeBtn").textContent="후작업 완료됨";
-  $("completeStatus").textContent=`완료자: ${currentUserName}`;
+  $("completeStatus").textContent=
+    "완료자: "+currentUserName;
 };
 
-function recordCard(record){
-  const card=document.createElement("div");
-
-  card.className=
-    `record-card ${record.is_completed?"completed":"incomplete"}`;
-
-  card.innerHTML=
-    `<div class="record-top">`+
-      `<div class="record-title">`+
-        `${escapeHtml(record.ship_no||"")} / `+
-        `${escapeHtml(record.area||"")} / `+
-        `${escapeHtml(record.bhd_no||"")}`+
-      `</div>`+
-      `<span class="badge ${record.is_completed?"badge-completed":"badge-pending"}">`+
-        `${record.is_completed?"완료":"미완료"}`+
-      `</span>`+
-    `</div>`+
-    `<div class="record-meta">`+
-      `등록: ${formatDateTime(record.created_at)}`+
-      `${record.completed_by?`<br>후작업: ${escapeHtml(record.completed_by)}`:""}`+
-    `</div>`;
-
-  const actions=document.createElement("div");
-  actions.className="record-actions";
-
-  const view=document.createElement("button");
-  view.className="secondary";
-  view.textContent="후작업 보기";
-  view.onclick=()=>renderRecordDetail(record,true);
-
-  const edit=document.createElement("button");
-  edit.className="warning";
-  edit.textContent="수정";
-  edit.onclick=()=>loadForEdit(record,true);
-
-  actions.append(view,edit);
-  card.appendChild(actions);
-
-  return card;
-}
-
 async function loadBhdList(){
+
   const {data,error}=await supabase
     .from("bhd_records")
     .select("*")
@@ -1719,16 +2626,152 @@ async function loadBhdList(){
     return;
   }
 
-  $("bhdListStatus").textContent=`전체 ${data.length}건`;
+  $("bhdListStatus").textContent=
+    "전체 "+data.length+"건";
 
   data.forEach(record=>{
-    $("recordList").appendChild(recordCard(record));
+
+    const card=document.createElement("div");
+
+    card.className=
+      "record-card "+
+      (
+        record.is_completed
+          ?"completed"
+          :"incomplete"
+      );
+
+    card.innerHTML=
+      `<div class="record-title">`+
+      `${escapeHtml(record.ship_no||"")} / `+
+      `${escapeHtml(record.area||"")} / `+
+      `${escapeHtml(record.bhd_no||"")}`+
+      `</div>`+
+      `<div class="record-meta">`+
+      `등록: ${formatDateTime(record.created_at)}`+
+      `${record.completed_by?`<br>후작업: ${escapeHtml(record.completed_by)}`:""}`+
+      `</div>`;
+
+    const actions=document.createElement("div");
+    actions.className="record-actions";
+
+    const view=document.createElement("button");
+    view.className="secondary";
+    view.textContent="후작업 보기";
+    view.onclick=()=>openBhd(record);
+
+    const edit=document.createElement("button");
+    edit.className="warning";
+    edit.textContent="수정";
+
+    edit.onclick=async()=>{
+
+      editingId=record.id;
+
+      existingPaths=
+        record.original_images||
+        [];
+
+      $("shipNo").value=
+        record.ship_no||"";
+
+      $("area").value=
+        record.area||"";
+
+      $("bhdNo").value=
+        record.bhd_no||"";
+
+      $("workDate").value=
+        record.work_date||
+        localToday();
+
+      setRows(
+        record.line_table||[],
+        Number(record.section_count||1)
+      );
+
+      $("modifierBox").classList.remove("hidden");
+
+      showBhdTab("register");
+    };
+
+    actions.append(view,edit);
+
+    if(isAdmin){
+
+      const del=document.createElement("button");
+
+      del.className="danger";
+      del.textContent="삭제";
+
+      del.onclick=()=>deleteBhd(record);
+
+      actions.appendChild(del);
+    }
+
+    card.appendChild(actions);
+
+    $("recordList").appendChild(card);
   });
 }
 
 $("refreshBhdListBtn").onclick=loadBhdList;
 
+async function deleteBhd(record){
+
+  if(!isAdmin){
+    alert("관리자만 삭제할 수 있습니다.");
+    return;
+  }
+
+  if(!await checkAdmin()){
+    alert("관리자 인증 실패");
+    return;
+  }
+
+  if(!confirm("이 BHD 자료를 삭제하시겠습니까?")){
+    return;
+  }
+
+  try{
+
+    const paths=
+      record.original_images||
+      (
+        record.original_image
+          ?[record.original_image]
+          :[]
+      );
+
+    if(paths.length){
+
+      const storage=await supabase.storage
+        .from("bhd-images")
+        .remove(paths);
+
+      if(storage.error)throw storage.error;
+    }
+
+    const result=await supabase
+      .from("bhd_records")
+      .delete()
+      .eq("id",record.id)
+      .select("id");
+
+    if(result.error)throw result.error;
+
+    alert("삭제되었습니다.");
+
+    loadBhdList();
+
+  }catch(error){
+
+    alert("삭제 실패: "+error.message);
+  }
+}
+
 async function searchBhd(){
+
   const ship=$("searchShip").value.trim();
   const area=$("searchArea").value.trim();
   const name=$("searchBhd").value.trim();
@@ -1739,11 +2782,11 @@ async function searchBhd(){
     .order("created_at",{ascending:false});
 
   if(ship){
-    query=query.ilike("ship_no",`%${ship}%`);
+    query=query.ilike("ship_no","%"+ship+"%");
   }
 
   if(area){
-    query=query.ilike("area",`%${area}%`);
+    query=query.ilike("area","%"+area+"%");
   }
 
   if(name){
@@ -1761,1051 +2804,75 @@ async function searchBhd(){
     return;
   }
 
-  $("searchStatus").textContent=`${data.length}건 검색됨`;
+  $("searchStatus").textContent=
+    data.length+"건 검색됨";
 
   data.forEach(record=>{
-    $("searchResults").appendChild(recordCard(record));
+
+    const card=document.createElement("div");
+    card.className="record-card";
+
+    card.innerHTML=
+      `<div class="record-title">`+
+      `${escapeHtml(record.ship_no||"")} / `+
+      `${escapeHtml(record.area||"")} / `+
+      `${escapeHtml(record.bhd_no||"")}`+
+      `</div>`;
+
+    const button=document.createElement("button");
+
+    button.className="secondary";
+    button.textContent="후작업 보기";
+    button.onclick=()=>openBhd(record);
+
+    card.appendChild(button);
+
+    $("searchResults").appendChild(card);
   });
 }
 
 $("searchBtn").onclick=searchBhd;
 
-function buildExportSheet(record){
-  return(
-    `<div class="export-sheet">`+
-      `<div class="export-sheet-title">BHD 후작업 결선표</div>`+
-      `<div class="export-sheet-info">`+
-        `<strong>호선:</strong> ${escapeHtml(record.ship_no||"-")} &nbsp; `+
-        `<strong>위치:</strong> ${escapeHtml(record.area||"-")} &nbsp; `+
-        `<strong>작성자:</strong> ${escapeHtml(record.bhd_no||"-")}`+
-      `</div>`+
-      buildTableHTML(
-        record.line_table||[],
-        Number(record.section_count||1),
-        true
-      )+
-    `</div>`
-  );
-}
-
-$("exportTableImageBtn").onclick=async()=>{
-  if(!currentViewedRecord)return;
-
-  $("exportStage").innerHTML=
-    buildExportSheet(currentViewedRecord);
-
-  const canvas=await html2canvas(
-    $("exportStage").firstElementChild,
-    {
-      backgroundColor:"#fff",
-      scale:2
-    }
-  );
-
-  const link=document.createElement("a");
-
-  link.href=canvas.toDataURL("image/png");
-  link.download=safeFilename(
-    `${currentViewedRecord.ship_no}_BHD.png`
-  );
-
-  link.click();
-
-  $("exportStage").innerHTML="";
-};
-
-$("printTableBtn").onclick=()=>{
-  if(!currentViewedRecord)return;
-
-  const win=window.open("","_blank");
-
-  win.document.write(
-    `<html><body>${buildExportSheet(currentViewedRecord)}`+
-    `<script>onload=()=>print()<\/script></body></html>`
-  );
-
-  win.document.close();
-};
-
-/* 업무요청 */
-
-function showRequestTab(mode){
-  hideAllMain();
-  showHeader();
-
-  $("requestApp").classList.remove("hidden");
-
-  const tabs={
-    register:"requestRegisterTab",
-    search:"requestSearchTab",
-    list:"requestListTab"
-  };
-
-  const sections={
-    register:"requestRegisterSection",
-    search:"requestSearchSection",
-    list:"requestListSection"
-  };
-
-  Object.values(tabs).forEach(id=>$(id).classList.remove("active"));
-  Object.values(sections).forEach(id=>$(id).classList.add("hidden"));
-
-  $(tabs[mode]).classList.add("active");
-  $(sections[mode]).classList.remove("hidden");
-
-  if(mode==="list"){
-    loadRequestList();
-  }
-}
-
-async function resetRequestForm(){
-  $("reqShip").value="";
-  $("reqArea").value="";
-  $("reqAuthor").value=currentUserName;
-  $("reqTarget").value="";
-  $("reqContent").value="";
-  reqPhotos.value="";
-  $("reqPreviewGrid").innerHTML="";
-  $("reqSaveStatus").textContent="";
-
-  await loadAssignableUsers();
-}
-
-$("openRequestBtn").onclick=async()=>{
-  await resetRequestForm();
-  showRequestTab("register");
-
-  pushState({
-    screen:"request-tab",
-    tab:"register",
-    admin:isAdmin
-  });
-};
-
-$("requestRegisterTab").onclick=async()=>{
-  await resetRequestForm();
-  showRequestTab("register");
-};
-
-$("requestSearchTab").onclick=()=>{
-  showRequestTab("search");
-};
-
-$("requestListTab").onclick=()=>{
-  showRequestTab("list");
-};
-
-function renderFilePreviews(input,targetId,labelPrefix){
-  const target=$(targetId);
-  target.innerHTML="";
-
-  [...input.files].forEach((file,index)=>{
-    const url=URL.createObjectURL(file);
-
-    const item=document.createElement("div");
-    const image=document.createElement("img");
-    const label=document.createElement("div");
-
-    item.className="preview-item";
-    image.src=url;
-    label.className="preview-label";
-    label.textContent=`${labelPrefix} ${index+1}`;
-
-    item.append(image,label);
-    attachImageTools(item,image,url,file.name);
-
-    target.appendChild(item);
-  });
-}
-
-reqPhotos.onchange=()=>{
-  renderFilePreviews(
-    reqPhotos,
-    "reqPreviewGrid",
-    "첨부사진"
-  );
-};
-
-responsePhotos.onchange=()=>{
-  renderFilePreviews(
-    responsePhotos,
-    "responsePreviewGrid",
-    "완료사진"
-  );
-};
-
-$("saveRequestBtn").onclick=async()=>{
-  const status=$("reqSaveStatus");
-
-  const ship=$("reqShip").value.trim();
-  const area=$("reqArea").value.trim();
-  const targetName=normalizeName($("reqTarget").value);
-  const content=$("reqContent").value.trim();
-
-  if(!ship||!area||!targetName||!content){
-    status.textContent="호선, 위치, 확인요청자, 내용을 입력하세요.";
-    return;
-  }
-
-  if(reqPhotos.files.length>5){
-    status.textContent="사진은 최대 5장입니다.";
-    return;
-  }
-
-  try{
-    status.textContent="등록 중...";
-
-    const target=await findUserByName(targetName);
-
-    if(!target){
-      throw new Error("회원가입된 확인요청자를 찾을 수 없습니다.");
-    }
-
-    const imagePaths=await uploadFiles(
-      [...reqPhotos.files],
-      "requests"
-    );
-
-    const {error}=await supabase
-      .from("check_requests")
-      .insert({
-        ship_no:ship,
-        area,
-        requester_name:currentUserName,
-        author_name:currentUserName,
-        requested_to_name:target.name,
-        requested_to_user_id:target.user_id,
-        recipient_read_at:null,
-        author_completion_read_at:null,
-        author_reconfirmed:false,
-        author_reconfirmed_at:null,
-        author_reconfirmed_by:null,
-        delete_ready:false,
-        request_content:content,
-        image_paths:imagePaths,
-        response_image_paths:[],
-        status:"pending",
-        answer:null,
-        confirmed_by:null,
-        confirmed_at:null,
-        created_by:currentUserId,
-        updated_at:new Date().toISOString()
-      });
-
-    if(error)throw error;
-
-    status.textContent=`${target.name}님에게 업무요청을 전달했습니다.`;
-
-    $("reqTarget").value="";
-    $("reqContent").value="";
-    reqPhotos.value="";
-    $("reqPreviewGrid").innerHTML="";
-
-  }catch(error){
-    status.textContent="등록 실패: "+(error?.message||"오류");
-  }
-};
-
-async function fetchRequestById(id){
-  const {data,error}=await supabase
-    .from("check_requests")
-    .select("*")
-    .eq("id",id)
-    .maybeSingle();
-
-  return error||!data?null:data;
-}
-
-function requestStageLabel(record){
-  if(record.status!=="completed"){
-    return "확인대기";
-  }
-
-  if(record.author_reconfirmed){
-    return "최종확인완료 · 삭제가능";
-  }
-
-  return "작성자 재확인 대기";
-}
-
-async function markRequestRead(record){
-  if(isAdmin)return record;
-
-  const patch={};
-  const now=new Date().toISOString();
-
-  if(
-    record.requested_to_user_id===currentUserId&&
-    record.status!=="completed"&&
-    !record.recipient_read_at
-  ){
-    patch.recipient_read_at=now;
-  }
-
-  if(
-    record.created_by===currentUserId&&
-    record.status==="completed"&&
-    !record.author_completion_read_at
-  ){
-    patch.author_completion_read_at=now;
-  }
-
-  if(!Object.keys(patch).length)return record;
-
-  const {error}=await supabase
-    .from("check_requests")
-    .update(patch)
-    .eq("id",record.id);
-
-  if(!error){
-    record={
-      ...record,
-      ...patch
-    };
-
-    refreshNotificationBadge();
-  }
-
-  return record;
-}
-
-async function displayStoredImages(paths,targetId,prefix){
-  const target=$(targetId);
-  target.innerHTML="";
-
-  const urls=await signedUrls(paths||[]);
-
-  urls.forEach((url,index)=>{
-    const item=document.createElement("div");
-    const image=document.createElement("img");
-    const label=document.createElement("div");
-
-    item.className="preview-item";
-    image.src=url;
-    label.className="preview-label";
-    label.textContent=`${prefix} ${index+1}`;
-
-    item.append(image,label);
-
-    attachImageTools(
-      item,
-      image,
-      url,
-      `${prefix}-${index+1}.jpg`
-    );
-
-    target.appendChild(item);
-  });
-}
-
-async function renderRequestDetail(record,addHistory=true){
-  record=await markRequestRead(record);
-
-  currentRequestRecord=record;
-
-  showRequestTab("search");
-
-  const author=
-    record.author_name||
-    record.requester_name||
-    "-";
-
-  const target=
-    record.requested_to_name||
-    "-";
-
-  $("requestDetailInfo").innerHTML=
-    `<strong>호선:</strong> ${escapeHtml(record.ship_no||"-")}<br>`+
-    `<strong>위치:</strong> ${escapeHtml(record.area||"-")}<br>`+
-    `<strong>작성자:</strong> ${escapeHtml(author)}<br>`+
-    `<strong>확인요청자:</strong> ${escapeHtml(target)}<br>`+
-    `<strong>상태:</strong> ${escapeHtml(requestStageLabel(record))}<br>`+
-    `${record.confirmed_by?`<strong>확인자:</strong> ${escapeHtml(record.confirmed_by)}<br>`:""}`+
-    `${record.confirmed_at?`<strong>답변완료:</strong> ${formatDateTime(record.confirmed_at)}<br>`:""}`+
-    `${record.author_reconfirmed_by?`<strong>재확인자:</strong> ${escapeHtml(record.author_reconfirmed_by)}<br>`:""}`+
-    `${record.author_reconfirmed_at?`<strong>재확인시간:</strong> ${formatDateTime(record.author_reconfirmed_at)}<br>`:""}`+
-    `${record.delete_ready?`<strong>삭제상태:</strong> 삭제 가능`:""}`;
-
-  $("requestDetailContent").textContent=
-    record.request_content||"";
-
-  await displayStoredImages(
-    record.image_paths||[],
-    "requestDetailImages",
-    "요청사진"
-  );
-
-  responsePhotos.value="";
-  $("responsePreviewGrid").innerHTML="";
-
-  const responsePaths=
-    Array.isArray(record.response_image_paths)
-      ?record.response_image_paths
-      :[];
-
-  if(responsePaths.length){
-    $("responseCompletedBox").classList.remove("hidden");
-
-    await displayStoredImages(
-      responsePaths,
-      "responseDetailImages",
-      "완료사진"
-    );
-  }else{
-    $("responseCompletedBox").classList.add("hidden");
-    $("responseDetailImages").innerHTML="";
-  }
-
-  const canConfirm=
-    isAdmin||
-    record.requested_to_user_id===currentUserId;
-
-  if(record.status==="completed"){
-    $("confirmBy").value=record.confirmed_by||"";
-    $("confirmAnswer").value=record.answer||"";
-    $("confirmAnswer").readOnly=true;
-
-    $("responseUploadBox").classList.add("hidden");
-
-    $("confirmRequestBtn").disabled=true;
-    $("confirmRequestBtn").textContent="확인자 답변 완료";
-
-    $("confirmStatus").textContent=
-      `확인자: ${record.confirmed_by||"-"} · ${formatDateTime(record.confirmed_at)}`;
-
-  }else if(canConfirm){
-    $("confirmBy").value=currentUserName;
-    $("confirmAnswer").value="";
-    $("confirmAnswer").readOnly=false;
-
-    $("responseUploadBox").classList.remove("hidden");
-
-    $("confirmRequestBtn").disabled=false;
-    $("confirmRequestBtn").textContent="답변 등록 및 확인완료";
-
-    $("confirmStatus").textContent=
-      "답변 및 필요 시 완료사진을 첨부하세요.";
-
-  }else{
-    $("confirmBy").value=target;
-    $("confirmAnswer").value="";
-    $("confirmAnswer").readOnly=true;
-
-    $("responseUploadBox").classList.add("hidden");
-
-    $("confirmRequestBtn").disabled=true;
-    $("confirmRequestBtn").textContent="확인요청 대상자만 처리 가능";
-
-    $("confirmStatus").textContent=
-      `${target}님이 답변할 수 있습니다.`;
-  }
-
-  const isAuthor=
-    !isAdmin&&
-    record.created_by===currentUserId;
-
-  if(
-    record.status==="completed"&&
-    isAuthor
-  ){
-    $("reconfirmBox").classList.remove("hidden");
-
-    if(record.author_reconfirmed){
-      $("reconfirmBtn").disabled=true;
-      $("reconfirmBtn").textContent="재확인 완료됨";
-      $("reconfirmInfo").textContent=
-        "최종 재확인이 완료되어 삭제 가능한 상태입니다.";
-      $("reconfirmStatus").textContent=
-        `${record.author_reconfirmed_by||currentUserName} · ${formatDateTime(record.author_reconfirmed_at)}`;
-
-      $("reconfirmBox").classList.add("delete-ready-box");
-
-    }else{
-      $("reconfirmBtn").disabled=false;
-      $("reconfirmBtn").textContent="재확인 완료";
-      $("reconfirmInfo").textContent=
-        "확인자의 답변과 완료사진을 확인한 뒤 재확인 완료를 눌러주세요.";
-      $("reconfirmStatus").textContent=
-        "재확인 전에는 삭제 가능 상태로 변경되지 않습니다.";
-
-      $("reconfirmBox").classList.remove("delete-ready-box");
-    }
-
-  }else if(record.author_reconfirmed){
-    $("reconfirmBox").classList.remove("hidden");
-    $("reconfirmBtn").disabled=true;
-    $("reconfirmBtn").textContent="재확인 완료됨";
-
-    $("reconfirmInfo").textContent=
-      "작성자 최종 재확인이 완료되었습니다.";
-
-    $("reconfirmStatus").textContent=
-      `삭제 가능 · ${formatDateTime(record.author_reconfirmed_at)}`;
-
-    $("reconfirmBox").classList.add("delete-ready-box");
-
-  }else{
-    $("reconfirmBox").classList.add("hidden");
-    $("reconfirmBox").classList.remove("delete-ready-box");
-  }
-
-  $("requestDetailBox").classList.remove("hidden");
-
-  if(addHistory){
-    pushState({
-      screen:"request-detail",
-      recordId:record.id,
-      admin:isAdmin
-    });
-  }
-}
-
-$("confirmRequestBtn").onclick=async()=>{
-  if(
-    !currentRequestRecord||
-    currentRequestRecord.status==="completed"
-  ){
-    return;
-  }
-
-  if(
-    !isAdmin&&
-    currentRequestRecord.requested_to_user_id!==currentUserId
-  ){
-    return;
-  }
-
-  const answer=$("confirmAnswer").value.trim();
-
-  if(!answer){
-    $("confirmStatus").textContent="답변을 입력하세요.";
-    return;
-  }
-
-  if(responsePhotos.files.length>5){
-    $("confirmStatus").textContent="완료사진은 최대 5장입니다.";
-    return;
-  }
-
-  try{
-    $("confirmStatus").textContent="답변 저장 중...";
-
-    const responseImagePaths=await uploadFiles(
-      [...responsePhotos.files],
-      "responses"
-    );
-
-    const now=new Date().toISOString();
-
-    const {error}=await supabase
-      .from("check_requests")
-      .update({
-        status:"completed",
-        answer,
-        response_image_paths:responseImagePaths,
-        confirmed_by:currentUserName,
-        confirmed_at:now,
-        author_completion_read_at:null,
-        author_reconfirmed:false,
-        author_reconfirmed_at:null,
-        author_reconfirmed_by:null,
-        delete_ready:false,
-        updated_at:now
-      })
-      .eq("id",currentRequestRecord.id);
-
-    if(error)throw error;
-
-    currentRequestRecord={
-      ...currentRequestRecord,
-      status:"completed",
-      answer,
-      response_image_paths:responseImagePaths,
-      confirmed_by:currentUserName,
-      confirmed_at:now,
-      author_completion_read_at:null,
-      author_reconfirmed:false,
-      author_reconfirmed_at:null,
-      author_reconfirmed_by:null,
-      delete_ready:false
-    };
-
-    refreshNotificationBadge();
-
-    await renderRequestDetail(
-      currentRequestRecord,
-      false
-    );
-
-  }catch(error){
-    $("confirmStatus").textContent=
-      "완료 처리 실패: "+(error?.message||"오류");
-  }
-};
-
-$("reconfirmBtn").onclick=async()=>{
-  if(
-    !currentRequestRecord||
-    currentRequestRecord.status!=="completed"
-  ){
-    return;
-  }
-
-  if(currentRequestRecord.created_by!==currentUserId){
-    $("reconfirmStatus").textContent=
-      "최초 작성자만 최종 재확인할 수 있습니다.";
-    return;
-  }
-
-  if(currentRequestRecord.author_reconfirmed){
-    return;
-  }
-
-  if(
-    !confirm(
-      "확인자의 답변과 완료사진을 모두 확인하셨습니까?\n\n"+
-      "재확인 완료 후 이 건은 삭제 가능한 상태로 변경됩니다."
-    )
-  ){
-    return;
-  }
-
-  const now=new Date().toISOString();
-
-  const {error}=await supabase
-    .from("check_requests")
-    .update({
-      author_reconfirmed:true,
-      author_reconfirmed_at:now,
-      author_reconfirmed_by:currentUserName,
-      author_completion_read_at:now,
-      delete_ready:true,
-      updated_at:now
-    })
-    .eq("id",currentRequestRecord.id);
-
-  if(error){
-    $("reconfirmStatus").textContent=
-      "재확인 처리 실패: "+error.message;
-    return;
-  }
-
-  currentRequestRecord={
-    ...currentRequestRecord,
-    author_reconfirmed:true,
-    author_reconfirmed_at:now,
-    author_reconfirmed_by:currentUserName,
-    author_completion_read_at:now,
-    delete_ready:true
-  };
-
-  refreshNotificationBadge();
-
-  await renderRequestDetail(
-    currentRequestRecord,
-    false
-  );
-};
-
-function requestCard(record){
-  const card=document.createElement("div");
-
-  const author=
-    record.author_name||
-    record.requester_name||
-    "-";
-
-  const target=
-    record.requested_to_name||
-    "-";
-
-  const newIncoming=
-    !isAdmin&&
-    record.requested_to_user_id===currentUserId&&
-    record.status!=="completed"&&
-    !record.recipient_read_at;
-
-  const reconfirmNotice=
-    !isAdmin&&
-    record.created_by===currentUserId&&
-    record.status==="completed"&&
-    !record.author_reconfirmed&&
-    !record.author_completion_read_at;
-
-  const unread=
-    newIncoming||
-    reconfirmNotice;
-
-  card.className=
-    `request-card ${record.status==="completed"?"completed":"pending"}`+
-    `${unread?" mywork-unread":""}`;
-
-  card.innerHTML=
-    `<div class="record-top">`+
-      `<div class="record-title">`+
-        `${escapeHtml(record.ship_no||"")} / ${escapeHtml(record.area||"")}`+
-        `${unread?`<span class="new-badge">${reconfirmNotice?"재확인 요청":"새 업무"}</span>`:""}`+
-      `</div>`+
-      `<span class="badge ${record.status==="completed"?"badge-completed":"badge-pending"}">`+
-        `${escapeHtml(requestStageLabel(record))}`+
-      `</span>`+
-    `</div>`+
-
-    `<div class="record-meta">`+
-      `작성자: ${escapeHtml(author)}`+
-      `<br>확인요청자: ${escapeHtml(target)}`+
-      `<br>등록: ${formatDateTime(record.created_at)}`+
-      `${record.confirmed_by?`<br>확인자: ${escapeHtml(record.confirmed_by)}`:""}`+
-      `${record.confirmed_at?`<br>확인자 답변완료: ${formatDateTime(record.confirmed_at)}`:""}`+
-      `${record.author_reconfirmed_by?`<br>작성자 재확인: ${escapeHtml(record.author_reconfirmed_by)}`:""}`+
-      `${record.delete_ready?`<br><strong>삭제 가능 상태</strong>`:""}`+
-    `</div>`+
-
-    `<div class="request-content-preview">`+
-      `${escapeHtml(record.request_content||"")}`+
-    `</div>`;
-
-  const actions=document.createElement("div");
-  actions.className="request-actions";
-
-  const button=document.createElement("button");
-  button.className="secondary";
-
-  if(record.author_reconfirmed){
-    button.textContent="최종확인 내용 보기";
-  }else if(record.status==="completed"){
-    button.textContent="재확인 / 완료내용 보기";
-  }else{
-    button.textContent="확인 및 답변";
-  }
-
-  button.onclick=()=>renderRequestDetail(record,true);
-
-  actions.appendChild(button);
-  card.appendChild(actions);
-
-  return card;
-}
-
-async function searchRequests(){
-  const ship=$("reqSearchShip").value.trim();
-  const area=$("reqSearchArea").value.trim();
-  const name=$("reqSearchName").value.trim();
-
-  let query=supabase
-    .from("check_requests")
-    .select("*")
-    .order("created_at",{ascending:false});
-
-  if(ship){
-    query=query.ilike("ship_no",`%${ship}%`);
-  }
-
-  if(area){
-    query=query.ilike("area",`%${area}%`);
-  }
-
-  if(name){
-    query=query.or(
-      `author_name.ilike.%${name}%,`+
-      `requested_to_name.ilike.%${name}%,`+
-      `confirmed_by.ilike.%${name}%`
-    );
-  }
-
-  const {data,error}=await query;
-
-  $("reqSearchResults").innerHTML="";
-
-  if(error){
-    $("reqSearchStatus").textContent=error.message;
-    return;
-  }
-
-  $("reqSearchStatus").textContent=
-    `${data.length}건 · `+
-    `확인대기 ${data.filter(item=>item.status!=="completed").length}건 · `+
-    `재확인대기 ${data.filter(item=>item.status==="completed"&&!item.author_reconfirmed).length}건 · `+
-    `최종완료 ${data.filter(item=>item.author_reconfirmed).length}건`;
-
-  data.forEach(record=>{
-    $("reqSearchResults").appendChild(
-      requestCard(record)
-    );
-  });
-}
-
-$("reqSearchBtn").onclick=searchRequests;
-
-async function loadRequestList(){
-  const {data,error}=await supabase
-    .from("check_requests")
-    .select("*")
-    .order("created_at",{ascending:false});
-
-  $("requestList").innerHTML="";
-
-  if(error){
-    $("requestListStatus").textContent=error.message;
-    return;
-  }
-
-  $("requestListStatus").textContent=
-    `전체 ${data.length}건 · `+
-    `확인대기 ${data.filter(item=>item.status!=="completed").length}건 · `+
-    `재확인대기 ${data.filter(item=>item.status==="completed"&&!item.author_reconfirmed).length}건 · `+
-    `최종완료 ${data.filter(item=>item.author_reconfirmed).length}건`;
-
-  data.forEach(record=>{
-    $("requestList").appendChild(
-      requestCard(record)
-    );
-  });
-}
-
-$("refreshRequestListBtn").onclick=loadRequestList;
-
-/* 나의 업무 */
-
-async function loadMyWork(){
-  const list=$("myWorkList");
-  const status=$("myWorkStatus");
-
-  list.innerHTML="";
-
-  if(isAdmin){
-    status.textContent="관리자 계정에는 개인 지정 업무가 없습니다.";
-    return;
-  }
-
-  const {data,error}=await supabase
-    .from("check_requests")
-    .select("*")
-    .or(
-      `requested_to_user_id.eq.${currentUserId},`+
-      `created_by.eq.${currentUserId}`
-    )
-    .order("created_at",{ascending:false});
-
-  if(error){
-    status.textContent="조회 실패: "+error.message;
-    return;
-  }
-
-  const items=data||[];
-
-  items.sort((a,b)=>{
-    const aReconfirm=
-      a.created_by===currentUserId&&
-      a.status==="completed"&&
-      !a.author_reconfirmed;
-
-    const bReconfirm=
-      b.created_by===currentUserId&&
-      b.status==="completed"&&
-      !b.author_reconfirmed;
-
-    return(
-      Number(bReconfirm)-Number(aReconfirm)||
-      new Date(b.created_at)-new Date(a.created_at)
-    );
-  });
-
-  const incoming=
-    items.filter(item=>
-      item.requested_to_user_id===currentUserId&&
-      item.status!=="completed"
-    ).length;
-
-  const reconfirm=
-    items.filter(item=>
-      item.created_by===currentUserId&&
-      item.status==="completed"&&
-      !item.author_reconfirmed
-    ).length;
-
-  const deleteReady=
-    items.filter(item=>
-      item.created_by===currentUserId&&
-      item.delete_ready
-    ).length;
-
-  status.textContent=
-    `전체 ${items.length}건 · `+
-    `확인대기 ${incoming}건 · `+
-    `재확인대기 ${reconfirm}건 · `+
-    `삭제가능 ${deleteReady}건`;
-
-  if(!items.length){
-    list.innerHTML=
-      '<div class="empty">현재 나의 업무가 없습니다.</div>';
-  }
-
-  items.forEach(record=>{
-    list.appendChild(
-      requestCard(record)
-    );
-  });
-
-  refreshNotificationBadge();
-}
-
-function showMyWork(addHistory=true){
-  hideAllMain();
-  showHeader();
-
-  $("myWorkApp").classList.remove("hidden");
-
-  loadMyWork();
-
-  if(addHistory){
-    pushState({
-      screen:"mywork",
-      admin:isAdmin
-    });
-  }
-}
-
-$("openMyWorkBtn").onclick=()=>showMyWork(true);
-$("notificationBtn").onclick=()=>showMyWork(true);
-$("refreshMyWorkBtn").onclick=loadMyWork;
-
-/* 브라우저 이동 */
-
-async function renderHistoryState(state){
-  const target=state||{screen:"auth"};
-
-  if(target.screen==="auth"){
-    showAuth();
-    return;
-  }
-
-  if(target.screen==="home"){
-    showHome(false);
-    return;
-  }
-
-  if(target.screen==="mywork"){
-    showMyWork(false);
-    return;
-  }
-
-  if(target.screen==="bhd-tab"){
-    showBhdTab(target.tab||"register");
-    return;
-  }
-
-  if(target.screen==="bhd-edit"){
-    const record=await fetchRecordById(target.recordId);
-
-    if(record){
-      await loadForEdit(record,false);
-    }
-
-    return;
-  }
-
-  if(target.screen==="bhd-detail"){
-    const record=await fetchRecordById(target.recordId);
-
-    if(record){
-      await renderRecordDetail(record,false);
-    }
-
-    return;
-  }
-
-  if(target.screen==="request-tab"){
-    showRequestTab(target.tab||"register");
-    return;
-  }
-
-  if(target.screen==="request-detail"){
-    const record=await fetchRequestById(target.recordId);
-
-    if(record){
-      await renderRequestDetail(record,false);
-    }
-
-    return;
-  }
-
-  if(target.screen==="log"){
-    const record=await fetchRecordById(target.recordId);
-
-    if(record){
-      await openHistoryModal(
-        record,
-        Number(target.logIndex||0),
-        false
-      );
-    }
-
-    return;
-  }
-
-  if(target.screen==="image"){
-    showImageModalOnly(
-      target.url,
-      target.filename||"photo.jpg",
-      Boolean(target.mirror)
-    );
-  }
-}
-
-addEventListener(
-  "popstate",
-  event=>renderHistoryState(event.state)
-);
-
-/* 초기 실행 */
+/* 초기 로그인 복원 */
 
 async function initialize(){
-  replaceState({screen:"auth"});
 
   $("workDate").value=localToday();
 
   setRows([],1);
+
   showAuth();
 
   const {data}=await supabase.auth.getSession();
-  const session=data.session;
 
-  if(!session)return;
+  if(!data.session)return;
 
-  currentUserId=session.user.id;
+  currentUserId=data.session.user.id;
 
-  if(await checkCurrentUserAdmin()){
+  if(await checkAdmin()){
+
     isAdmin=true;
     currentUserName="관리자";
 
-    replaceState({
-      screen:"home",
-      admin:true
-    });
+    showHome();
 
-    showHome(false);
     return;
   }
 
-  const name=await loadMyProfile(currentUserId);
+  const name=await getProfile(currentUserId);
 
   if(name){
+
     isAdmin=false;
     currentUserName=name;
 
     startNotificationPolling();
-
-    replaceState({
-      screen:"home",
-      admin:false
-    });
-
-    showHome(false);
+    showHome();
   }
 }
 
 initialize();
+
 </script>
 </body>
 </html>
