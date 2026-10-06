@@ -44,10 +44,40 @@ header{padding:9px 10px}.header-inner{display:grid;grid-template-columns:minmax(
 .schedule-row-grid{grid-template-columns:repeat(3,minmax(0,1fr));align-items:start}
 .schedule-row-grid label{height:18px;line-height:18px}
 .schedule-row-grid select:disabled{background:#f3f5f7;color:#8a9199}
-.schedule-row-grid .schedule-progress-hint{grid-column:1/-1}
-.schedule-progress-hint{padding:8px 10px;border-radius:8px;background:#eef5fb;color:#334155;font-size:12px;line-height:1.5}
-.schedule-progress-hint:empty{display:none}
-.schedule-progress-hint.warn{background:#fff0e8;color:#b42318;font-weight:800}
+.schedule-row-grid .schedule-wide-field,.schedule-row-grid .multi-panel{grid-column:1/-1}
+.schedule-manpower-input{max-width:170px}
+.schedule-field-note{margin-top:4px;color:#64748b;font-size:12px;line-height:1.4}
+/* 작업구분 · 작업방식: 드롭다운처럼 생긴 칸을 누르면 체크 목록이 펼쳐짐 */
+.multi-box{display:flex;align-items:center;gap:6px;width:100%;min-height:43px;margin-top:4px;padding:9px 10px;border:1px solid #ccd2d8;border-radius:7px;background:#fff;color:#222;font-size:16px;font-weight:400;text-align:left}
+.multi-box:disabled{background:#f3f5f7;color:#8a9199;opacity:1}
+.multi-box.open{border-color:#16324f;box-shadow:0 0 0 2px rgba(22,50,79,.15)}
+.multi-text{flex:1 1 auto;min-width:0;overflow:hidden;white-space:nowrap;text-overflow:ellipsis}
+.multi-text.placeholder{color:#8a9199}
+.multi-box:not(:disabled) .multi-text.placeholder{color:#555}
+.multi-count{flex:0 0 auto;padding:2px 7px;border-radius:999px;background:#16324f;color:#fff;font-size:11px;font-weight:800}
+.multi-caret{flex:0 0 auto;color:#334155;font-size:13px}
+.multi-panel{border:1px solid #16324f;border-radius:10px;background:#fff;overflow:hidden;box-shadow:0 6px 16px rgba(22,50,79,.16)}
+.multi-list{max-height:270px;overflow-y:auto;-webkit-overflow-scrolling:touch}
+.multi-group{padding:6px 12px;background:#eef3f7;color:#16324f;font-size:12px;font-weight:900}
+.multi-row{-webkit-tap-highlight-color:transparent;display:flex;align-items:center;gap:10px;width:100%;min-height:44px;padding:8px 12px;border-radius:0;border-top:1px solid #edf0f3;background:#fff;color:#334155;font-size:16px;font-weight:700;text-align:left}
+.multi-row.on{background:#eef6fd;color:#16324f}
+.multi-check{flex:0 0 auto;display:inline-flex;align-items:center;justify-content:center;width:22px;height:22px;border:2px solid #9aa8b5;border-radius:5px;background:#fff;color:#fff;font-size:15px;line-height:1}
+.multi-row.on .multi-check{border-color:#16324f;background:#16324f}
+.multi-foot{display:flex;justify-content:space-between;align-items:center;gap:8px;padding:8px 12px;border-top:1px solid #dbe2e8;background:#f8fafc;color:#52606d;font-size:13px;font-weight:800}
+.multi-done{padding:9px 16px;background:#16324f;color:#fff;font-size:14px}
+/* 작업별 공정률 입력 */
+.rate-head{display:flex;justify-content:space-between;align-items:center;gap:8px;min-height:30px}
+.rate-sub{font-weight:400;color:#7a8794}
+.schedule-rate-same{flex:0 0 auto;padding:6px 10px;background:#e8edf2;color:#16324f;font-size:12px}
+.rate-row{display:grid;grid-template-columns:minmax(0,1fr) 112px;gap:8px;align-items:center;margin-top:7px;padding:8px 10px;border:1px solid #dbe2e8;border-radius:9px;background:#fff}
+.rate-name{font-size:15px;font-weight:800;overflow-wrap:anywhere}
+.rate-prev{margin-top:2px;color:#64748b;font-size:12px;line-height:1.45}
+.rate-prev.warn{color:#b42318;font-weight:800}
+.rate-nowrap{white-space:nowrap}
+.schedule-row-grid .rate-row input{margin:0;padding:9px;text-align:right;font-weight:700}
+.rate-empty{margin-top:6px;padding:10px;border:1px dashed #c4ced8;border-radius:9px;color:#64748b;font-size:12px}
+.schedule-rate-msg{margin-top:6px;color:#b42318;font-size:12px;font-weight:800}
+.schedule-rate-msg:empty{display:none}
 .schedule-setup-notice{margin-top:12px;padding:11px 12px;background:#fff8e7;border:1px solid #e7cc7a;border-radius:9px;color:#664c00;font-size:13px;font-weight:700;line-height:1.6}
 .schedule-major-badge{display:inline-block;margin-right:6px;padding:3px 8px;border-radius:999px;background:#e4f0fb;color:#174f7c;font-size:11px;font-weight:900;vertical-align:middle}
 .schedule-worker-list .production-progress-track{margin-top:6px}
@@ -240,7 +270,7 @@ header{padding:9px 10px}.header-inner{display:grid;grid-template-columns:minmax(
   <section id="scheduleRegisterSection">
     <div class="card">
       <h2>일일작업등록</h2>
-      <div class="hint">선종 → 호선 → STAGE → 구역 → 작업구분 → 작업방식 순서로 고르면 앞에서 고른 값에 맞는 것만 나옵니다. 그다음 오늘 투입 인원과 현재 공정률을 숫자로 입력합니다. 같은 작업을 다시 등록하면 공정률은 높은 쪽 값으로 지표에 남습니다.</div>
+      <div class="hint">선종 → 호선 → STAGE → 구역 순서로 고른 뒤, 작업구분과 작업방식은 눌러서 펼친 목록에서 여러 개를 체크할 수 있습니다. 투입 인원은 고른 작업 전체에 한 번, 공정률은 작업마다 숫자로 입력합니다. 같은 작업을 다시 등록하면 공정률은 높은 쪽 값으로 지표에 남습니다.</div>
       <div id="scheduleSetupNotice" class="schedule-setup-notice hidden"></div>
 
       <div class="schedule-form-head" style="margin-top:14px">
@@ -899,14 +929,12 @@ let scheduleRowSeq=0;
 const MASTER_TABLE="production_master";
 /* 선종 드롭다운 기본 목록. 마스터에 다른 선종이 들어오면 자동으로 뒤에 추가됩니다. */
 const SHIP_TYPES=["LPG","LNG","VLCC","CONT"];
-/* 선택 순서. 위에서 고른 값에 해당하는 것만 아래 드롭다운에 나옵니다. */
+/* 드롭다운 선택 순서. 위에서 고른 값에 해당하는 것만 아래 드롭다운에 나옵니다. (작업구분 · 작업방식은 그 아래에서 여러 개 체크) */
 const SCHEDULE_LEVELS=[
   {field:"ship_type",label:"선종",particle:"을",cls:"schedule-ship-type"},
   {field:"ship_no",label:"호선",particle:"을",cls:"schedule-ship"},
   {field:"stage",label:"STAGE",particle:"를",cls:"schedule-stage"},
-  {field:"area",label:"구역",particle:"을",cls:"schedule-area"},
-  {field:"work_type",label:"작업구분",particle:"을",cls:"schedule-work-type"},
-  {field:"work_method",label:"작업방식",particle:"을",cls:"schedule-work-method"}
+  {field:"area",label:"구역",particle:"을",cls:"schedule-area"}
 ];
 
 let scheduleMaster=[];
@@ -988,7 +1016,7 @@ function readScheduleSelection(card){
   SCHEDULE_LEVELS.forEach(def=>{selected[def.field]=card.querySelector("."+def.cls).value});
   return selected;
 }
-/* fromIndex 단계부터 아래 드롭다운을 다시 채웁니다. reset=true 이면 아래 단계의 기존 선택을 지웁니다. */
+/* fromIndex 단계부터 아래 드롭다운을 다시 채웁니다. reset=true 이면 아래 단계의 기존 선택(작업구분 · 작업방식 · 공정률 포함)을 지웁니다. */
 function refreshScheduleCascade(card,fromIndex=0,reset=false){
   const selected=readScheduleSelection(card);
   for(let i=fromIndex;i<SCHEDULE_LEVELS.length;i++){
@@ -1002,7 +1030,122 @@ function refreshScheduleCascade(card,fromIndex=0,reset=false){
     select.innerHTML=`<option value="">${escapeHtml(placeholder)}</option>`+options.map(v=>`<option value="${escapeHtml(v)}"${v===value?" selected":""}>${escapeHtml(v)}</option>`).join("");
     select.disabled=parentMissing||!options.length;
   }
-  updateScheduleProgressHint(card);
+  if(reset){card._types=[];card._works=new Set();card._rates=new Map();card._open=""}
+  syncScheduleWorkPicks(card);
+}
+
+/* ----- 작업구분 · 작업방식: 드롭다운을 펼쳐 여러 개 체크 ----- */
+function scheduleWorkKey(type,method){return type+"|||"+method}
+/* 고른 구역에 있는 마스터 작업 전체(엑셀 순서) */
+function scheduleAreaWorks(card){
+  const selected=readScheduleSelection(card);
+  if(SCHEDULE_LEVELS.some(def=>!selected[def.field]))return [];
+  return scheduleMaster.filter(m=>SCHEDULE_LEVELS.every(def=>m[def.field]===selected[def.field]));
+}
+/* 체크한 작업(작업구분 · 작업방식)만, 엑셀 순서대로 */
+function scheduleSelectedWorks(card){
+  return scheduleAreaWorks(card).filter(m=>card._types.includes(m.work_type)&&card._works.has(scheduleWorkKey(m.work_type,m.work_method)));
+}
+function toggleScheduleType(card,type){
+  const works=scheduleAreaWorks(card);
+  if(card._types.includes(type)){
+    card._types=card._types.filter(t=>t!==type);
+    [...card._works].forEach(key=>{if(key.startsWith(type+"|||"))card._works.delete(key)});
+  }else{
+    card._types.push(type);
+    /* 작업방식이 하나뿐인 작업구분은 바로 체크해 둡니다. */
+    const methods=works.filter(m=>m.work_type===type);
+    if(methods.length===1)card._works.add(scheduleWorkKey(type,methods[0].work_method));
+  }
+}
+function toggleScheduleWork(card,key){if(card._works.has(key))card._works.delete(key);else card._works.add(key)}
+
+/* 구역이 바뀌었거나 마스터를 다시 읽었을 때: 없는 항목은 빼고 화면을 다시 그립니다. */
+function syncScheduleWorkPicks(card){
+  if(!card.querySelector(".schedule-type-box"))return;
+  const works=scheduleAreaWorks(card),types=[...new Set(works.map(m=>m.work_type))];
+  card._types=types.filter(type=>card._types.includes(type));
+  const valid=new Set(works.filter(m=>card._types.includes(m.work_type)).map(m=>scheduleWorkKey(m.work_type,m.work_method)));
+  card._works=new Set([...card._works].filter(key=>valid.has(key)));
+  if(!works.length)card._open="";
+  renderScheduleWorkBoxes(card);renderSchedulePanel(card);renderScheduleRates(card);updateScheduleSaveLabel();
+}
+
+function renderScheduleWorkBoxes(card){
+  const works=scheduleAreaWorks(card),selectedWorks=scheduleSelectedWorks(card);
+  const paint=(box,text,placeholder,count,disabled,open)=>{
+    const label=box.querySelector(".multi-text"),badge=box.querySelector(".multi-count");
+    label.textContent=text;label.classList.toggle("placeholder",placeholder);
+    badge.textContent=`${count}개`;badge.classList.toggle("hidden",!count);
+    box.disabled=disabled;box.classList.toggle("open",open);box.setAttribute("aria-expanded",open?"true":"false");
+    box.querySelector(".multi-caret").textContent=open?"▴":"▾";
+  };
+  paint(card.querySelector(".schedule-type-box"),!works.length?"구역 먼저 선택":(card._types.length?card._types.join(", "):"작업구분 선택"),!card._types.length,card._types.length,!works.length,card._open==="type");
+  const summary=card._types.map(type=>{const methods=selectedWorks.filter(m=>m.work_type===type).map(m=>m.work_method);return methods.length?`${type} ${methods.join("·")}`:""}).filter(Boolean).join(" / ");
+  paint(card.querySelector(".schedule-method-box"),!card._types.length?"작업구분 먼저 선택":(summary||"작업방식 선택"),!summary,selectedWorks.length,!card._types.length,card._open==="method");
+}
+
+function renderSchedulePanel(card){
+  const panel=card.querySelector(".multi-panel");
+  if(!card._open){panel.classList.add("hidden");panel.innerHTML="";return}
+  const works=scheduleAreaWorks(card);
+  const rowHtml=(kind,value,label)=>`<button type="button" role="checkbox" class="multi-row" data-kind="${kind}" data-value="${escapeHtml(value)}"><span class="multi-check"></span><span>${escapeHtml(label)}</span></button>`;
+  let rows="";
+  if(card._open==="type")[...new Set(works.map(m=>m.work_type))].forEach(type=>{rows+=rowHtml("type",type,type)});
+  else card._types.forEach(type=>{
+    rows+=`<div class="multi-group">${escapeHtml(type)}</div>`;
+    works.filter(m=>m.work_type===type).forEach(m=>{rows+=rowHtml("work",scheduleWorkKey(type,m.work_method),m.work_method)});
+  });
+  panel.innerHTML=`<div class="multi-list">${rows}</div><div class="multi-foot"><span class="multi-foot-count"></span><button type="button" class="multi-done">선택 완료</button></div>`;
+  panel.classList.remove("hidden");
+  syncSchedulePanel(card);
+}
+/* 체크 표시와 개수만 갱신합니다(목록의 스크롤 위치를 유지하려고 목록은 다시 그리지 않음). */
+function syncSchedulePanel(card){
+  const panel=card.querySelector(".multi-panel");
+  panel.querySelectorAll(".multi-row").forEach(row=>{
+    const on=row.dataset.kind==="type"?card._types.includes(row.dataset.value):card._works.has(row.dataset.value);
+    row.classList.toggle("on",on);row.setAttribute("aria-checked",on?"true":"false");
+    row.querySelector(".multi-check").textContent=on?"✓":"";
+  });
+  const count=panel.querySelector(".multi-foot-count");
+  if(count)count.textContent=`${card._open==="type"?card._types.length:scheduleSelectedWorks(card).length}개 선택`;
+}
+
+/* 체크한 작업마다 공정률 입력칸을 한 줄씩 만듭니다. 이미 입력한 값은 유지합니다. */
+function renderScheduleRates(card){
+  const wrap=card.querySelector(".schedule-rate-list"),works=scheduleSelectedWorks(card);
+  card.querySelector(".schedule-rate-same").classList.toggle("hidden",works.length<2);
+  card.querySelector(".schedule-rate-msg").textContent="";
+  wrap.innerHTML="";
+  if(!works.length){wrap.innerHTML='<div class="rate-empty">작업방식을 고르면 작업별 공정률 입력칸이 나옵니다.</div>';return}
+  works.forEach(m=>{
+    const key=scheduleWorkKey(m.work_type,m.work_method);
+    const row=document.createElement("div");row.className="rate-row";row.dataset.key=key;
+    row.innerHTML=`<div><div class="rate-name">${escapeHtml(m.work_type)} · ${escapeHtml(m.work_method)}</div><div class="rate-prev"></div></div><input class="schedule-rate-input" type="number" min="0" max="100" step="0.1" inputmode="decimal" placeholder="0 ~ 100" aria-label="${escapeHtml(m.work_type)} ${escapeHtml(m.work_method)} 공정률">`;
+    const input=row.querySelector("input");
+    input.value=card._rates.get(key)||"";
+    input.addEventListener("input",()=>{card._rates.set(key,input.value);card.querySelector(".schedule-rate-msg").textContent="";updateScheduleRateHint(card,row,m)});
+    wrap.appendChild(row);
+    updateScheduleRateHint(card,row,m);
+  });
+}
+/* 작업별로 지금까지의 공정률과 완료 일정을 알려 줍니다. 지표에는 항상 가장 높은 공정률이 남습니다. */
+function updateScheduleRateHint(card,row,m){
+  const selected=readScheduleSelection(card),hint=row.querySelector(".rate-prev"),value=productionNumber(row.querySelector("input").value);
+  const prev=scheduleProgressMap.get(productionWorkKey(selected.ship_no,selected.stage,selected.area,m.work_type,m.work_method));
+  const due=m.due_date||m.milestone?`완료 일정 ${[m.due_date,m.milestone?`(${m.milestone})`:""].filter(Boolean).map(part=>`<span class="rate-nowrap">${escapeHtml(part)}</span>`).join(" ")}`:"";
+  hint.classList.remove("warn");
+  if(prev!==undefined&&value!==null&&value<prev){
+    hint.classList.add("warn");
+    hint.textContent=`기존 공정률 ${productionPercentLabel(prev)}보다 낮습니다. 지표에는 높은 값(${productionPercentLabel(prev)})이 유지됩니다.`;
+    return;
+  }
+  hint.innerHTML=[prev===undefined?"처음 등록":`현재 공정률 ${productionPercentLabel(prev)}`,due].filter(Boolean).join(" · ");
+}
+function updateScheduleSaveLabel(){
+  const count=[...$("scheduleRows").querySelectorAll(".schedule-row-card")].reduce((sum,card)=>sum+scheduleSelectedWorks(card).length,0);
+  $("saveScheduleBtn").textContent=count?`일일작업 등록 (${count}건)`:"일일작업 등록";
 }
 
 function renderScheduleNotice(){
@@ -1014,7 +1157,7 @@ function renderScheduleNotice(){
   box.classList.toggle("hidden",!text);
 }
 
-/* 마스터를 다시 불러왔을 때 열려 있는 입력칸의 드롭다운을 다시 채웁니다(이미 고른 값은 유지). */
+/* 마스터를 다시 불러왔을 때 열려 있는 입력칸을 다시 채웁니다(이미 고른 값과 입력한 공정률은 유지). */
 function refreshScheduleForm(){
   [...$("scheduleRows").querySelectorAll(".schedule-row-card")].forEach(card=>refreshScheduleCascade(card,0,false));
   renderScheduleNotice();
@@ -1034,25 +1177,9 @@ function showScheduleTab(mode){
 }
 
 function readScheduleCard(card){
-  const manpowerText=card.querySelector(".schedule-manpower-input").value.trim(),progressText=card.querySelector(".schedule-progress-input").value.trim();
-  return {...readScheduleSelection(card),manpower:manpowerText===""?null:Number(manpowerText),progress_rate:progressText===""?null:Number(progressText)};
-}
-
-/* 작업을 다 고르면 완료 일정과 현재 공정률을 알려 줍니다. 지표에는 항상 가장 높은 공정률이 남습니다. */
-function updateScheduleProgressHint(card){
-  const hint=card.querySelector(".schedule-progress-hint"),v=readScheduleCard(card);
-  hint.className="schedule-progress-hint";
-  if(SCHEDULE_LEVELS.some(def=>!v[def.field])){hint.textContent="";return}
-  const master=scheduleMaster.find(m=>SCHEDULE_LEVELS.every(def=>m[def.field]===v[def.field]));
-  const due=master&&(master.due_date||master.milestone)?`완료 일정 ${[master.due_date,master.milestone?`(${master.milestone})`:""].filter(Boolean).join(" ")} · `:"";
-  const prev=scheduleProgressMap.get(productionWorkKey(v.ship_no,v.stage,v.area,v.work_type,v.work_method));
-  let text;
-  if(prev===undefined)text=due+"이 작업은 처음 등록됩니다.";
-  else if(v.progress_rate!==null&&Number.isFinite(v.progress_rate)&&v.progress_rate<prev){
-    hint.classList.add("warn");
-    text=`입력한 값이 기존 공정률 ${productionPercentLabel(prev)}보다 낮습니다. 지표에는 높은 값(${productionPercentLabel(prev)})이 유지됩니다.`;
-  }else text=due+`이 작업의 현재 공정률: ${productionPercentLabel(prev)}`;
-  hint.innerHTML=`<strong>${escapeHtml(v.work_type)} · ${escapeHtml(v.work_method)}</strong><br>${escapeHtml(text)}`;
+  const manpowerText=card.querySelector(".schedule-manpower-input").value.trim();
+  return {...readScheduleSelection(card),types:[...card._types],manpower:manpowerText===""?null:Number(manpowerText),
+    works:scheduleSelectedWorks(card).map(m=>({work_type:m.work_type,work_method:m.work_method,progress_rate:productionNumber(card._rates.get(scheduleWorkKey(m.work_type,m.work_method)))}))};
 }
 
 function refreshScheduleRowHeads(){
@@ -1061,16 +1188,21 @@ function refreshScheduleRowHeads(){
     card.querySelector(".schedule-row-title").textContent=`작업 ${index+1}`;
     card.querySelector(".schedule-remove-btn").classList.toggle("hidden",cards.length<=1);
   });
+  updateScheduleSaveLabel();
 }
 
 function scheduleRowTemplate(prefill={}){
   scheduleRowSeq++;
   const card=document.createElement("div");card.className="schedule-row-card";card.dataset.seq=String(scheduleRowSeq);
+  card._types=[];card._works=new Set();card._rates=new Map();card._open="";
+  const boxHtml=cls=>`<button type="button" class="multi-box ${cls}" aria-haspopup="true"><span class="multi-text"></span><span class="multi-count hidden"></span><span class="multi-caret">▾</span></button>`;
   card.innerHTML=`<div class="schedule-row-head"><span class="schedule-row-title">작업</span><button type="button" class="schedule-remove-btn">작업 삭제</button></div><div class="schedule-row-grid">`
     +SCHEDULE_LEVELS.map(def=>`<div><label>${escapeHtml(def.label)}</label><select class="${def.cls}"></select></div>`).join("")
-    +`<div><label>오늘 투입 인원</label><input class="schedule-manpower-input" type="number" min="1" step="1" inputmode="numeric" placeholder="명"></div>
-    <div><label>현재 공정률(%)</label><input class="schedule-progress-input" type="number" min="0" max="100" step="0.1" inputmode="decimal" placeholder="0 ~ 100"></div>
-    <div class="schedule-progress-hint"></div>
+    +`<div><label>작업구분</label>${boxHtml("schedule-type-box")}</div>
+    <div><label>작업방식</label>${boxHtml("schedule-method-box")}</div>
+    <div class="multi-panel hidden"></div>
+    <div class="schedule-wide-field"><label>오늘 투입 인원</label><input class="schedule-manpower-input" type="number" min="1" step="1" inputmode="numeric" placeholder="명"><div class="schedule-field-note">고른 작업 전체에 투입된 인원입니다. 합계에는 한 번만 반영됩니다.</div></div>
+    <div class="schedule-wide-field"><div class="rate-head"><label>현재 공정률(%) <span class="rate-sub">· 작업별 입력</span></label><button type="button" class="schedule-rate-same hidden">모두 같은 값</button></div><div class="schedule-rate-list"></div><div class="schedule-rate-msg"></div></div>
   </div>`;
   /* 드롭다운을 위에서부터 채웁니다. prefill 값이 있으면(작업 추가 시 앞 작업의 선종 · 호선 · STAGE · 구역) 그대로 골라 둡니다. */
   SCHEDULE_LEVELS.forEach((def,index)=>{
@@ -1080,7 +1212,28 @@ function scheduleRowTemplate(prefill={}){
     select.onchange=()=>refreshScheduleCascade(card,index+1,true);
   });
   refreshScheduleCascade(card,0,false);
-  card.querySelector(".schedule-progress-input").addEventListener("input",()=>updateScheduleProgressHint(card));
+  const openPanel=kind=>{card._open=card._open===kind?"":kind;renderSchedulePanel(card);renderScheduleWorkBoxes(card)};
+  card.querySelector(".schedule-type-box").onclick=()=>openPanel("type");
+  card.querySelector(".schedule-method-box").onclick=()=>openPanel("method");
+  card.querySelector(".multi-panel").addEventListener("click",e=>{
+    if(e.target.closest(".multi-done")){
+      /* 작업구분을 고르고 닫으면, 아직 작업방식을 안 고른 작업구분이 있을 때 작업방식 목록을 바로 엽니다. */
+      const needMethod=card._open==="type"&&card._types.some(type=>!scheduleSelectedWorks(card).some(m=>m.work_type===type));
+      card._open=needMethod?"method":"";
+      renderSchedulePanel(card);renderScheduleWorkBoxes(card);
+      return;
+    }
+    const row=e.target.closest(".multi-row");
+    if(!row)return;
+    if(row.dataset.kind==="type")toggleScheduleType(card,row.dataset.value);else toggleScheduleWork(card,row.dataset.value);
+    syncSchedulePanel(card);renderScheduleWorkBoxes(card);renderScheduleRates(card);updateScheduleSaveLabel();
+  });
+  card.querySelector(".schedule-rate-same").onclick=()=>{
+    const inputs=[...card.querySelectorAll(".schedule-rate-input")],source=inputs.find(input=>input.value.trim()!=="");
+    if(!source){card.querySelector(".schedule-rate-msg").textContent="먼저 한 칸에 공정률을 입력한 뒤 누르세요.";return}
+    const value=source.value;
+    inputs.forEach(input=>{input.value=value;input.dispatchEvent(new Event("input"))});
+  };
   card.querySelector(".schedule-remove-btn").onclick=()=>{
     card.remove();
     if(!$("scheduleRows").querySelector(".schedule-row-card"))addScheduleRow();
@@ -1092,12 +1245,19 @@ function scheduleRowTemplate(prefill={}){
 /* 작업을 추가하면 바로 앞 작업의 선종 · 호선 · STAGE · 구역을 이어받습니다(작업구분부터 새로 고름). */
 function addScheduleRow(){
   const cards=$("scheduleRows").querySelectorAll(".schedule-row-card"),last=cards[cards.length-1],prefill={};
-  if(last){const selected=readScheduleSelection(last);["ship_type","ship_no","stage","area"].forEach(field=>{prefill[field]=selected[field]})}
+  if(last){const selected=readScheduleSelection(last);SCHEDULE_LEVELS.forEach(def=>{prefill[def.field]=selected[def.field]})}
   $("scheduleRows").appendChild(scheduleRowTemplate(prefill));
   refreshScheduleRowHeads();
 }
 function resetScheduleForm(){$("scheduleWorkDate").value=localToday();$("scheduleAuthor").value=currentUserName;$("scheduleSaveStatus").textContent="";$("scheduleRows").innerHTML="";scheduleRowSeq=0;addScheduleRow()}
 function collectScheduleRows(){return [...$("scheduleRows").querySelectorAll(".schedule-row-card")].map(readScheduleCard)}
+/* 함께 등록한 작업 묶음 번호. 같은 묶음의 투입 인원은 합계에 한 번만 반영합니다. */
+function newScheduleBatchId(){
+  if(crypto.randomUUID)return crypto.randomUUID();
+  const b=crypto.getRandomValues(new Uint8Array(16));b[6]=(b[6]&0x0f)|0x40;b[8]=(b[8]&0x3f)|0x80;
+  const h=[...b].map(x=>x.toString(16).padStart(2,"0")).join("");
+  return `${h.slice(0,8)}-${h.slice(8,12)}-${h.slice(12,16)}-${h.slice(16,20)}-${h.slice(20)}`;
+}
 
 async function saveProductionSchedule(){
   const status=$("scheduleSaveStatus"),btn=$("saveScheduleBtn"),workDate=$("scheduleWorkDate").value,rows=collectScheduleRows();
@@ -1106,20 +1266,28 @@ async function saveProductionSchedule(){
   for(let i=0;i<rows.length;i++){
     const r=rows[i],missing=SCHEDULE_LEVELS.find(def=>!r[def.field]);
     if(missing){status.textContent=`작업 ${i+1}의 ${missing.label}${missing.particle} 선택하세요.`;return}
+    if(!r.types.length){status.textContent=`작업 ${i+1}의 작업구분을 선택하세요.`;return}
+    const noMethod=r.types.find(type=>!r.works.some(w=>w.work_type===type));
+    if(noMethod){status.textContent=`작업 ${i+1}의 ${noMethod} 작업방식을 선택하세요.`;return}
     if(r.manpower===null||!Number.isInteger(r.manpower)||r.manpower<1){status.textContent=`작업 ${i+1}의 오늘 투입 인원을 1명 이상 숫자로 입력하세요.`;return}
-    if(r.progress_rate===null||!Number.isFinite(r.progress_rate)||r.progress_rate<0||r.progress_rate>100){status.textContent=`작업 ${i+1}의 현재 공정률을 0 ~ 100 사이 숫자로 입력하세요.`;return}
+    const badRate=r.works.find(w=>w.progress_rate===null||w.progress_rate<0||w.progress_rate>100);
+    if(badRate){status.textContent=`작업 ${i+1}의 ${badRate.work_type} · ${badRate.work_method} 공정률을 0 ~ 100 사이 숫자로 입력하세요.`;return}
   }
   try{
     btn.disabled=true;status.textContent="일일작업 등록 중...";
-    const payload=rows.map(r=>({work_date:workDate,ship_type:r.ship_type,ship_no:r.ship_no,stage:r.stage,area:r.area,work_type:r.work_type,work_method:r.work_method,work_name:`${r.work_type} ${r.work_method}`,manpower:r.manpower,progress_rate:r.progress_rate,author_name:currentUserName,created_by:currentUserId,updated_at:new Date().toISOString()}));
+    const now=new Date().toISOString(),payload=[];
+    rows.forEach(r=>{
+      const batchId=newScheduleBatchId();
+      r.works.forEach(w=>payload.push({work_date:workDate,ship_type:r.ship_type,ship_no:r.ship_no,stage:r.stage,area:r.area,work_type:w.work_type,work_method:w.work_method,work_name:`${w.work_type} ${w.work_method}`,manpower:r.manpower,progress_rate:w.progress_rate,batch_id:batchId,author_name:currentUserName,created_by:currentUserId,updated_at:now}));
+    });
     const {error}=await supabase.from("production_schedules").insert(payload);if(error)throw error;
-    status.textContent=`등록 완료 · 작업 ${rows.length}건 · 투입 인원 ${rows.reduce((sum,r)=>sum+r.manpower,0)}명`;
+    status.textContent=`등록 완료 · 작업 ${payload.length}건 · 투입 인원 ${rows.reduce((sum,r)=>sum+r.manpower,0)}명`;
     $("scheduleRows").innerHTML="";addScheduleRow();
     loadScheduleData(true);
   }catch(e){status.textContent="등록 실패: "+(productionSchemaMessage(e)||e?.message||"오류")}finally{btn.disabled=false}
 }
 
-function scheduleCard(record){
+function scheduleCard(record,batchSize=1){
   const card=document.createElement("div");card.className="schedule-card";
   const workerNames=Array.isArray(record.worker_names)?record.worker_names.filter(Boolean):[];
   const displayCount=Number(record.manpower||0)||workerNames.length;
@@ -1134,7 +1302,7 @@ function scheduleCard(record){
     if(record.major_category)badge=`<span class="schedule-major-badge">${escapeHtml(record.major_category)}</span>`;
     body=`<div class="schedule-card-work">${escapeHtml(record.work_name||record.other_work_name||"-")}</div>`+(workerNames.length?`<div class="schedule-worker-list"><strong>투입자</strong><br>${workerNames.map(escapeHtml).join(" · ")}</div>`:"");
   }
-  card.innerHTML=`<div class="record-top"><div class="schedule-card-title">${badge}${escapeHtml([record.ship_type,record.ship_no||"-"].filter(Boolean).join(" "))} / ${escapeHtml(record.area||"-")}</div><span class="schedule-manpower">${displayCount}명</span></div>${body}<div class="schedule-card-meta">작업일: ${escapeHtml(record.work_date||"-")}<br>작성자: ${escapeHtml(record.author_name||"-")} · 등록 ${escapeHtml(formatDateTime(record.created_at))}</div>`;
+  card.innerHTML=`<div class="record-top"><div class="schedule-card-title">${badge}${escapeHtml([record.ship_type,record.ship_no||"-"].filter(Boolean).join(" "))} / ${escapeHtml(record.area||"-")}</div><span class="schedule-manpower">${displayCount}명</span></div>${body}<div class="schedule-card-meta">작업일: ${escapeHtml(record.work_date||"-")}<br>작성자: ${escapeHtml(record.author_name||"-")} · 등록 ${escapeHtml(formatDateTime(record.created_at))}${batchSize>1?`<br>함께 등록한 작업 ${batchSize}건 · 투입 인원은 공동`:""}</div>`;
   if(isAdmin||record.created_by===currentUserId){const actions=document.createElement("div");actions.className="schedule-list-actions";const del=document.createElement("button");del.className="danger";del.textContent="삭제";del.onclick=()=>deleteProductionSchedule(record);actions.appendChild(del);card.appendChild(actions)}
   return card;
 }
@@ -1146,8 +1314,10 @@ async function loadProductionScheduleList(){
   if(date)q=q.eq("work_date",date);if(ship)q=q.ilike("ship_no",`%${ship}%`);
   const {data,error}=await q;if(error){status.textContent="목록 조회 실패: "+error.message;return}
   const items=data||[];if(!items.length){status.textContent="";list.innerHTML='<div class="empty">등록된 일일작업이 없습니다.</div>';return}
-  const manpowerSum=items.reduce((sum,r)=>sum+(Number(r.manpower||0)||(Array.isArray(r.worker_names)?r.worker_names.filter(Boolean).length:0)),0);const ships=new Set(items.map(r=>r.ship_no).filter(Boolean));
-  status.textContent=`조회 ${items.length}건 · 호선 ${ships.size}개`;summary.textContent=`투입 인원 합계 ${manpowerSum}명`;summary.classList.remove("hidden");items.forEach(r=>list.appendChild(scheduleCard(r)));
+  const batchSizes=new Map();items.forEach(r=>{if(r.batch_id)batchSizes.set(r.batch_id,(batchSizes.get(r.batch_id)||0)+1)});
+  const counted=new Set();
+  const manpowerSum=items.reduce((sum,r)=>{if(r.batch_id){if(counted.has(r.batch_id))return sum;counted.add(r.batch_id)}return sum+(Number(r.manpower||0)||(Array.isArray(r.worker_names)?r.worker_names.filter(Boolean).length:0))},0);const ships=new Set(items.map(r=>r.ship_no).filter(Boolean));
+  status.textContent=`조회 ${items.length}건 · 호선 ${ships.size}개`;summary.textContent=`투입 인원 합계 ${manpowerSum}명`;summary.classList.remove("hidden");items.forEach(r=>list.appendChild(scheduleCard(r,r.batch_id?batchSizes.get(r.batch_id):1)));
 }
 
 async function deleteProductionSchedule(record){
@@ -1161,6 +1331,15 @@ $("openScheduleBtn").onclick=()=>{resetScheduleForm();showScheduleTab("register"
 $("scheduleRegisterTab").onclick=()=>{showScheduleTab("register");pushState({screen:"schedule-tab",tab:"register",admin:isAdmin})};
 $("scheduleListTab").onclick=()=>{showScheduleTab("list");pushState({screen:"schedule-tab",tab:"list",admin:isAdmin})};
 $("addScheduleRowBtn").onclick=()=>addScheduleRow();
+/* 펼쳐 둔 작업구분 · 작업방식 목록은 바깥을 누르면 닫습니다. */
+document.addEventListener("click",e=>{
+  const path=e.composedPath?e.composedPath():[];
+  $("scheduleRows").querySelectorAll(".schedule-row-card").forEach(card=>{
+    if(!card._open)return;
+    if(path.some(el=>el.classList&&(el.classList.contains("multi-panel")||el.classList.contains("multi-box"))&&card.contains(el)))return;
+    card._open="";renderSchedulePanel(card);renderScheduleWorkBoxes(card);
+  });
+});
 $("saveScheduleBtn").onclick=saveProductionSchedule;
 $("refreshScheduleListBtn").onclick=loadProductionScheduleList;
 $("scheduleSearchBtn").onclick=loadProductionScheduleList;
@@ -1198,7 +1377,7 @@ function productionStageDetailHtml(stage){
       const registered=row.record_count>0,progress=row.progress||0;
       const badge=progress>=100?'<span class="badge badge-completed">완료</span>':(registered?`<strong>${productionPercentLabel(progress)}</strong>`:'<span class="production-no-target">미등록</span>');
       const due=row.due_date||row.milestone?`완료 일정 ${escapeHtml([row.due_date,row.milestone?`(${row.milestone})`:""].filter(Boolean).join(" "))}`:"";
-      const meta=[registered?`등록 ${row.record_count}건`:"",row.last_work_date?`최근작업 ${escapeHtml(row.last_work_date)}`:"",registered?`누적 투입 ${row.manpower}명`:"",due].filter(Boolean).join(" · ");
+      const meta=[registered?`등록 ${row.record_count}건`:"",row.last_work_date?`최근작업 ${escapeHtml(row.last_work_date)}`:"",registered?`투입 ${row.manpower}명`:"",due].filter(Boolean).join(" · ");
       html+=`<div class="production-work-item"><div class="production-work-head"><div class="production-work-name">${escapeHtml([row.work_type,row.work_method].filter(Boolean).join(" · ")||"-")}</div><div>${badge}</div></div>${registered?productionBarHtml(progress):""}<div class="production-work-meta">${meta}</div></div>`;
     });
     html+="</div>";
@@ -1253,7 +1432,7 @@ async function loadProductionDashboard(){
   const seq=++productionDashboardSeq;
   status.textContent="생산 데이터 집계 중...";summary.innerHTML="";content.innerHTML="";
   const [scheduleResult,masterResult]=await Promise.all([
-    fetchAllRows(()=>{let q=supabase.from("production_schedules").select("id,work_date,ship_type,ship_no,stage,area,work_type,work_method,manpower,progress_rate,created_at").order("created_at",{ascending:true}).order("id",{ascending:true});if(shipFilter)q=q.ilike("ship_no",`%${shipFilter}%`);return q}),
+    fetchAllRows(()=>{let q=supabase.from("production_schedules").select("id,work_date,ship_type,ship_no,stage,area,work_type,work_method,manpower,progress_rate,batch_id,created_at").order("created_at",{ascending:true}).order("id",{ascending:true});if(shipFilter)q=q.ilike("ship_no",`%${shipFilter}%`);return q}),
     fetchAllRows(productionMasterQuery)
   ]);
   if(seq!==productionDashboardSeq)return;
@@ -1275,19 +1454,22 @@ async function loadProductionDashboard(){
     if(!ship.ship_type)ship.ship_type=m.ship_type;
     ["kl_date","lc_date","st_date","dl_date"].forEach(f=>{if(!ship[f]&&m[f])ship[f]=m[f]});
     const stageKey=productionNormalize(m.stage);
-    if(!ship.stages.has(stageKey))ship.stages.set(stageKey,{name:m.stage,record_count:0,manpower:0,last_work_date:"",items:new Map()});
+    if(!ship.stages.has(stageKey))ship.stages.set(stageKey,{name:m.stage,record_count:0,manpower:0,last_work_date:"",batches:new Set(),items:new Map()});
     const stage=ship.stages.get(stageKey),itemKey=productionWorkKey("","",m.area,m.work_type,m.work_method);
     if(!stage.items.has(itemKey))stage.items.set(itemKey,{area:m.area,work_type:m.work_type,work_method:m.work_method,milestone:m.milestone||"",due_date:m.due_date?productionDateOnly(m.due_date):"",progress:null,record_count:0,manpower:0,last_work_date:""});
   });
   /* ② 일일작업 등록을 얹습니다. 같은 작업의 공정률은 입력된 값 중 가장 높은 값(축적식). */
-  let manpowerTotal=0;
+  /* 함께 등록한 묶음(batch_id)의 투입 인원은 합계에 한 번만 더합니다. */
+  let manpowerTotal=0;const countedBatches=new Set();
   schedules.forEach(r=>{
     const ship=getShip(r.ship_no,r.ship_type||""),manpower=Number(r.manpower||0)||0,workDate=productionDateOnly(r.work_date);
-    ship.record_count++;manpowerTotal+=manpower;
+    ship.record_count++;
+    if(!r.batch_id||!countedBatches.has(r.batch_id)){manpowerTotal+=manpower;if(r.batch_id)countedBatches.add(r.batch_id)}
     if(!ship.first_created)ship.first_created=r.created_at||r.work_date||"";
     const stage=ship.stages.get(productionNormalize(r.stage)),item=stage?stage.items.get(productionWorkKey("","",r.area,r.work_type,r.work_method)):null;
     if(!item){ship.unmatched_count++;return}
-    stage.record_count++;stage.manpower+=manpower;
+    stage.record_count++;
+    if(!r.batch_id||!stage.batches.has(r.batch_id)){stage.manpower+=manpower;if(r.batch_id)stage.batches.add(r.batch_id)}
     if(workDate>stage.last_work_date)stage.last_work_date=workDate;
     item.record_count++;item.manpower+=manpower;
     if(workDate>item.last_work_date)item.last_work_date=workDate;
