@@ -68,7 +68,7 @@ header{padding:9px 10px}.header-inner{display:grid;grid-template-columns:minmax(
 .production-detail-title{padding:12px 12px 0;font-size:15px;font-weight:900;color:#16324f}
 .production-detail-sub{color:#7a8794;font-size:11px;font-weight:700}
 .production-major-detail .production-area:first-of-type{border-top:0}
-@media(max-width:720px){.schedule-row-grid{grid-template-columns:1fr}.production-major-grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:7px;padding:10px}.production-major-card{padding:10px}.production-major-pct{font-size:23px}.production-major-meta{font-size:11px}}
+@media(max-width:720px){.schedule-form-head{grid-template-columns:repeat(2,minmax(0,1fr))}.schedule-row-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.production-major-grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:7px;padding:10px}.production-major-card{padding:10px}.production-major-pct{font-size:23px}.production-major-meta{font-size:11px}}
 /* ===== 게시판(공지사항) ===== */
 .home-board{padding:12px 14px;background:#fffaf0;border:1px solid #e3c66f;border-radius:14px}
 .home-board-head{display:flex;justify-content:space-between;align-items:center;gap:8px;margin-bottom:4px}
@@ -1046,13 +1046,13 @@ function updateScheduleProgressHint(card){
   const master=scheduleMaster.find(m=>SCHEDULE_LEVELS.every(def=>m[def.field]===v[def.field]));
   const due=master&&(master.due_date||master.milestone)?`완료 일정 ${[master.due_date,master.milestone?`(${master.milestone})`:""].filter(Boolean).join(" ")} · `:"";
   const prev=scheduleProgressMap.get(productionWorkKey(v.ship_no,v.stage,v.area,v.work_type,v.work_method));
-  if(prev===undefined){hint.textContent=due+"이 작업은 처음 등록됩니다.";return}
-  if(v.progress_rate!==null&&Number.isFinite(v.progress_rate)&&v.progress_rate<prev){
+  let text;
+  if(prev===undefined)text=due+"이 작업은 처음 등록됩니다.";
+  else if(v.progress_rate!==null&&Number.isFinite(v.progress_rate)&&v.progress_rate<prev){
     hint.classList.add("warn");
-    hint.textContent=`입력한 값이 기존 공정률 ${productionPercentLabel(prev)}보다 낮습니다. 지표에는 높은 값(${productionPercentLabel(prev)})이 유지됩니다.`;
-    return;
-  }
-  hint.textContent=due+`이 작업의 현재 공정률: ${productionPercentLabel(prev)}`;
+    text=`입력한 값이 기존 공정률 ${productionPercentLabel(prev)}보다 낮습니다. 지표에는 높은 값(${productionPercentLabel(prev)})이 유지됩니다.`;
+  }else text=due+`이 작업의 현재 공정률: ${productionPercentLabel(prev)}`;
+  hint.innerHTML=`<strong>${escapeHtml(v.work_type)} · ${escapeHtml(v.work_method)}</strong><br>${escapeHtml(text)}`;
 }
 
 function refreshScheduleRowHeads(){
