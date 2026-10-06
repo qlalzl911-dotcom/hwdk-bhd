@@ -81,6 +81,23 @@ header{padding:9px 10px}.header-inner{display:grid;grid-template-columns:minmax(
 .production-major-detail .production-area:first-of-type{border-top:0}
 @media(min-width:721px){.suggest-list{position:absolute;left:0;right:0;top:100%;z-index:50}}
 @media(max-width:720px){.schedule-row-grid{grid-template-columns:1fr}.schedule-worker-rows{grid-template-columns:1fr}.production-major-grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:7px;padding:10px}.production-major-card{padding:10px}.production-major-pct{font-size:23px}.production-major-meta{font-size:11px}}
+/* ===== 게시판(공지사항) ===== */
+.home-board{padding:12px 14px;background:#fffaf0;border:1px solid #e3c66f;border-radius:14px}
+.home-board-head{display:flex;justify-content:space-between;align-items:center;gap:8px;margin-bottom:4px}
+.home-board-title{font-size:17px;font-weight:900;color:#16324f}
+.home-board-more{flex:0 0 auto;padding:6px 10px;background:#fff;border:1px solid #d5dde4;color:#16324f;font-size:12px}
+.home-board-list{display:flex;flex-direction:column}
+.home-board-row{display:block;width:100%;padding:8px 0;border-radius:0;border-top:1px solid #f0e2b4;background:transparent;color:#222;font-size:14px;font-weight:400;text-align:left}
+.home-board-row:first-child{border-top:0}
+.home-board-line{display:flex;align-items:center;gap:6px;min-width:0}
+.home-board-row-title{flex:1 1 auto;min-width:0;overflow:hidden;font-weight:800;white-space:nowrap;text-overflow:ellipsis}
+.home-board-date{flex:0 0 auto;color:#8a8f98;font-size:12px}
+.home-board-new{display:inline-block;flex:0 0 auto;margin-right:6px;padding:2px 6px;border-radius:10px;background:#d64545;color:#fff;font-size:10px;font-weight:800;vertical-align:middle}
+.home-board-line .home-board-new{margin-right:0}
+.home-board-empty{padding:8px 0 4px;color:#777;font-size:13px;line-height:1.5}
+.board-card{border-left:5px solid #d9a72b}
+.board-card-focus{box-shadow:0 0 0 2px rgba(217,119,6,.35)}
+.board-content{margin-top:9px;padding:10px;background:#f7f9fb;border-radius:7px;line-height:1.6;white-space:pre-wrap;overflow-wrap:anywhere}
 </style>
 </head>
 <body>
@@ -149,6 +166,14 @@ header{padding:9px 10px}.header-inner{display:grid;grid-template-columns:minmax(
     <div id="homeUser" class="home-user"></div>
 
     <div class="dashboard-stack">
+      <div id="homeBoard" class="home-board">
+        <div class="home-board-head">
+          <span class="home-board-title">게시판</span>
+          <button id="openBoardBtn" class="home-board-more" type="button">전체보기</button>
+        </div>
+        <div id="homeBoardList" class="home-board-list"><div class="home-board-empty">불러오는 중...</div></div>
+      </div>
+
       <div class="quick-work-grid">
         <button id="openMyWorkBtn" class="module-btn module-mywork">
           <span id="myWorkHomeCount" class="tile-count hidden">0</span>
@@ -279,6 +304,31 @@ header{padding:9px 10px}.header-inner{display:grid;grid-template-columns:minmax(
     <div id="productionDashboardSummary" class="production-summary-grid"></div>
     <div id="productionDashboardStatus" class="status"></div>
     <div id="productionDashboardContent"></div>
+  </div>
+</div>
+
+<!-- 게시판(공지사항) 모듈 -->
+<div id="boardApp" class="container hidden">
+  <div id="boardWriteCard" class="card hidden">
+    <h2 id="boardFormTitle">공지 등록</h2>
+    <div class="hint">등록한 글은 로그인한 전체 인원의 홈 화면 게시판에 표시됩니다. 관리자만 등록 · 수정 · 삭제할 수 있습니다.</div>
+    <label>제목</label><input id="boardTitle" maxlength="100" placeholder="예: 10/8(목) 안전교육 안내">
+    <label>내용</label><textarea id="boardContent" placeholder="전체 인원에게 전달할 내용을 작성하세요."></textarea>
+    <div class="schedule-actions">
+      <button id="boardCancelEditBtn" class="secondary hidden" type="button">수정 취소</button>
+      <button id="boardSaveBtn" class="primary" type="button" style="margin-top:0">공지 등록</button>
+    </div>
+    <div id="boardSaveStatus" class="status"></div>
+  </div>
+
+  <div class="card">
+    <div class="section-heading">
+      <h2>게시판</h2>
+      <button id="refreshBoardBtn" class="refresh" type="button">새로고침</button>
+    </div>
+    <div class="hint">전체 인원에게 전달하는 공지사항입니다. 최근 글이 위에 표시됩니다.</div>
+    <div id="boardStatus" class="status"></div>
+    <div id="boardList"></div>
   </div>
 </div>
 
@@ -640,7 +690,7 @@ async function nameToSyntheticEmail(name){
   return `u_${hex.slice(0,40)}@hwdk-bhd.com`;
 }
 
-function hideAllMain(){authScreen.classList.add("hidden");moduleHome.classList.add("hidden");scheduleApp.classList.add("hidden");$("productionDashboardApp")?.classList.add("hidden");bhdApp.classList.add("hidden");requestApp.classList.add("hidden");myWorkApp.classList.add("hidden")}
+function hideAllMain(){authScreen.classList.add("hidden");moduleHome.classList.add("hidden");scheduleApp.classList.add("hidden");$("productionDashboardApp")?.classList.add("hidden");$("boardApp")?.classList.add("hidden");bhdApp.classList.add("hidden");requestApp.classList.add("hidden");myWorkApp.classList.add("hidden")}
 function updateHeader(){
   $("userBadge").textContent=isAdmin?`관리자 · ${currentUserName||"관리자"}`:currentUserName;
   $("userBadge").className=isAdmin?"user-badge admin":"user-badge";
@@ -655,7 +705,7 @@ function setAuthMode(mode){
 }
 function showAuth(){hideAllMain();appHeader.classList.add("hidden");authScreen.classList.remove("hidden");setAuthMode("login")}
 function showHeader(){appHeader.classList.remove("hidden");updateHeader();updateAppBackButton();refreshNotificationBadge()}
-function showHome(push=true){hideAllMain();showHeader();moduleHome.classList.remove("hidden");$("homeUser").textContent=`현재 사용자: ${currentUserName||"-"}`;refreshNotificationBadge();if(push)pushState({screen:"home",admin:isAdmin})}
+function showHome(push=true){hideAllMain();showHeader();moduleHome.classList.remove("hidden");$("homeUser").textContent=`현재 사용자: ${currentUserName||"-"}`;refreshNotificationBadge();loadHomeBoard();if(push)pushState({screen:"home",admin:isAdmin})}
 
 async function loadAssignableUsers(){
   const {data,error}=await supabase.from("user_profiles").select("user_id,name").order("name",{ascending:true});
@@ -1340,6 +1390,136 @@ $("openProductionDashboardBtn").onclick=()=>showProductionDashboard(true);
 $("refreshProductionDashboardBtn").onclick=loadProductionDashboard;
 $("productionDashboardSearchBtn").onclick=loadProductionDashboard;
 $("productionDashboardShip").addEventListener("keydown",e=>{if(e.key==="Enter")loadProductionDashboard()});
+
+/* ---------- 게시판(공지사항) ---------- */
+/* 전체 인원에게 전달하는 공지입니다. 읽기는 로그인한 전원, 등록 · 수정 · 삭제는 관리자만 가능합니다. */
+const BOARD_TABLE="board_posts";
+/* 홈 화면 게시판에 보여 줄 공지 제목 개수 */
+const BOARD_HOME_LINES=3;
+/* 등록 후 NEW 표시를 유지하는 기간(일) */
+const BOARD_NEW_DAYS=3;
+let boardEditingId=null;
+let boardFocusId=null;
+let homeBoardSeq=0;
+
+function boardErrorText(error){
+  const text=`${error?.code||""} ${error?.message||""}`;
+  if(/PGRST205|42P01|schema cache|does not exist/i.test(text))return "게시판 설정이 아직 적용되지 않았습니다. 제공된 게시판 SQL을 Supabase에서 먼저 실행하세요.";
+  if(/42501|row-level security|permission denied/i.test(text))return "권한이 없습니다. 공지 등록 · 수정 · 삭제는 관리자만 할 수 있습니다.";
+  return error?.message||"오류";
+}
+function boardIsNew(post){
+  const t=new Date(post.created_at).getTime();
+  return Number.isFinite(t)&&Date.now()-t<BOARD_NEW_DAYS*86400000;
+}
+function boardShortDate(v){
+  const d=new Date(v);
+  if(Number.isNaN(d.getTime()))return "";
+  return `${String(d.getMonth()+1).padStart(2,"0")}/${String(d.getDate()).padStart(2,"0")}`;
+}
+
+/* 홈 화면 게시판: 최근 공지의 제목만 보여 줍니다. 내용은 눌러서 게시판 화면에서 봅니다. */
+async function loadHomeBoard(){
+  const list=$("homeBoardList");
+  if(!list||!currentUserId)return;
+  $("openBoardBtn").textContent=isAdmin?"공지 등록 · 전체보기":"전체보기";
+  const seq=++homeBoardSeq;
+  const {data,error}=await supabase.from(BOARD_TABLE).select("id,title,created_at").order("created_at",{ascending:false}).limit(BOARD_HOME_LINES);
+  if(seq!==homeBoardSeq)return;
+  if(error){list.innerHTML=`<div class="home-board-empty">${escapeHtml(boardErrorText(error))}</div>`;return}
+  const posts=data||[];
+  if(!posts.length){list.innerHTML='<div class="home-board-empty">등록된 공지가 없습니다.</div>';return}
+  list.innerHTML="";
+  posts.forEach(post=>{
+    const row=document.createElement("button");row.type="button";row.className="home-board-row";
+    row.innerHTML=`<div class="home-board-line">${boardIsNew(post)?'<span class="home-board-new">NEW</span>':""}<span class="home-board-row-title">${escapeHtml(post.title||"(제목 없음)")}</span><span class="home-board-date">${escapeHtml(boardShortDate(post.created_at))}</span></div>`;
+    row.onclick=()=>showBoard(true,post.id);
+    list.appendChild(row);
+  });
+}
+
+function resetBoardForm(){
+  boardEditingId=null;
+  $("boardTitle").value="";$("boardContent").value="";
+  $("boardFormTitle").textContent="공지 등록";$("boardSaveBtn").textContent="공지 등록";
+  $("boardCancelEditBtn").classList.add("hidden");$("boardSaveStatus").textContent="";
+}
+function startBoardEdit(post){
+  boardEditingId=post.id;
+  $("boardTitle").value=post.title||"";$("boardContent").value=post.content||"";
+  $("boardFormTitle").textContent="공지 수정";$("boardSaveBtn").textContent="수정 저장";
+  $("boardCancelEditBtn").classList.remove("hidden");$("boardSaveStatus").textContent="";
+  $("boardWriteCard").scrollIntoView({block:"start"});
+  $("boardTitle").focus();
+}
+
+function boardCard(post){
+  const card=document.createElement("div");card.className="record-card board-card";card.dataset.postId=String(post.id);
+  const content=String(post.content||"").trim();
+  const edited=post.updated_at&&post.created_at&&new Date(post.updated_at).getTime()-new Date(post.created_at).getTime()>60000;
+  card.innerHTML=`<div class="record-title">${boardIsNew(post)?'<span class="home-board-new">NEW</span>':""}${escapeHtml(post.title||"(제목 없음)")}</div><div class="record-meta">${escapeHtml(post.author_name||"관리자")} · ${escapeHtml(formatDateTime(post.created_at))}${edited?` · 수정 ${escapeHtml(formatDateTime(post.updated_at))}`:""}</div>${content?`<div class="board-content">${escapeHtml(content)}</div>`:""}`;
+  if(isAdmin){
+    const actions=document.createElement("div");actions.className="record-actions";
+    const edit=document.createElement("button");edit.className="secondary";edit.type="button";edit.textContent="수정";edit.onclick=()=>startBoardEdit(post);
+    const del=document.createElement("button");del.className="danger";del.type="button";del.textContent="삭제";del.onclick=()=>deleteBoardPost(post);
+    actions.appendChild(edit);actions.appendChild(del);card.appendChild(actions);
+  }
+  return card;
+}
+
+async function loadBoardList(){
+  const list=$("boardList"),status=$("boardStatus");
+  list.innerHTML="";status.textContent="게시판 불러오는 중...";
+  const {data,error}=await supabase.from(BOARD_TABLE).select("*").order("created_at",{ascending:false}).limit(200);
+  if(error){status.textContent=boardErrorText(error);return}
+  const posts=data||[];
+  status.textContent=posts.length?`전체 ${posts.length}건`:"";
+  if(!posts.length){list.innerHTML='<div class="empty">등록된 공지가 없습니다.</div>';return}
+  posts.forEach(post=>list.appendChild(boardCard(post)));
+  if(boardFocusId){
+    const target=[...list.querySelectorAll(".board-card")].find(card=>card.dataset.postId===String(boardFocusId));
+    if(target){target.classList.add("board-card-focus");target.scrollIntoView({block:"center"})}
+    boardFocusId=null;
+  }
+}
+
+async function saveBoardPost(){
+  const status=$("boardSaveStatus"),btn=$("boardSaveBtn"),title=$("boardTitle").value.trim(),content=$("boardContent").value.trim();
+  if(!isAdmin){status.textContent="공지 등록은 관리자만 할 수 있습니다.";return}
+  if(!title){status.textContent="제목을 입력하세요.";return}
+  try{
+    btn.disabled=true;status.textContent=boardEditingId?"공지 수정 중...":"공지 등록 중...";
+    const result=boardEditingId
+      ?await supabase.from(BOARD_TABLE).update({title,content,updated_at:new Date().toISOString()}).eq("id",boardEditingId)
+      :await supabase.from(BOARD_TABLE).insert({title,content,author_name:currentUserName,created_by:currentUserId});
+    if(result.error)throw result.error;
+    const done=boardEditingId?"공지를 수정했습니다.":"공지를 등록했습니다. 전체 인원의 홈 화면 게시판에 표시됩니다.";
+    resetBoardForm();status.textContent=done;loadBoardList();
+  }catch(e){status.textContent="저장 실패: "+boardErrorText(e)}finally{btn.disabled=false}
+}
+
+async function deleteBoardPost(post){
+  if(!confirm(`${post.title||""}\n\n이 공지를 삭제하시겠습니까?`))return;
+  const {error}=await supabase.from(BOARD_TABLE).delete().eq("id",post.id);
+  if(error){alert("삭제 실패: "+boardErrorText(error));return}
+  if(boardEditingId===post.id)resetBoardForm();
+  loadBoardList();
+}
+
+function showBoard(push=true,focusId=null){
+  hideAllMain();showHeader();$("boardApp").classList.remove("hidden");
+  $("boardWriteCard").classList.toggle("hidden",!isAdmin);
+  boardFocusId=focusId;
+  if(push)resetBoardForm();
+  loadBoardList();
+  if(push)pushState({screen:"board",admin:isAdmin});
+}
+$("openBoardBtn").onclick=()=>showBoard(true);
+$("refreshBoardBtn").onclick=loadBoardList;
+$("boardSaveBtn").onclick=saveBoardPost;
+$("boardCancelEditBtn").onclick=resetBoardForm;
+/* 앱을 다시 열었을 때 홈 화면이면 새 공지를 바로 반영합니다. */
+document.addEventListener("visibilitychange",()=>{if(!document.hidden&&currentUserId&&!moduleHome.classList.contains("hidden"))loadHomeBoard()});
 
 /* ---------- BHD 모듈 ---------- */
 function showBhdTab(mode){
@@ -2676,7 +2856,7 @@ $("notificationBtn").onclick=()=>showMyWork(true);
 $("refreshMyWorkBtn").onclick=loadMyWork;
 
 /* ---------- 브라우저 뒤로가기 ---------- */
-async function renderHistoryState(state){const t=state||{screen:"auth"};if(t.screen!=="image")hideImageModalOnly();if(t.screen!=="log"&&t.screen!=="image")hideHistoryModalOnly();if(t.screen==="auth"){showAuth();return}if(t.admin){if(!await checkCurrentUserAdmin()){showAuth();replaceState({screen:"auth"});return}isAdmin=true;currentUserName="관리자"}showHeader();if(t.screen==="home"){showHome(false);return}if(t.screen==="mywork"){showMyWork(false);return}if(t.screen==="schedule-tab"){showScheduleTab(t.tab||"register");return}if(t.screen==="production-dashboard"){showProductionDashboard(false);return}if(t.screen==="bhd-tab"){showBhdTab(t.tab||"register");return}if(t.screen==="bhd-edit"){const r=await fetchRecordById(t.recordId);if(r)await loadForEdit(r,false);else showBhdTab("list");return}if(t.screen==="bhd-detail"){const r=await fetchRecordById(t.recordId);if(r)await renderRecordDetail(r,false);else showBhdTab("list");return}if(t.screen==="request-tab"){showRequestTab(t.tab||"register");return}if(t.screen==="request-detail"){const r=await fetchRequestById(t.recordId);if(r)await renderRequestDetail(r,false);else showRequestTab("list");return}if(t.screen==="log"){const r=await fetchRecordById(t.recordId);if(r)await openHistoryModal(r,Number(t.logIndex||0),false);return}if(t.screen==="image"){showImageModalOnly(t.url,t.filename||"HWDK-photo.jpg",!!t.mirror)}}
+async function renderHistoryState(state){const t=state||{screen:"auth"};if(t.screen!=="image")hideImageModalOnly();if(t.screen!=="log"&&t.screen!=="image")hideHistoryModalOnly();if(t.screen==="auth"){showAuth();return}if(t.admin){if(!await checkCurrentUserAdmin()){showAuth();replaceState({screen:"auth"});return}isAdmin=true;currentUserName="관리자"}showHeader();if(t.screen==="home"){showHome(false);return}if(t.screen==="mywork"){showMyWork(false);return}if(t.screen==="schedule-tab"){showScheduleTab(t.tab||"register");return}if(t.screen==="production-dashboard"){showProductionDashboard(false);return}if(t.screen==="board"){showBoard(false);return}if(t.screen==="bhd-tab"){showBhdTab(t.tab||"register");return}if(t.screen==="bhd-edit"){const r=await fetchRecordById(t.recordId);if(r)await loadForEdit(r,false);else showBhdTab("list");return}if(t.screen==="bhd-detail"){const r=await fetchRecordById(t.recordId);if(r)await renderRecordDetail(r,false);else showBhdTab("list");return}if(t.screen==="request-tab"){showRequestTab(t.tab||"register");return}if(t.screen==="request-detail"){const r=await fetchRequestById(t.recordId);if(r)await renderRequestDetail(r,false);else showRequestTab("list");return}if(t.screen==="log"){const r=await fetchRecordById(t.recordId);if(r)await openHistoryModal(r,Number(t.logIndex||0),false);return}if(t.screen==="image"){showImageModalOnly(t.url,t.filename||"HWDK-photo.jpg",!!t.mirror)}}
 addEventListener("popstate",e=>{updateAppBackButton();renderHistoryState(e.state)});
 
 /* ---------- 초기 실행 ---------- */
